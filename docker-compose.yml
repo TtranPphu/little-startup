@@ -1,0 +1,38 @@
+services:
+  mongo:
+    image: mongo:latest
+    # ports:
+    #   - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - ./db-mongodb:/data/db:delegated
+
+  little-example:
+    build:
+      context: little-example
+      dockerfile: Dockerfile
+      target: little-example
+    volumes:
+      - ./little-example:/little-example
+    ports:
+      - 1234:1234
+    working_dir: /little-example
+    command: npm start
+    # depends_on:
+    #   - some-backend
+
+  little-example-devcontainer:
+    build:
+      context: .devcontainer/little-example
+      dockerfile: ../../little-example/Dockerfile
+      target: little-example-devcontainer
+    volumes:
+      - .:/workspace/little-startup
+      - /home/ttranpphu/.ssh:/home/little/.ssh:cached
+    environment:
+      - UV_LINK_MODE=copy
+    command: sleep infinity
+    depends_on:
+      - mongo
