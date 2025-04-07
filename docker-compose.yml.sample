@@ -36,3 +36,29 @@ services:
     command: sleep infinity
     depends_on:
       - mongo
+
+  frontend-tung:
+    build:
+      context: frontend-tung
+      dockerfile: Dockerfile
+      target: frontend-tung
+    volumes:
+      - ./frontend-tung/frontend:/frontend-tung
+    ports:
+      - 3000:3000
+    working_dir: /frontend-tung
+    command: npm start
+    # depends_on:
+    #   - some-backend
+  frontend-tung-devcontainer:
+    build:
+      context: .devcontainer/frontend-tung
+      dockerfile: ../../frontend-tung/Dockerfile
+      target: frontend-tung-devcontainer
+    volumes:
+      - .:/workspace/frontend-tung
+      - /home/duytung13pro/.ssh:/home/tung/.ssh:cached
+    environment:
+      - UV_LINK_MODE=copy
+    command: sleep infinity
+    depends_on: # some-backend:

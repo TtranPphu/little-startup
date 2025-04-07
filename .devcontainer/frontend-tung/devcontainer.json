@@ -1,0 +1,33 @@
+{
+    "name": "frontend-tung-devcontainer",
+    "postCreateCommand": "sh .devcontainer/frontend-tung/post-create.sh",
+    "dockerComposeFile": "../../docker-compose.yml",
+    "service": "frontend-tung-devcontainer",
+    "runServices": ["frontend-tung-devcontainer"],
+    "workspaceFolder": "/workspace/little-startup",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "terminal.integrated.fontFamily": "MesloLGS NF",
+          "workbench.colorTheme": "Default Dark Modern"
+        },
+        "extensions": [
+          "chekweitan.compare-view",
+          "eriklynd.json-tools",
+          "esbenp.prettier-vscode",
+          "github.copilot",
+          "github.vscode-pull-request-github",
+          "mechatroner.rainbow-csv",
+          "medo64.render-crlf",
+          "ms-azuretools.vscode-docker",
+          "ms-python.black-formatter",
+          "ms-toolsai.jupyter",
+          "tamasfe.even-better-toml",
+          "usernamehw.errorlens",
+          "vadimcn.vscode-lldb"
+        ]
+      }
+    }
+  }
+  
+  

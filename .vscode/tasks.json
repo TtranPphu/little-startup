@@ -12,6 +12,17 @@
         "cwd": "${workspaceFolder}/little-example"
       },
       "problemMatcher": []
+    },
+
+    {
+      "label": "Run Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend-tung"
+      },
+      "problemMatcher": []
     }
   ]
 }
