@@ -36,3 +36,14 @@ services:
     command: sleep infinity
     depends_on:
       - mongo
+
+  sping-boot:
+    build:
+      context: ../myapp
+      dockerfile: ../myapp/Dockerfile
+    volumes:
+      - ../myapp:/app:cached
+    ports:
+      - 4000:4000
+    depends_on:
+      - mongo
