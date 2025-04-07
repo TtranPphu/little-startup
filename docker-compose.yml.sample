@@ -43,9 +43,9 @@ services:
       dockerfile: Dockerfile
       target: frontend-tung
     volumes:
-      - ./frontend-tung/frontend:/frontend-tung
+      - ./frontend-tung:/frontend-tung
     ports:
-      - 3000:3000
+      - 3000
     working_dir: /frontend-tung
     command: npm start
     # depends_on:
@@ -56,9 +56,9 @@ services:
       dockerfile: ../../frontend-tung/Dockerfile
       target: frontend-tung-devcontainer
     volumes:
-      - .:/workspace/frontend-tung
-      - /home/duytung13pro/.ssh:/home/tung/.ssh:cached
-    environment:
-      - UV_LINK_MODE=copy
+      - .:/workspace/little-startup
+      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
+    # environment:
+    #   - UV_LINK_MODE=copy
     command: sleep infinity
-    depends_on: # some-backend:
+    # depends_on: # some-backend:
