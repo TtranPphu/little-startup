@@ -30,7 +30,7 @@ services:
       target: little-example-devcontainer
     volumes:
       - .:/workspace/little-startup
-      - /home/phuccuhp211/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
     environment:
       - UV_LINK_MODE=copy
     command: sleep infinity
