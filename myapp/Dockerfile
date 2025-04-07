@@ -1,9 +1,5 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
-
-EXPOSE 4000
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "./mvnw package -DskipTests && java -jar target/myapp-0.0.1-SNAPSHOT.jar"]

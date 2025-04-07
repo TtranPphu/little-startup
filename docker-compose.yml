@@ -39,10 +39,10 @@ services:
 
   sping-boot:
     build:
-      context: ../myapp
-      dockerfile: ../myapp/Dockerfile
+      context: myapp
+      dockerfile: Dockerfile
     volumes:
-      - ../myapp:/app:cached
+      - ./myapp:/app:cached
     ports:
       - 4000:4000
     depends_on:
