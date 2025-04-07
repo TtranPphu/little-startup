@@ -1,8 +1,8 @@
 services:
   mongo:
     image: mongo:latest
-    # ports:
-    #   - 27017:27017
+    ports:
+      - 4444:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./little-example:/little-example
     ports:
-      - 1234:1234
+      - 4100:1234
     working_dir: /little-example
     command: npm start
     # depends_on:
@@ -37,7 +37,7 @@ services:
     depends_on:
       - mongo
 
-  sping-boot:
+  spring-boot:
     build:
       context: myapp
       dockerfile: Dockerfile
@@ -45,5 +45,8 @@ services:
       - ./myapp:/app:cached
     ports:
       - 4000:4000
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
+      - SERVER_PORT=4000
     depends_on:
       - mongo
