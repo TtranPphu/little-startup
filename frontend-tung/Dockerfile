@@ -39,9 +39,15 @@ RUN sudo apt-get update && sudo apt-get install make gcc ripgrep unzip git xclip
 RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
     --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
+#install reactjs
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
+    npm
+RUN sudo npm install n -g 
+RUN sudo n stable
+RUN sudo npm update npm -g
 
-FROM node:22.14.0-slim as frontend-tung
+FROM node:22-alpine as frontend-tung
 WORKDIR /frontend-tung
 COPY package*.json ./
 RUN npm install
-    
+CMD ["npm", "run", "dev"]

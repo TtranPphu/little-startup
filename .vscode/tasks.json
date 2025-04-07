@@ -15,6 +15,18 @@
     },
 
     {
+      "label": "Build Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend-tung"
+      },
+      "hide": true,
+      "problemMatcher": []
+    },
+
+    {
       "label": "Run Frontend",
       "type": "shell",
       "command": "npm",
@@ -22,6 +34,7 @@
       "options": {
         "cwd": "${workspaceFolder}/frontend-tung"
       },
+      "dependsOn": "Build Frontend",
       "problemMatcher": []
     }
   ]
