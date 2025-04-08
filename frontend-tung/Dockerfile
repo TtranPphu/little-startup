@@ -47,7 +47,11 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM node:22-alpine as frontend-tung
+
 WORKDIR /frontend-tung
+
 COPY package*.json ./
+
 RUN npm install
+
 CMD ["npm", "run", "dev"]
