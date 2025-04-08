@@ -4,7 +4,7 @@
 
     - Docker
       - **_For Windows_**: Recommended to use WSL2 based engine.
-    - VS Code with Development Containers support (Optional).
+    - VS Code with Dev Containers extention (ms-vscode-remote.remote-containers) installed (Optional).
 
 1.  **Clone and init the repository**:
     - **_For Windows_**: Recommended to clone in WSL2 managed directory.
