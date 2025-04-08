@@ -1,9 +1,9 @@
 {
-    "name": "frontend-tung-devcontainer",
-    "postCreateCommand": "sh .devcontainer/frontend-tung/post-create.sh",
+    "name": "frontend-devcontainer",
+    "postCreateCommand": "sh .devcontainer/frontend/post-create.sh",
     "dockerComposeFile": "../../docker-compose.yml",
-    "service": "frontend-tung-devcontainer",
-    "runServices": ["frontend-tung-devcontainer"],
+    "service": "frontend-devcontainer",
+    "runServices": ["frontend-devcontainer"],
     "workspaceFolder": "/workspace/little-startup",
     "customizations": {
       "vscode": {

@@ -20,7 +20,7 @@
       "command": "npm",
       "args": ["run", "build"],
       "options": {
-        "cwd": "${workspaceFolder}/frontend-tung"
+        "cwd": "${workspaceFolder}/frontend"
       },
       "hide": true,
       "problemMatcher": []
@@ -32,7 +32,7 @@
       "command": "npm",
       "args": ["start"],
       "options": {
-        "cwd": "${workspaceFolder}/frontend-tung"
+        "cwd": "${workspaceFolder}/frontend"
       },
       "dependsOn": "Build Frontend",
       "problemMatcher": []

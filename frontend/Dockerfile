@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as frontend-tung-devcontainer
+FROM ubuntu:22.04 as frontend-devcontainer
 
 # common utilities
 RUN apt update && apt upgrade -y && apt install -y \
@@ -46,9 +46,9 @@ RUN sudo npm install n -g
 RUN sudo n stable
 RUN sudo npm update npm -g
 
-FROM node:22-alpine as frontend-tung
+FROM node:22-alpine as frontend
 
-WORKDIR /frontend-tung
+WORKDIR /frontend
 
 COPY package*.json ./
 
