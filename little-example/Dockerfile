@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as little-example-devcontainer
+FROM ubuntu:22.04 AS little-example-devcontainer
 
 # common utilities
 RUN apt update && apt upgrade -y && apt install -y \
@@ -62,7 +62,7 @@ RUN sudo npm install n -g
 RUN sudo n stable
 RUN sudo npm update npm -g
 
-FROM node:22.14.0-slim as little-example
+FROM node:22.14.0-slim AS little-example
 
 WORKDIR /little-example
 
