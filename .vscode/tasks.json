@@ -12,6 +12,30 @@
         "cwd": "${workspaceFolder}/little-example"
       },
       "problemMatcher": []
+    },
+
+    {
+      "label": "Build Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "hide": true,
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Run Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "dependsOn": "Build Frontend",
+      "problemMatcher": []
     }
   ]
 }

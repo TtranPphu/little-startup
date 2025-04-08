@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS little-example-devcontainer
+FROM ubuntu:22.04 as frontend-devcontainer
 
 # common utilities
 RUN apt update && apt upgrade -y && apt install -y \
@@ -39,31 +39,19 @@ RUN sudo apt-get update && sudo apt-get install make gcc ripgrep unzip git xclip
 RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
     --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
-# rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    . $HOME/.cargo/env && \
-    rustc --version
-
-# uv for python
-ARG PYTHON_VERSION=3.12
-RUN curl --proto '=https' --tlsv1.2 -LsSf https://astral.sh/uv/install.sh | sh -s --
-RUN . /home/${USER_NAME}/.local/bin/env && uv python install ${PYTHON_VERSION}
-
-# mongodbcli
-RUN sudo apt-get install -y gnupg
-RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-RUN sudo apt-get update && sudo apt-get install -y mongodb-mongosh
-
-# npm
+#install reactjs
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     npm
-RUN sudo npm install n -g
+RUN sudo npm install n -g 
 RUN sudo n stable
 RUN sudo npm update npm -g
 
-FROM node:22.14.0-slim AS little-example
+FROM node:22-alpine as frontend
 
-WORKDIR /little-example
+WORKDIR /frontend
+
 COPY package*.json ./
+
 RUN npm install
+
+CMD ["npm", "run", "dev"]
