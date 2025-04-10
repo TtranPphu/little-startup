@@ -26,5 +26,6 @@
     "little-example/.parcel-cache": true,
     "little-example/.env": true,
     "little-example/uv.lock": true
-  }
+  },
+  "github.codespaces.devcontainerChangedNotificationStyle": "none"
 }
