@@ -18,5 +18,14 @@
     "editor.tabSize": 2
   },
   "python.defaultInterpreterPath": "./.venv/bin/python",
-  "files.exclude": {}
+  "files.exclude": {
+    "db-mongodb": true,
+    "little-example/node_modules": true,
+    "little-example/dist": true,
+    "little-example/package-lock.json": true,
+    "little-example/.parcel-cache": true,
+    "little-example/.env": true,
+    "little-example/uv.lock": true
+  },
+  "github.codespaces.devcontainerChangedNotificationStyle": "none"
 }
