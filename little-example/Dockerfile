@@ -65,5 +65,6 @@ RUN sudo npm update npm -g
 FROM node:22.14.0-slim AS little-example
 
 WORKDIR /little-example
+
 COPY package*.json ./
 RUN npm install
