@@ -1,5 +1,6 @@
 {
   "name": "little-example-devcontainer",
+  "initializeCommand": "sh init.sh",
   "postCreateCommand": "sh .devcontainer/little-example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "little-example-devcontainer",

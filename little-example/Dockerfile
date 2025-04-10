@@ -1,7 +1,7 @@
 FROM ubuntu:22.04 AS little-example-devcontainer
 
 # common utilities
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git vim zip \
     build-essential software-properties-common \
     bpytop cloc ncdu
