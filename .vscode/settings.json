@@ -18,5 +18,22 @@
     "editor.tabSize": 2
   },
   "python.defaultInterpreterPath": "./.venv/bin/python",
-  "files.exclude": {}
+  "files.exclude": {
+    "db-mongodb": true,
+    "little-example/node_modules": true,
+    "little-example/dist": true,
+    "little-example/package-lock.json": true,
+    "little-example/.parcel-cache": true,
+    "little-example/.env": true,
+    "little-example/uv.lock": true
+  },
+  "github.codespaces.devcontainerChangedNotificationStyle": "none",
+  "docker.extension.dockerEngineAvailabilityPrompt": false,
+  "editor.renderWhitespace": "all",
+  "code-eol.newlineCharacter": "¬",
+  "code-eol.returnCharacter": "¤",
+  "code-eol.crlfCharacter": "¤¬",
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/CascadiaCode.zip
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
+  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font"
 }

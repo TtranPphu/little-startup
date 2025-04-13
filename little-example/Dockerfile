@@ -1,7 +1,7 @@
-FROM ubuntu:22.04 as little-example-devcontainer
+FROM ubuntu:22.04 AS little-example-devcontainer
 
 # common utilities
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git vim zip \
     build-essential software-properties-common \
     bpytop cloc ncdu
@@ -14,21 +14,32 @@ RUN usermod -aG sudo ${USER_NAME}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER_NAME}
 
-# meslo nerd font for powerlevel10k and neo-vim
-ARG MESLO_URL="https://github.com/romkatv/powerlevel10k-media/raw/master"
-ARG MESLO_DIR="/usr/share/fonts/truetype/meslo"
-RUN sudo mkdir -p ${MESLO_DIR}
-RUN sudo wget ${MESLO_URL}/MesloLGS%20NF%20Regular.ttf -O ${MESLO_DIR}/MesloLGSNFRegular.ttf
-RUN sudo wget ${MESLO_URL}/MesloLGS%20NF%20Bold.ttf -O ${MESLO_DIR}/MesloLGSNFBold.ttf
-RUN sudo wget ${MESLO_URL}/MesloLGS%20NF%20Italic.ttf -O ${MESLO_DIR}/MesloLGSNFItalic.ttf
-RUN sudo wget ${MESLO_URL}/MesloLGS%20NF%20Bold%20Italic.ttf -O ${MESLO_DIR}/MesloLGSNFBoldItalic.ttf
+# meslo lsg nerd font for powerlevel10k
+ARG MESLOLGS_URL="https://github.com/romkatv/powerlevel10k-media/raw/master"
+ARG MESLOLGS_DIR="/usr/share/fonts/truetype/meslo"
+RUN sudo mkdir -p ${MESLOLGS_DIR}
+RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Regular.ttf
+RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Bold.ttf
+RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Italic.ttf
+RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Bold%20Italic.ttf
+
+# caskaydia cove nerd font for neo-vim
+ARG CASKAYDIACOVE_URL="https://github.com/eliheuer/caskaydia-cove/raw/master/fonts/ttf"
+ARG CASKAYDIACOVE_DIR="/usr/share/fonts/truetype/caskaydia_cove"
+RUN sudo mkdir -p ${CASKAYDIACOVE_DIR}
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-Bold.ttf
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-ExtraLight.ttf
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-Light.ttf
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-Medium.ttf
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-Regular.ttf
+RUN sudo wget -P ${CASKAYDIACOVE_DIR}/ ${CASKAYDIACOVE_URL}/CaskaydiaCove-SemiBold.ttf
 
 # oh-my-zsh & powerlevel10k
 RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 RUN git clone --depth=1 \
     https://github.com/romkatv/powerlevel10k.git \
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-COPY .zshrc /home/${USER_NAME}/.zshrc
+COPY little-example/.zshrc /home/${USER_NAME}/.zshrc
 COPY .p10k.zsh /home/${USER_NAME}/.p10k.zsh
 
 # neo-vim and dependencies
@@ -62,7 +73,7 @@ RUN sudo npm install n -g
 RUN sudo n stable
 RUN sudo npm update npm -g
 
-FROM node:22.14.0-slim as little-example
+FROM node:22.14.0-slim AS little-example
 
 WORKDIR /little-example
 
