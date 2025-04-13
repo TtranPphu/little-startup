@@ -114,8 +114,6 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.local/bin/env
 eval "$(uv generate-shell-completion zsh)"
 
-source /workspace/little-startup/little-example/.venv/bin/activate
-
 export HISTFILE="/workspace/little-startup/.zsh_history"
 export HISTSIZE=1000
 export SAVEHIST=10000

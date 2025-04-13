@@ -2,7 +2,7 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - 4444:27017
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./little-example:/little-example
     ports:
-      - 4100:1234
+      - 1234:1234
     working_dir: /little-example
     command: npm start
     # depends_on:
@@ -25,11 +25,11 @@ services:
 
   little-example-devcontainer:
     build:
-      context: .devcontainer/little-example
-      dockerfile: ../../little-example/Dockerfile
+      context: .devcontainer
+      dockerfile: ../little-example/Dockerfile
       target: little-example-devcontainer
     volumes:
-      - .:/workspace/little-startup
+      - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
     environment:
       - UV_LINK_MODE=copy
@@ -44,8 +44,7 @@ services:
       target: backend-devcontainer
     volumes:
       - .:/workspace/little-startup
-    ports:
-      - 4000:4000
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
     depends_on:
       - mongo
     environment:

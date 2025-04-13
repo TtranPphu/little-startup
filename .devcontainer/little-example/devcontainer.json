@@ -5,11 +5,13 @@
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "little-example-devcontainer",
   "runServices": ["little-example-devcontainer"],
-  "workspaceFolder": "/workspace/little-startup",
+  "workspaceFolder": "/workspaces/little-startup",
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.fontFamily": "MesloLGS NF",
+        // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/CascadiaCode.zip
+        "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
+        "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
@@ -17,6 +19,7 @@
         "cweijan.vscode-mysql-client2",
         "eriklynd.json-tools",
         "esbenp.prettier-vscode",
+        "github.codespaces",
         "github.copilot",
         "github.vscode-pull-request-github",
         "mechatroner.rainbow-csv",
