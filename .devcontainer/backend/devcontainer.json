@@ -9,7 +9,8 @@
     "customizations": {
         "vscode": {
             "settings": {
-                "terminal.integrated.fontFamily": "MesloLGS NF",
+                "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
+                "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
                 "workbench.colorTheme": "Default Dark Modern"
             },
             "extensions": [

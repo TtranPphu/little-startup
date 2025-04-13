@@ -8,7 +8,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     openjdk-17-jdk
 
 # user
-ARG USER_NAME=little
+ARG USER_NAME=backend
 RUN groupadd ${USER_NAME}
 RUN adduser --shell /usr/bin/zsh --gecos '' --ingroup ${USER_NAME} --disabled-password ${USER_NAME}
 RUN usermod -aG sudo ${USER_NAME}
@@ -42,7 +42,6 @@ RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
 
 # maven install
 USER root 
-
 RUN sudo apt update && apt upgrade -y && apt install -y \
     wget \
     unzip &&\
@@ -50,6 +49,7 @@ RUN sudo apt update && apt upgrade -y && apt install -y \
     tar -xzvf apache-maven-3.8.6-bin.tar.gz -C /opt/ &&\
     ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn &&\
     rm -rf apache-maven-3.8.6-bin.tar.gz
+USER ${USER_NAME}
 
 FROM maven:3.9.4-eclipse-temurin-17 AS backend
 WORKDIR /app
