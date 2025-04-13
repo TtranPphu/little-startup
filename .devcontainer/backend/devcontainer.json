@@ -1,5 +1,6 @@
 {
     "name": "backend-devcontainer",
+    "initializeCommand": "sh init.sh",
     "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
     "dockerComposeFile": "../../docker-compose.yml",
     "service": "spring-boot-dev",
