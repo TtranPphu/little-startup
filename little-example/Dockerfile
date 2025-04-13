@@ -15,7 +15,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER_NAME}
 
 # set zsh as default
-RUN sudo chsh -s /usr/bin/zsh little
+ENV SHELL=/usr/bin/zsh
 
 # caskaydia cove nerd font for neo-vim
 ARG CASKAYDIACOVE_URL="https://github.com/eliheuer/caskaydia-cove/raw/master/fonts/ttf"
