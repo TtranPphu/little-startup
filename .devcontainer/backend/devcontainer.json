@@ -3,9 +3,7 @@
     "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
     "dockerComposeFile": "../../docker-compose.yml",
     "service": "spring-boot-dev",
-    "runServices": [
-        "spring-boot-dev"
-    ],
+    "runServices": ["spring-boot-dev"],
     "workspaceFolder": "/workspace/little-startup",
     "customizations": {
         "vscode": {
@@ -23,12 +21,6 @@
                 "mechatroner.rainbow-csv",
                 "medo64.render-crlf",
                 "ms-azuretools.vscode-docker",
-                "ms-python.black-formatter",
-                "ms-python.python",
-                "ms-python.vscode-pylance",
-                "ms-toolsai.jupyter",
-                "rust-lang.rust-analyzer",
-                "tamasfe.even-better-toml",
                 "usernamehw.errorlens",
                 "vadimcn.vscode-lldb"
             ]
