@@ -8,7 +8,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     openjdk-17-jdk
 
 # user
-ARG USER_NAME=backend
+ARG USER_NAME=little
 RUN groupadd ${USER_NAME}
 RUN adduser --shell /usr/bin/zsh --gecos '' --ingroup ${USER_NAME} --disabled-password ${USER_NAME}
 RUN usermod -aG sudo ${USER_NAME}
