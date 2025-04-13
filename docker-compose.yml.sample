@@ -31,6 +31,7 @@ services:
     volumes:
       - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     environment:
       - UV_LINK_MODE=copy
     command: sleep infinity

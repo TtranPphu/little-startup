@@ -13,12 +13,18 @@
     ```sh
     git clone git@github.com:TtranPphu/little-startup.git
     cd little-startup
-    sh init.sh
-    code .
     ```
 
-    - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
-    - Select component you want to work on.
+    - Working in VS Code
+      ```
+      code .
+      ```
+      - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
+      - Select component you want to work on.
+    - Working in Neovim
+      ```
+      sh init.sh && docker compose up -d <your-component>-devcontainer --build && docker exec -it --workdir workspaces/little-startup little-startup-<your-component>-devcontainer-1 nvim
+      ```
 
 2.  **Working on Github codespaces**
 
