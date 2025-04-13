@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import LearningCarousel from "@/components/learning-carousel";
 
 export default function Home() {
+  console.log("Home page loaded");
   return (
     <div className="min-h-screen bg-[#FFF8E9]">
       {/* Header */}
@@ -54,7 +55,7 @@ export default function Home() {
         </div>
         <div className="md:w-1/2 mt-8 md:mt-0">
           <Image
-            src="/hero-image.svg"
+            src="/hero-section.png"
             alt="Learning Chinese"
             width={500}
             height={400}
@@ -202,7 +203,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/3">
             <Image
-              src="/contact-image.svg"
+              src="/section-5.png"
               alt="Contact Us"
               width={300}
               height={300}
@@ -243,23 +244,20 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
             <Image
-              src="/logo.svg"
+              src="/logo02.svg"
               alt="Project Rewood"
-              width={36}
-              height={36}
-              className="w-9 h-9"
+              width={100}
+              height={100}
+              className="w-24 h-24 cursor-pointer"
             />
             <div>
-              <p className="font-bold text-green-700 uppercase">
-                Project Rewood
-              </p>
               <p className="text-xs text-gray-500">
-                Copyright © 2023 Project Rewood
+                Copyright © 2025 Project Rewood
               </p>
             </div>
           </div>
           <div className="flex gap-4">
-            <Link href="#" className="text-blue-600">
+            <Link href="https://www.facebook.com/" className="text-blue-600">
               <Image
                 src="/icon-facebook.svg"
                 alt="Facebook"
@@ -268,7 +266,7 @@ export default function Home() {
                 className="w-6 h-6"
               />
             </Link>
-            <Link href="#" className="text-pink-600">
+            <Link href="https://www.instagram.com/" className="text-pink-600">
               <Image
                 src="/icon-instagram.svg"
                 alt="Instagram"
@@ -277,7 +275,7 @@ export default function Home() {
                 className="w-6 h-6"
               />
             </Link>
-            <Link href="#" className="text-gray-800">
+            <Link href="https://github.com/" className="text-gray-800">
               <Image
                 src="/icon-github.svg"
                 alt="GitHub"

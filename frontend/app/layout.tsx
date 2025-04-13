@@ -1,18 +1,19 @@
-import type React from "react"
-import "./globals.css"
-import type { Metadata } from "next"
-import { ThemeProvider } from "@/components/theme-provider"
+import type React from "react";
+import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Project Rewood - Learn Chinese Effectively",
-  description: "Learn Chinese effectively anytime, anywhere with Project Rewood.",
-    generator: 'v0.dev'
-}
+  description:
+    "Learn Chinese effectively anytime, anywhere with Project Rewood.",
+  generator: "Project Rewood team",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -22,8 +23,7 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
 
-
-import './globals.css'
+import "./globals.css";
