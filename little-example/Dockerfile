@@ -4,7 +4,7 @@ FROM ubuntu:22.04 AS little-example-devcontainer
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git vim zip \
     build-essential software-properties-common \
-    bpytop cloc ncdu
+    bpytop tree ncdu cloc neofetch
 
 # user
 ARG USER_NAME=little
@@ -14,14 +14,8 @@ RUN usermod -aG sudo ${USER_NAME}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER_NAME}
 
-# meslo lsg nerd font for powerlevel10k
-ARG MESLOLGS_URL="https://github.com/romkatv/powerlevel10k-media/raw/master"
-ARG MESLOLGS_DIR="/usr/share/fonts/truetype/meslo"
-RUN sudo mkdir -p ${MESLOLGS_DIR}
-RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Regular.ttf
-RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Bold.ttf
-RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Italic.ttf
-RUN sudo wget -P ${MESLOLGS_DIR}/ ${MESLOLGS_URL}/MesloLGS%20NF%20Bold%20Italic.ttf
+# set zsh as default shell
+ENV SHELL=/usr/bin/zsh
 
 # caskaydia cove nerd font for neo-vim
 ARG CASKAYDIACOVE_URL="https://github.com/eliheuer/caskaydia-cove/raw/master/fonts/ttf"
