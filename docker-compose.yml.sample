@@ -37,3 +37,32 @@ services:
     command: sleep infinity
     depends_on:
       - mongo
+
+  backend-devcontainer:
+    build:
+      context: .devcontainer/backend
+      dockerfile: ../../backend/Dockerfile
+      target: backend-devcontainer
+    volumes:
+      - .:/workspace/little-startup
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
+      - SPRING_PROFILES_ACTIVE=dev
+    command: sleep infinity
+
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+      target: backend
+    ports:
+      - 4000:4000
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
+      - SPRING_PROFILES_ACTIVE=prod
+    command: java -jar /app/target/backend.jar
