@@ -1,8 +1,8 @@
 services:
   mongo:
     image: mongo:latest
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -38,7 +38,7 @@ services:
     depends_on:
       - mongo
 
-  spring-boot-dev:
+  backend-devcontainer:
     build:
       context: .devcontainer/backend
       dockerfile: ../../backend/Dockerfile
@@ -53,7 +53,7 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
 
-  spring-boot-prod:
+  backend:
     build:
       context: backend
       dockerfile: Dockerfile
