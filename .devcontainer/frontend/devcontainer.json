@@ -1,0 +1,31 @@
+{
+  "name": "frontend-devcontainer",
+  "initializeCommand": "sh initialize.sh",
+  "postCreateCommand": "sh .devcontainer/frontend/post-create.sh",
+  "dockerComposeFile": "../../docker-compose.yml",
+  "service": "frontend-devcontainer",
+  "runServices": ["frontend-devcontainer"],
+  "workspaceFolder": "/workspace/little-startup",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.fontFamily": "MesloLGS NF",
+        "workbench.colorTheme": "Default Dark Modern"
+      },
+      "extensions": [
+        "chekweitan.compare-view",
+        "eriklynd.json-tools",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.vscode-pull-request-github",
+        "mechatroner.rainbow-csv",
+        "medo64.render-crlf",
+        "ms-azuretools.vscode-docker",
+        "ms-python.black-formatter",
+        "tamasfe.even-better-toml",
+        "bradlc.vscode-tailwindcss",
+        "usernamehw.errorlens"
+      ]
+    }
+  }
+}
