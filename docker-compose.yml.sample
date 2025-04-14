@@ -25,12 +25,13 @@ services:
 
   little-example-devcontainer:
     build:
-      context: .devcontainer/little-example
-      dockerfile: ../../little-example/Dockerfile
+      context: .devcontainer
+      dockerfile: ../little-example/Dockerfile
       target: little-example-devcontainer
     volumes:
-      - .:/workspace/little-startup
+      - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     environment:
       - UV_LINK_MODE=copy
     command: sleep infinity

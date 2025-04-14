@@ -27,5 +27,13 @@
     "little-example/.env": true,
     "little-example/uv.lock": true
   },
-  "github.codespaces.devcontainerChangedNotificationStyle": "none"
+  "github.codespaces.devcontainerChangedNotificationStyle": "none",
+  "docker.extension.dockerEngineAvailabilityPrompt": false,
+  "editor.renderWhitespace": "all",
+  "code-eol.newlineCharacter": "¬",
+  "code-eol.returnCharacter": "¤",
+  "code-eol.crlfCharacter": "¤¬",
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/CascadiaCode.zip
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
+  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font"
 }

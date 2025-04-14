@@ -13,16 +13,22 @@
     ```sh
     git clone git@github.com:TtranPphu/little-startup.git
     cd little-startup
-    sh init.sh
-    code .
     ```
 
-    - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
-    - Select component you want to work on.
+    - Working in VS Code
+      ```
+      code .
+      ```
+      - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
+      - Select service you want to work on.
+    - Working in Neovim
+      ```
+      sh start-nvim-container-<your-service>.sh
+      ```
+      - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 
 2.  **Working on Github codespaces**
 
     - On the project's Github page:
-
       - **<> Code** -> Change to **Codespaces** tab -> **⋯** -> **New with options...**
       - Make sure **Dev container configuration** is set to the component you want to work with, and not **Default project configuration**, because we have none.
