@@ -6,6 +6,12 @@
   "service": "little-example-devcontainer",
   "runServices": ["little-example-devcontainer"],
   "workspaceFolder": "/workspaces/little-startup",
+  "portsAttributes": {
+    "1234": {
+      "label": "little-example",
+      "onAutoForward": "notify"
+    }
+  },
   "customizations": {
     "vscode": {
       "settings": {

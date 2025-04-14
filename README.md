@@ -20,11 +20,12 @@
       code .
       ```
       - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
-      - Select component you want to work on.
+      - Select service you want to work on.
     - Working in Neovim
       ```
-      sh init.sh && docker compose up -d <your-component>-devcontainer --build && docker exec -it --workdir workspaces/little-startup little-startup-<your-component>-devcontainer-1 nvim
+      sh init.sh && docker compose up -d <your-service>-devcontainer --build && docker exec -it --workdir workspaces/little-startup little-startup-<your-service>-devcontainer-1 nvim
       ```
+      Subsitude <your-service> with the name of the service you want to work on.
 
 2.  **Working on Github codespaces**
 

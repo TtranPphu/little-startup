@@ -14,7 +14,7 @@ RUN usermod -aG sudo ${USER_NAME}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER_NAME}
 
-# set zsh as default
+# set zsh as default shell
 ENV SHELL=/usr/bin/zsh
 
 # caskaydia cove nerd font for neo-vim
@@ -41,6 +41,8 @@ ARG GITHUB_USER=TtranPphu
 ARG GIT_BRANCH=TtranPphu-patch-1
 RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
 RUN sudo apt-get update && sudo apt-get install make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji -y
+RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
+    --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
