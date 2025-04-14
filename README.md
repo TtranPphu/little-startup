@@ -23,13 +23,12 @@
       - Select service you want to work on.
     - Working in Neovim
       ```
-      sh init.sh && docker compose up -d <your-service>-devcontainer --build && docker exec -it --workdir workspaces/little-startup little-startup-<your-service>-devcontainer-1 nvim
+      sh start-nvim-container-<your-service>.sh
       ```
-      Subsitude <your-service> with the name of the service you want to work on.
+      - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 
 2.  **Working on Github codespaces**
 
     - On the project's Github page:
-
       - **<> Code** -> Change to **Codespaces** tab -> **⋯** -> **New with options...**
       - Make sure **Dev container configuration** is set to the component you want to work with, and not **Default project configuration**, because we have none.
