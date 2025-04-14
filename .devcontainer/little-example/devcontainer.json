@@ -1,11 +1,17 @@
 {
   "name": "little-example-devcontainer",
-  "initializeCommand": "sh init.sh",
+  "initializeCommand": "sh initialize.sh",
   "postCreateCommand": "sh .devcontainer/little-example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "little-example-devcontainer",
   "runServices": ["little-example-devcontainer"],
   "workspaceFolder": "/workspaces/little-startup",
+  "portsAttributes": {
+    "1234": {
+      "label": "little-example",
+      "onAutoForward": "notify"
+    }
+  },
   "customizations": {
     "vscode": {
       "settings": {
