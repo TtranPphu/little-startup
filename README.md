@@ -23,7 +23,7 @@
       - Select service you want to work on.
     - Working in Neovim
       ```
-      sh start-nvim-container-<your-service>.sh
+      sh nvim-dev.sh <your-service>
       ```
       - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 
