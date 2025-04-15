@@ -1,5 +1,7 @@
 #! /usr/bin/bash
+
 sh initialize.sh
+
 case $1 in
   example | ex | eg)
     docker compose up -d example-devcontainer --build --remove-orphans && \
@@ -33,7 +35,12 @@ case $1 in
       --workdir /workspaces/little-startup \
       little-startup-backend-devcontainer-1 \
       nvim
-   ;;
+    ;;
+  *)
+    printf "Missing <service>, try:\n  - sh nvim-dev.sh example\n  - sh nvim-dev.sh backend\n  - sh nvim-dev.sh frontend\n"
+    exit
+    ;;
 esac
+
 docker compose stop
 
