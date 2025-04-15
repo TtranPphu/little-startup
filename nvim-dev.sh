@@ -21,7 +21,7 @@ case $1 in
       --workdir /workspaces/little-startup \
       little-startup-backend-devcontainer-1 \
       sh .devcontainer/backend/post-create.sh; nvim
-    ;;
+   ;;
 esac
 docker compose stop
 
