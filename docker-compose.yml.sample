@@ -45,6 +45,7 @@ services:
     volumes:
       - .:/workspace/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     depends_on:
       - mongo
     environment:
