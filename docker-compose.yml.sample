@@ -1,8 +1,8 @@
 services:
   mongo:
     image: mongo:latest
-    # ports:
-    #   - 27017:27017
+    ports:
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -31,14 +31,13 @@ services:
     volumes:
       - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
-      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     environment:
       - UV_LINK_MODE=copy
     command: sleep infinity
     depends_on:
       - mongo
 
-  backend-devcontainer:
+  spring-boot-dev:
     build:
       context: .devcontainer/backend
       dockerfile: ../../backend/Dockerfile
@@ -53,13 +52,13 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
 
-  backend:
+  spring-boot-prod:
     build:
       context: backend
       dockerfile: Dockerfile
       target: backend
     ports:
-      - 4000:4000
+      - 8080:8080
     depends_on:
       - mongo
     environment:
