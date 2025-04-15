@@ -1,14 +1,14 @@
 {
-  "name": "little-example-devcontainer",
+  "name": "example-devcontainer",
   "initializeCommand": "sh initialize.sh",
-  "postCreateCommand": "sh .devcontainer/little-example/post-create.sh",
+  "postCreateCommand": "sh .devcontainer/example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
-  "service": "little-example-devcontainer",
-  "runServices": ["little-example-devcontainer"],
+  "service": "example-devcontainer",
+  "runServices": ["example-devcontainer"],
   "workspaceFolder": "/workspaces/little-startup",
   "portsAttributes": {
     "1234": {
-      "label": "little-example",
+      "label": "example",
       "onAutoForward": "notify"
     }
   },
@@ -16,8 +16,8 @@
     "vscode": {
       "settings": {
         // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/CascadiaCode.zip
-        "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
-        "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+        "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Hurmit Nerd Font'",
+        "terminal.integrated.fontFamily": "Hurmit Nerd Font",
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
