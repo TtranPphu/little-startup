@@ -78,8 +78,8 @@ services:
       - 3000
     working_dir: /frontend
     command: npm start
-    # depends_on:
-    #   - some-backend
+    depends_on:
+      - backend
   frontend-devcontainer:
     build:
       context: .devcontainer/frontend
@@ -87,8 +87,8 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspace/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
     # environment:
     #   - UV_LINK_MODE=copy
     command: sleep infinity
-    # depends_on: # some-backend:
+    depends_on: backend-container

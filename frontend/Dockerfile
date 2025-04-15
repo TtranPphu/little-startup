@@ -49,4 +49,4 @@ RUN sudo npm update npm -g
 FROM node:22.14.0-alpine AS frontend
 WORKDIR /little-example
 COPY package*.json ./
-RUN npm install --force
+RUN npm install
