@@ -3,8 +3,8 @@
     "initializeCommand": "sh initialize.sh",
     "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
     "dockerComposeFile": "../../docker-compose.yml",
-    "service": "spring-boot-dev",
-    "runServices": ["spring-boot-dev"],
+    "service": "backend-devcontainer",
+    "runServices": ["backend-devcontainer"],
     "workspaceFolder": "/workspace/little-startup",
     "portsAttributes": {
         "8080": {
