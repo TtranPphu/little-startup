@@ -88,7 +88,5 @@ services:
     volumes:
       - .:/workspace/little-startup
       - /home/duytung13pro/.ssh:/home/little/.ssh:cached
-    # environment:
-    #   - UV_LINK_MODE=copy
     command: sleep infinity
     depends_on: backend-container
