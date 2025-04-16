@@ -2,7 +2,7 @@ services:
   mongo:
     image: mongo:latest
     # ports:
-    #   - 27017:27017
+    #   - 27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./example:/example
     ports:
-      - 1234:1234
+      - 1234
     working_dir: /example
     command: npm start
 
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
       target: backend
     ports:
-      - 8080:8080
+      - 8080
     depends_on:
       - mongo
     environment:
