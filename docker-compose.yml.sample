@@ -87,6 +87,7 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspace/little-startup
-      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
     command: sleep infinity
-    depends_on: backend-container
+    depends_on: 
+      - backend
