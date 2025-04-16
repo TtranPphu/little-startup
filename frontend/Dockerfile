@@ -1,7 +1,8 @@
 FROM node:22.14.0-alpine AS frontend
 
-WORKDIR /little-example
+WORKDIR /frontend
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --force
+
