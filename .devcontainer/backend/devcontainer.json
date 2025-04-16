@@ -1,38 +1,38 @@
 {
-    "name": "backend-devcontainer",
-    "initializeCommand": "sh initialize.sh",
-    "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
-    "dockerComposeFile": "../../docker-compose.yml",
-    "service": "backend-devcontainer",
-    "runServices": ["backend-devcontainer"],
-    "workspaceFolder": "/workspace/little-startup",
-    "portsAttributes": {
-        "8080": {
-            "label": "backend",
-            "onAutoForward": "notify"
-        }
-    },
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
-                "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
-                "workbench.colorTheme": "Default Dark Modern"
-            },
-            "extensions": [
-                "vscjava.vscode-java-pack",
-                "chekweitan.compare-view",
-                "cweijan.vscode-mysql-client2",
-                "eriklynd.json-tools",
-                "esbenp.prettier-vscode",
-                "github.copilot",
-                "github.vscode-pull-request-github",
-                "mechatroner.rainbow-csv",
-                "medo64.render-crlf",
-                "ms-azuretools.vscode-docker",
-                "usernamehw.errorlens",
-                "vadimcn.vscode-lldb"
-            ]
-        }
+  "name": "backend-devcontainer",
+  "initializeCommand": "sh initialize.sh",
+  "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
+  "dockerComposeFile": "../../docker-compose.yml",
+  "service": "backend-devcontainer",
+  "runServices": ["backend-devcontainer"],
+  "workspaceFolder": "/workspace/little-startup",
+  "portsAttributes": {
+    "8080": {
+      "label": "backend",
+      "onAutoForward": "notify"
     }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
+        "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+        "workbench.colorTheme": "Default Dark Modern"
+      },
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "chekweitan.compare-view",
+        "cweijan.vscode-mysql-client2",
+        "eriklynd.json-tools",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.vscode-pull-request-github",
+        "mechatroner.rainbow-csv",
+        "medo64.render-crlf",
+        "ms-azuretools.vscode-docker",
+        "usernamehw.errorlens",
+        "vadimcn.vscode-lldb"
+      ]
+    }
+  }
 }
