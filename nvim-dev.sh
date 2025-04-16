@@ -1,12 +1,13 @@
 #! /usr/bin/bash
 
 sh initialize.sh
+docker compose build --parallel
 
 case $1 in
   example | ex | eg)
     SERVICE='example'
     ;;
- frontend | FE | fe)
+  frontend | FE | fe)
     SERVICE='frontend'
     ;;
   backend | BE | be)
@@ -18,7 +19,7 @@ case $1 in
     ;;
 esac
 
-docker compose up -d $SERVICE-devcontainer --build --remove-orphans && \
+docker compose up -d $SERVICE-devcontainer --remove-orphans && \
 docker exec \
   --workdir /workspaces/little-startup \
   little-startup-$SERVICE-devcontainer-1 \
