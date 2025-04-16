@@ -6,7 +6,7 @@
       - **_For Windows_**: Recommended to use WSL2 based engine.
     - VS Code with **Dev Containers** extention (_ms-vscode-remote.remote-containers_) installed (Optional).
 
-1.  **Clone and init the repository**:
+1.  **Working locally**:
 
     - **_For Windows_**: Recommended to clone in WSL2 managed directory.
 
@@ -15,13 +15,13 @@
     cd little-startup
     ```
 
-    - Working in VS Code
+    - in VS Code
       ```
       code .
       ```
       - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
       - Select service you want to work on.
-    - Working in Neovim
+    - in Neovim
       ```
       sh nvim-dev.sh <your-service>
       ```
