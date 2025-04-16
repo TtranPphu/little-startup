@@ -9,25 +9,25 @@ services:
     volumes:
       - ./db-mongodb:/data/db:delegated
 
-  little-example:
+  example:
     build:
-      context: little-example
+      context: example
       dockerfile: Dockerfile
-      target: little-example
+      target: example
     volumes:
-      - ./little-example:/little-example
+      - ./example:/example
     ports:
       - 1234:1234
-    working_dir: /little-example
+    working_dir: /example
     command: npm start
     # depends_on:
     #   - some-backend
 
-  little-example-devcontainer:
+  example-devcontainer:
     build:
       context: .devcontainer
-      dockerfile: ../little-example/Dockerfile
-      target: little-example-devcontainer
+      dockerfile: ../example/Dockerfile
+      target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
