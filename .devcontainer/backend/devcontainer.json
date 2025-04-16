@@ -3,9 +3,15 @@
   "initializeCommand": "sh initialize.sh",
   "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
-  "service": "spring-boot-dev",
-  "runServices": ["spring-boot-dev"],
+  "service": "backend-devcontainer",
+  "runServices": ["backend-devcontainer"],
   "workspaceFolder": "/workspace/little-startup",
+  "portsAttributes": {
+    "8080": {
+      "label": "backend",
+      "onAutoForward": "notify"
+    }
+  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -14,6 +20,7 @@
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
+        "vscjava.vscode-java-pack",
         "chekweitan.compare-view",
         "cweijan.vscode-mysql-client2",
         "eriklynd.json-tools",
