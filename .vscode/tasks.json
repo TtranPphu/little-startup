@@ -4,12 +4,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Run (little-example)",
+      "label": "Run (example)",
       "type": "shell",
       "command": "npm",
       "args": ["start"],
       "options": {
-        "cwd": "${workspaceFolder}/little-example"
+        "cwd": "${workspaceFolder}/example"
       },
       "problemMatcher": []
     },

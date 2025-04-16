@@ -20,12 +20,12 @@
   "python.defaultInterpreterPath": "./.venv/bin/python",
   "files.exclude": {
     "db-mongodb": true,
-    "little-example/node_modules": true,
-    "little-example/dist": true,
-    "little-example/package-lock.json": true,
-    "little-example/.parcel-cache": true,
-    "little-example/.env": true,
-    "little-example/uv.lock": true
+    "example/node_modules": true,
+    "example/dist": true,
+    "example/package-lock.json": true,
+    "example/.parcel-cache": true,
+    "example/.env": true,
+    "example/uv.lock": true
   },
   "github.codespaces.devcontainerChangedNotificationStyle": "none",
   "docker.extension.dockerEngineAvailabilityPrompt": false,
@@ -33,7 +33,7 @@
   "code-eol.newlineCharacter": "¬",
   "code-eol.returnCharacter": "¤",
   "code-eol.crlfCharacter": "¤¬",
-  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/CascadiaCode.zip
-  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'CaskaydiaCove Nerd Font'",
-  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font"
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Hurmit Nerd Font'",
+  "terminal.integrated.fontFamily": "Hurmit Nerd Font"
 }

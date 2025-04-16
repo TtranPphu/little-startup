@@ -20,38 +20,6 @@ services:
       - 1234:1234
     working_dir: /example
     command: npm start
-    # depends_on:
-    #   - some-backend
-
-  example-devcontainer:
-    build:
-      context: .devcontainer
-      dockerfile: ../example/Dockerfile
-      target: example-devcontainer
-    volumes:
-      - .:/workspaces/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
-      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
-    environment:
-      - UV_LINK_MODE=copy
-    command: sleep infinity
-    depends_on:
-      - mongo
-
-  backend-devcontainer:
-    build:
-      context: .devcontainer/backend
-      dockerfile: ../../backend/Dockerfile
-      target: backend-devcontainer
-    volumes:
-      - .:/workspace/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
-    depends_on:
-      - mongo
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
-      - SPRING_PROFILES_ACTIVE=dev
-    command: sleep infinity
 
   backend:
     build:
@@ -80,14 +48,47 @@ services:
     command: npm start
     depends_on:
       - backend
+
+  example-devcontainer:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+      target: example-devcontainer
+    volumes:
+      - .:/workspaces/little-startup
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+    environment:
+      - UV_LINK_MODE=copy
+    command: sleep infinity
+    depends_on:
+      - mongo
+
+  backend-devcontainer:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+      target: backend-devcontainer
+    volumes:
+      - .:/workspaces/little-startup
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
+      - SPRING_PROFILES_ACTIVE=dev
+    command: sleep infinity
+
   frontend-devcontainer:
     build:
-      context: .devcontainer/frontend
-      dockerfile: ../../frontend/Dockerfile
+      context: .devcontainer
+      dockerfile: Dockerfile
       target: frontend-devcontainer
     volumes:
-      - .:/workspace/little-startup
+      - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     command: sleep infinity
     depends_on: 
       - backend
