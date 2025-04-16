@@ -35,6 +35,20 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     command: java -jar /app/target/backend.jar
 
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      target: frontend
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - 3000
+    working_dir: /frontend
+    command: npm start
+    depends_on:
+      - backend
+
   example-devcontainer:
     build:
       context: .devcontainer
@@ -65,4 +79,17 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
+
+  frontend-devcontainer:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+      target: frontend-devcontainer
+    volumes:
+      - .:/workspace/little-startup
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+    command: sleep infinity
+    depends_on: 
+      - backend
 
