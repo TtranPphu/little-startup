@@ -86,7 +86,7 @@ services:
       dockerfile: Dockerfile
       target: frontend-devcontainer
     volumes:
-      - .:/workspace/little-startup
+      - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     command: sleep infinity

@@ -5,7 +5,7 @@
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "backend-devcontainer",
   "runServices": ["backend-devcontainer"],
-  "workspaceFolder": "/workspace/little-startup",
+  "workspaceFolder": "/workspaces/little-startup",
   "portsAttributes": {
     "8080": {
       "label": "backend",
