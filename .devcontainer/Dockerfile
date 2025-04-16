@@ -2,7 +2,7 @@ FROM ubuntu:22.04 AS base-devcontainer
 
 # common utilities
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    sudo zsh wget curl git vim zip \
+    sudo zsh wget curl git vim zip unzip \
     build-essential software-properties-common \
     bpytop tree ncdu cloc neofetch
 
@@ -33,7 +33,6 @@ RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
     --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 FROM base-devcontainer AS example-devcontainer
-
 COPY example/.zshrc /home/${USER_NAME}/.zshrc
 
 # rust
@@ -60,7 +59,6 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS frontend-devcontainer
-
 COPY frontend/.zshrc /home/${USER_NAME}/.zshrc
 
 # npm and node
@@ -71,7 +69,6 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
-
 COPY backend/.zshrc /home/${USER_NAME}/.zshrc
 
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
@@ -79,12 +76,9 @@ RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
 
 # maven install
 USER root 
-RUN sudo apt update && apt upgrade -y && apt install -y \
-    wget \
-    unzip &&\
-    wget https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz &&\
-    tar -xzvf apache-maven-3.8.6-bin.tar.gz -C /opt/ &&\
-    ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn &&\
+RUN wget https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz && \
+    tar -xzvf apache-maven-3.8.6-bin.tar.gz -C /opt/ && \
+    ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn && \
     rm -rf apache-maven-3.8.6-bin.tar.gz
 USER ${USER_NAME}
 
