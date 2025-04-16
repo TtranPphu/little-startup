@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS little-example-devcontainer
+FROM ubuntu:22.04 AS example-devcontainer
 
 # common utilities
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
@@ -33,7 +33,7 @@ RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 RUN git clone --depth=1 \
     https://github.com/romkatv/powerlevel10k.git \
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-COPY little-example/.zshrc /home/${USER_NAME}/.zshrc
+COPY example/.zshrc /home/${USER_NAME}/.zshrc
 COPY .p10k.zsh /home/${USER_NAME}/.p10k.zsh
 
 # neo-vim and dependencies
@@ -67,9 +67,9 @@ RUN sudo npm install n -g
 RUN sudo n stable
 RUN sudo npm update npm -g
 
-FROM node:22.14.0-slim AS little-example
+FROM node:22.14.0-slim AS example
 
-WORKDIR /little-example
+WORKDIR /example
 
 COPY package*.json ./
 RUN npm install
