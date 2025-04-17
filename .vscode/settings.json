@@ -34,6 +34,8 @@
   "code-eol.returnCharacter": "¤",
   "code-eol.crlfCharacter": "¤¬",
   // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
-  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Hurmit Nerd Font'",
-  "terminal.integrated.fontFamily": "Hurmit Nerd Font"
+  "editor.fontFamily": "Hurmit Nerd Font",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontFamily": "Hurmit Nerd Font",
+  "terminal.integrated.fontSize": 12
 }
