@@ -2,9 +2,9 @@ FROM ubuntu:22.04 AS base-devcontainer
 
 # common utilities
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    sudo zsh wget curl git vim zip unzip \
+    sudo zsh wget curl git tmux vim zip unzip \
     build-essential software-properties-common \
-    bpytop tree ncdu cloc neofetch
+    python3-pip bpytop tree ncdu cloc neofetch
 
 # user
 ARG USER_NAME=little
