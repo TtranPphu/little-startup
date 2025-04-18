@@ -56,12 +56,12 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/phut/.ssh:/home/little/.ssh:cached
-      - /home/phut/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     ports:
       - 1234
     environment:
-      - HOST_USERNAME=phut
+      - HOST_USERNAME=<host-username>
       - UV_LINK_MODE=copy
     command: sleep infinity
     depends_on:
@@ -74,12 +74,12 @@ services:
       target: backend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/phut/.ssh:/home/little/.ssh:cached
-      - /home/phut/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     ports:
       - 8080
     environment:
-      - HOST_USERNAME=phut
+      - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
@@ -93,12 +93,12 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/phut/.ssh:/home/little/.ssh:cached
-      - /home/phut/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
     ports:
       - 3000
     environment:
-      - HOST_USERNAME=phut
+      - HOST_USERNAME=<host-username>
     command: sleep infinity
     depends_on: 
       - backend
