@@ -5,7 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "black>=25.1.0",
     "ipykernel>=6.29.5",
     "nbconvert>=7.16.6",
     "pip>=25.0.1",
