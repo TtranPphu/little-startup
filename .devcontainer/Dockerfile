@@ -22,7 +22,9 @@ RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 RUN git clone --depth=1 \
     https://github.com/romkatv/powerlevel10k.git \
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-COPY .p10k.zsh /home/${USER_NAME}/.p10k.zsh
+COPY --chown=${USER_NAME}:${USER_NAME} .p10k.zsh /home/${USER_NAME}/.p10k.zsh
+COPY --chown=${USER_NAME}:${USER_NAME} gitstatusd-linux-x86_64 \
+    /home/${USER_NAME}/.cache/gitstatus/gitstatusd-linux-x86_64
 
 # neo-vim and dependencies
 ARG GITHUB_USER=TtranPphu
@@ -33,7 +35,7 @@ RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
     --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 FROM base-devcontainer AS example-devcontainer
-COPY example/.zshrc /home/${USER_NAME}/.zshrc
+COPY --chown=${USER_NAME}:${USER_NAME} example/.zshrc /home/${USER_NAME}/.zshrc
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
@@ -60,7 +62,7 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS frontend-devcontainer
-COPY frontend/.zshrc /home/${USER_NAME}/.zshrc
+COPY --chown=${USER_NAME}:${USER_NAME} frontend/.zshrc /home/${USER_NAME}/.zshrc
 
 # npm and node
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
@@ -70,7 +72,7 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
-COPY backend/.zshrc /home/${USER_NAME}/.zshrc
+COPY --chown=${USER_NAME}:${USER_NAME} backend/.zshrc /home/${USER_NAME}/.zshrc
 
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     openjdk-17-jdk
