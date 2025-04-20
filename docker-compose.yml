@@ -2,7 +2,7 @@ services:
   mongo:
     image: mongo:latest
     # ports:
-    #   - 27017
+    #   - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./example:/example
     ports:
-      - 1234
+      - 1234:1234
     working_dir: /example
     command: npm start
 
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
       target: backend
     ports:
-      - 8080
+      - 8080:8080
     depends_on:
       - mongo
     environment:
@@ -43,7 +43,7 @@ services:
     volumes:
       - ./frontend:/frontend
     ports:
-      - 3000
+      - 3000:3000
     working_dir: /frontend
     command: npm start
     depends_on:
@@ -61,7 +61,7 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 1234
+      - 1234:1234
     environment:
       - HOST_USERNAME=<host-username>
       - UV_LINK_MODE=copy
@@ -81,7 +81,7 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 8080
+      - 8080:8080
     environment:
       - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
@@ -102,10 +102,9 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 3000
+      - 3000:3000
     environment:
       - HOST_USERNAME=<host-username>
     command: sleep infinity
-    depends_on: 
+    depends_on:
       - backend
-
