@@ -1,0 +1,12 @@
+<svg width="400" height="350" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="350" fill="#FFF8E9"/>
+  <rect x="100" y="50" width="200" height="250" rx="10" fill="#4CAF50" fill-opacity="0.1"/>
+  <circle cx="200" cy="150" r="100" fill="#FF8A3D" fill-opacity="0.2"/>
+  <path d="M200 80C161.34 80 130 111.34 130 150C130 188.66 161.34 220 200 220C238.66 220 270 188.66 270 150C270 111.34 238.66 80 200 80ZM200 200C172.39 200 150 177.61 150 150C150 122.39 172.39 100 200 100C227.61 100 250 122.39 250 150C250 177.61 227.61 200 200 200Z" fill="#FF8A3D"/>
+  <rect x="150" y="230" width="100" height="20" rx="10" fill="#4CAF50"/>
+  <rect x="170" y="260" width="60" height="20" rx="10" fill="#4CAF50" fill-opacity="0.6"/>
+  <circle cx="200" cy="150" r="30" fill="white"/>
+  <path d="M200 130C188.95 130 180 138.95 180 150C180 161.05 188.95 170 200 170C211.05 170 220 161.05 220 150C220 138.95 211.05 130 200 130ZM210 155H190V145H210V155Z" fill="#4CAF50"/>
+  <circle cx="70" cy="70" r="30" fill="#FF8A3D" fill-opacity="0.3"/>
+  <circle cx="330" cy="230" r="40" fill="#4CAF50" fill-opacity="0.3"/>
+</svg>
