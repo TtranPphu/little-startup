@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
       target: backend
     ports:
-      - 8080
+      - 8080:8080
     depends_on:
       - mongo
     environment:
@@ -43,7 +43,7 @@ services:
     # volumes:
     #   - ./frontend/student-fe:/frontend
     ports:
-      - 3000
+      - 3001:3000
     working_dir: /frontend
     command: npm start
     depends_on:
@@ -57,7 +57,7 @@ services:
     # volumes:
     #   - ./frontend/tutor-fe:/frontend
     ports:
-      - 3000
+      - 3002:3000
     working_dir: /frontend
     command: npm start
     depends_on:
@@ -71,7 +71,7 @@ services:
     # volumes:
     #   - ./frontend/faculty-fe:/frontend
     ports:
-      - 3000
+      - 3003:3000
     working_dir: /frontend
     command: npm start
     depends_on:
