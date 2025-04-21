@@ -35,13 +35,41 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     command: java -jar /app/target/backend.jar
 
-  frontend:
+  student-fe:
     build:
-      context: frontend
-      dockerfile: Dockerfile
-      target: frontend
-    volumes:
-      - ./frontend:/frontend
+      context: frontend/student-fe
+      dockerfile: ../Dockerfile
+      target: student-fe
+    # volumes:
+    #   - ./frontend/student-fe:/frontend
+    ports:
+      - 3000
+    working_dir: /frontend
+    command: npm start
+    depends_on:
+      - backend
+
+  tutor-fe:
+    build:
+      context: frontend/tutor-fe
+      dockerfile: ../Dockerfile
+      target: tutor-fe
+    # volumes:
+    #   - ./frontend/tutor-fe:/frontend
+    ports:
+      - 3000
+    working_dir: /frontend
+    command: npm start
+    depends_on:
+      - backend
+
+  faculty-fe:
+    build:
+      context: frontend/faculty-fe
+      dockerfile: ../Dockerfile
+      target: faculty-fe
+    # volumes:
+    #   - ./frontend/faculty-fe:/frontend
     ports:
       - 3000
     working_dir: /frontend
@@ -56,14 +84,14 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
-      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
-      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home//.ssh:/home/little/.ssh:cached
+      - /home//.config/nvim:/home/little/.config/nvim:cached
+      - /home//.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home//.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 1234
     environment:
-      - HOST_USERNAME=<host-username>
+      - HOST_USERNAME=
       - UV_LINK_MODE=copy
     command: sleep infinity
     depends_on:
@@ -76,14 +104,14 @@ services:
       target: backend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
-      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
-      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home//.ssh:/home/little/.ssh:cached
+      - /home//.config/nvim:/home/little/.config/nvim:cached
+      - /home//.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home//.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 8080
     environment:
-      - HOST_USERNAME=<host-username>
+      - HOST_USERNAME=
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
@@ -97,14 +125,14 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/<host-username>/.ssh:/home/little/.ssh:cached
-      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
-      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home//.ssh:/home/little/.ssh:cached
+      - /home//.config/nvim:/home/little/.config/nvim:cached
+      - /home//.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home//.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 3000
     environment:
-      - HOST_USERNAME=<host-username>
+      - HOST_USERNAME=
     command: sleep infinity
     depends_on: 
       - backend

@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 sh initialize.sh
-docker compose build --parallel
+# docker compose build --parallel
 
 if [ $? -eq 0 ]; then
   case $1 in
