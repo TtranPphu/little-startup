@@ -3,11 +3,14 @@
 print_help() {
   printf "Usage: ./ops.sh <command> <environment> [<service>]\n"
   printf "  - commands: up, start, stop, down\n"
-  printf "  - environments: dev | development, prod | production, all\n"
-  printf "  - services (for development environments):\n"
-  printf "    - ex | example\n"
-  printf "    - be | backend\n"
-  printf "    - fe | frontend\n"
+  printf "  - environments:\n"
+  printf "    . dev | development\n"
+  printf "    . prod | production\n"
+  printf "    . all\n"
+  printf "  - services (for development environment):\n"
+  printf "    . ex | example\n"
+  printf "    . be | backend\n"
+  printf "    . fe | frontend\n"
 }
 
 case $2 in
