@@ -1,10 +1,13 @@
 #! /usr/bin/bash
 
 print_help() {
-  printf "Usage: ./ops.sh <command> [<environment>] [<service>]\n"
+  printf "Usage: ./ops.sh <command> <environment> [<service>]\n"
   printf "  - commands: up, start, stop, down\n"
-  printf "  - environments (if cmd != down): dev | development, prod | production\n"
-  printf "  - services (if env == dev): ex | example, be | backend, fe | frontend\n"
+  printf "  - environments: dev | development, prod | production, all\n"
+  printf "  - services (for development environments):\n"
+  printf "    - ex | example\n"
+  printf "    - be | backend\n"
+  printf "    - fe | frontend\n"
 }
 
 case $2 in
