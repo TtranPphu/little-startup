@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: myapp
+    data:
+      mongo:
+        uri: ${SPRING_DATA_MONGODB_URI}
+      mongodb:
+        database: madarin
+
+    # security:
+    #     user:
+    #         name: admin
+    #         password: admin
+
+server:
+    port: 8080
