@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Deps ###
-.m2/
+.m2/repository/
