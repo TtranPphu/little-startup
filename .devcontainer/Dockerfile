@@ -4,8 +4,7 @@ FROM ubuntu:22.04 AS base-devcontainer
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip \
     build-essential software-properties-common \
-    python3-pip bpytop tree ncdu cloc neofetch \
-    openjdk-17-jdk
+    python3-pip bpytop tree ncdu cloc neofetch
 
 # user
 ARG USER_NAME=little
@@ -74,3 +73,6 @@ RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
 COPY backend/.zshrc /home/${USER_NAME}/.zshrc
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    openjdk-17-jdk
