@@ -74,5 +74,5 @@ RUN sudo npm update npm -g
 FROM base-devcontainer AS backend-devcontainer
 COPY backend/.zshrc /home/${USER_NAME}/.zshrc
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     openjdk-17-jdk
