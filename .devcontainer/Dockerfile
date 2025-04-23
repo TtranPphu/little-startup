@@ -4,7 +4,8 @@ FROM ubuntu:22.04 AS base-devcontainer
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip \
     build-essential software-properties-common \
-    python3-pip bpytop tree ncdu cloc neofetch
+    python3-pip bpytop tree ncdu cloc neofetch \
+    openjdk-17-jdk
 
 # user
 ARG USER_NAME=little
@@ -70,15 +71,3 @@ RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
 COPY backend/.zshrc /home/${USER_NAME}/.zshrc
-
-RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    openjdk-17-jdk
-
-# maven install
-USER root 
-RUN wget https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz && \
-    tar -xzvf apache-maven-3.8.6-bin.tar.gz -C /opt/ && \
-    ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn && \
-    rm -rf apache-maven-3.8.6-bin.tar.gz
-USER ${USER_NAME}
-
