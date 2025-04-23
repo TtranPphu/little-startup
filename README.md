@@ -23,7 +23,7 @@
       - Select service you want to work on.
     - in Neovim
       ```
-      ./nvim-start.sh <your-service>
+      ./ops.sh up dev <your-service> && ./ops.sh start dev <your-service>
       ```
       - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 

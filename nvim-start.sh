@@ -33,7 +33,7 @@ if [ $? -eq 0 ]; then
     little-startup-$SERVICE-devcontainer-1 \
     nvim
 
-  docker compose stop
+  docker compose stop $SERVICE-devcontainer
 else
   printf "Build failed!\n"
 fi
