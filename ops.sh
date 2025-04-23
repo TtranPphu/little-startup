@@ -2,7 +2,7 @@
 
 print_help() {
   printf "Usage: ./ops.sh <command> <environment> [<service>]\n"
-  printf "  - commands: up, start, stop, down\n"
+  printf "  - commands: build, up, start, stop, down\n"
   printf "  - environments:\n"
   printf "    . dev | development\n"
   printf "    . prod | production\n"
@@ -12,6 +12,8 @@ print_help() {
   printf "    . be | backend\n"
   printf "    . fe | frontend\n"
 }
+
+exe_aloud() { echo "\$ $@"; "$@"; }
 
 case $2 in
   dev | development)
@@ -30,12 +32,17 @@ case $2 in
         exit
         ;;
     esac
+    echo "context: $CONTEXT"
     SERVICES="$CONTEXT-devcontainer"
     CONTAINERS="little-startup-$SERVICES-1"
+    echo "services: $SERVICES"
+    echo "containers: $CONTAINERS"
     ;;
   prod | production)
     SERVICES='student-fe tutor-fe faculty-fe'
     CONTAINERS='little-startup-student-fe-1 little-startup-tutor-fe-1 little-startup-faculty-fe-1'
+    echo "services: $SERVICES"
+    echo "containers: $CONTAINERS"
     ;;
   all)
     SERVICES=''
@@ -48,31 +55,33 @@ case $2 in
 esac
 
 case $1 in
+  build)
+    exe_aloud docker compose build --parallel $SERVICES
+    ;;
   up)
-    sh initialize.sh
-    docker compose build --parallel && \
-    docker compose up -d --remove-orphans $SERVICES
-    sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    exe_aloud sh initialize.sh
+    exe_aloud docker compose up -d --build --remove-orphans $SERVICES
+    exe_aloud sed -i "s/$USER/<host-username>/g" docker-compose.yml
     ;;
   start)
     if [ $2 == 'dev' ] || [ $2 == 'developement' ]; then
-      docker exec \
+      exe_aloud docker exec \
         --workdir /workspaces/little-startup \
         $CONTAINERS \
         sh .devcontainer/$CONTEXT/post-create.sh
-      docker exec -it \
+      exe_aloud docker exec -it \
         --workdir /workspaces/little-startup \
         $CONTAINERS \
         nvim
     else
-      docker compose start $SERVICES
+      exe_aloud docker compose start $SERVICES
     fi
     ;;
   stop)
-    docker compose stop $SERVICES
+    exe_aloud docker compose stop $SERVICES
     ;;
   down)
-    docker compose down $SERVICES
+    exe_aloud docker compose down $SERVICES
     ;;
   *)
     print_help
