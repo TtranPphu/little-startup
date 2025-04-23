@@ -23,7 +23,7 @@
       - Select service you want to work on.
     - in Neovim
       ```
-      ./nvim-start <your-service>
+      ./nvim-start.sh <your-service>
       ```
       - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 

@@ -6,3 +6,12 @@ COPY package*.json ./
 
 RUN npm install --force
 
+COPY . .
+RUN npm run build
+
+FROM frontend AS student-fe
+
+FROM frontend AS tutor-fe
+
+FROM frontend AS faculty-fe
+

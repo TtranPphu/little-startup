@@ -26,7 +26,7 @@ services:
       context: backend
       dockerfile: Dockerfile
     ports:
-      - 8080
+      - 8080:8080
     environment:
       - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
@@ -34,15 +34,43 @@ services:
     depends_on:
       - mongo
 
-  frontend:
+  student-fe:
     build:
-      context: frontend
-      dockerfile: Dockerfile
-      target: frontend
-    volumes:
-      - ./frontend:/frontend
+      context: frontend/student-fe
+      dockerfile: ../Dockerfile
+      target: student-fe
+    # volumes:
+    #   - ./frontend/student-fe:/frontend
     ports:
-      - 3000
+      - 3001:3000
+    working_dir: /frontend
+    command: npm start
+    depends_on:
+      - backend
+
+  tutor-fe:
+    build:
+      context: frontend/tutor-fe
+      dockerfile: ../Dockerfile
+      target: tutor-fe
+    # volumes:
+    #   - ./frontend/tutor-fe:/frontend
+    ports:
+      - 3002:3000
+    working_dir: /frontend
+    command: npm start
+    depends_on:
+      - backend
+
+  faculty-fe:
+    build:
+      context: frontend/faculty-fe
+      dockerfile: ../Dockerfile
+      target: faculty-fe
+    # volumes:
+    #   - ./frontend/faculty-fe:/frontend
+    ports:
+      - 3003:3000
     working_dir: /frontend
     command: npm start
     depends_on:
@@ -58,6 +86,8 @@ services:
       - ./backend/.m2:/workspaces/little-startup/backend/.m2
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 1234
     environment:
@@ -76,6 +106,8 @@ services:
       - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 8080
     environment:
@@ -95,6 +127,8 @@ services:
       - .:/workspaces/little-startup
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 3000
     environment:

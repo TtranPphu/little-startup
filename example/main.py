@@ -1,4 +1,8 @@
 #! /workspaces/little-startup/example/.venv/bin/python
 
-print("Hello, world!")
+def main():
+    print("Hello, world!")
+
+if __name__ == "__main__":
+    main()
 

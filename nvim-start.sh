@@ -15,7 +15,10 @@ if [ $? -eq 0 ]; then
       SERVICE='backend'
       ;;
     *)
-      printf "Build done! Start develop your serive:\n  - ./nvim-start example | ex | eg\n  - ./nvim-start backend | BE | be\n  - ./nvim-start frontend | FE | fe\n"
+      printf "Build done! Start develop your serive:\n"`
+      `"  - ./nvim-start.sh example  ( ex | eg )\n"`
+      `"  - ./nvim-start.sh backend  ( BE | be )\n"`
+      `"  - ./nvim-start.sh frontend ( FE | fe )\n"
       exit
       ;;
   esac
