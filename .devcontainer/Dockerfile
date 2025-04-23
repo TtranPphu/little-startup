@@ -72,16 +72,7 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
-COPY --chown=${USER_NAME}:${USER_NAME} backend/.zshrc /home/${USER_NAME}/.zshrc
+COPY backend/.zshrc /home/${USER_NAME}/.zshrc
 
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     openjdk-17-jdk
-
-# maven install
-USER root 
-RUN wget https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz && \
-    tar -xzvf apache-maven-3.8.6-bin.tar.gz -C /opt/ && \
-    ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn && \
-    rm -rf apache-maven-3.8.6-bin.tar.gz
-USER ${USER_NAME}
-
