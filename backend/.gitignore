@@ -33,4 +33,6 @@ build/
 .vscode/
 
 ### Deps ###
-.m2/repository/*
+.m2/repository/**
+!.m2/repository/
+!.m2/repository/.gitkeep
