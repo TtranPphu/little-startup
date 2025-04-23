@@ -1,8 +1,8 @@
 services:
   mongo:
     image: mongo:latest
-    # ports:
-    #   - 27017
+    ports:
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./example:/example
     ports:
-      - 1234
+      - 1232:1234
     working_dir: /example
     command: npm start
 
@@ -26,9 +26,8 @@ services:
       context: backend
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 8008:8080
     environment:
-      - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
@@ -39,8 +38,6 @@ services:
       context: frontend/student-fe
       dockerfile: ../Dockerfile
       target: student-fe
-    # volumes:
-    #   - ./frontend/student-fe:/frontend
     ports:
       - 3001:3000
     working_dir: /frontend
@@ -53,8 +50,6 @@ services:
       context: frontend/tutor-fe
       dockerfile: ../Dockerfile
       target: tutor-fe
-    # volumes:
-    #   - ./frontend/tutor-fe:/frontend
     ports:
       - 3002:3000
     working_dir: /frontend
@@ -67,8 +62,6 @@ services:
       context: frontend/faculty-fe
       dockerfile: ../Dockerfile
       target: faculty-fe
-    # volumes:
-    #   - ./frontend/faculty-fe:/frontend
     ports:
       - 3003:3000
     working_dir: /frontend
@@ -89,7 +82,7 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 1234
+      - 1234:1234
     environment:
       - HOST_USERNAME=<host-username>
       - UV_LINK_MODE=copy
@@ -109,7 +102,7 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 8080
+      - 8080:8080
     environment:
       - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
@@ -130,7 +123,7 @@ services:
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
       - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
-      - 3000
+      - 3000:3000
     environment:
       - HOST_USERNAME=<host-username>
     command: sleep infinity

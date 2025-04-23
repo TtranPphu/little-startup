@@ -47,7 +47,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
 ARG PYTHON_VERSION=3.12
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://astral.sh/uv/install.sh | sh -s --
 RUN . /home/${USER_NAME}/.local/bin/env && uv python install ${PYTHON_VERSION}
-RUN pip3 install ruff
+RUN pip3 install ruff ruff-lsp
 
 # mongodbcli
 RUN sudo apt-get install -y gnupg
