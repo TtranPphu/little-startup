@@ -1,10 +1,10 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { ProfilePage } from "@/components/profile-page"
+import { ResourcesPage } from "@/components/resources-page"
 
-export default function Profile() {
+export default function Resources() {
   return (
     <DashboardLayout>
-      <ProfilePage />
+      <ResourcesPage />
     </DashboardLayout>
   )
 }
