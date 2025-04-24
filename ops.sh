@@ -31,17 +31,17 @@ case $2 in
         exit
         ;;
     esac
-    echo "context: $CONTEXT"
+    printf "context: $CONTEXT\n"
     SERVICES="$CONTEXT-devcontainer"
     CONTAINERS="little-startup-$SERVICES-1"
-    echo "services: $SERVICES"
-    echo "containers: $CONTAINERS"
+    printf "services: $SERVICES\n"
+    printf "containers: $CONTAINERS\n"
     ;;
   prod | production)
     SERVICES='student-fe tutor-fe faculty-fe'
     CONTAINERS='little-startup-student-fe-1 little-startup-tutor-fe-1 little-startup-faculty-fe-1'
-    echo "services: $SERVICES"
-    echo "containers: $CONTAINERS"
+    printf "services: $SERVICES\n"
+    printf "containers: $CONTAINERS\n"
     ;;
   *)
     SERVICES=''
@@ -55,7 +55,8 @@ case $1 in
     ;;
   start)
     sh initialize.sh
-    exe_aloud docker compose --progress plain build --parallel $SERVICES > compose.log
+    printf 'Building containers...\n'
+    exe_aloud docker compose --progress plain build --parallel $SERVICES > compose.log && \
     exe_aloud docker compose up -d --remove-orphans $SERVICES
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
     case $2 in
@@ -70,6 +71,15 @@ case $1 in
           nvim
         ;;
       *)
+        # declare -a contexts=('example' 'backend' 'frontend')
+        for context in 'example' 'backend' 'frontend'; do
+          service="$context-devcontainer"
+          container="little-startup-$service-1"
+          exe_aloud docker exec \
+            --workdir /workspaces/little-startup \
+            $CONTAINERS \
+            sh .devcontainer/$CONTEXT/post-create.sh
+        done
         ;;
     esac
     ;;
