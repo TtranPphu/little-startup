@@ -28,7 +28,6 @@ services:
     ports:
       - 8008:8080
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - mongo
@@ -105,7 +104,6 @@ services:
       - 8080:8080
     environment:
       - HOST_USERNAME=<host-username>
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
     depends_on:
