@@ -17,7 +17,6 @@ import com.main.backend.authentication.models.Role;
 import com.main.backend.authentication.models.User;
 import com.main.backend.authentication.repositories.RoleRepo;
 import com.main.backend.authentication.repositories.UserRepo;
-import com.mongodb.MongoWriteException;
 
 @Service
 @Transactional
@@ -43,10 +42,10 @@ public class AuthenticationService {
             Role userRole = roleRepo.findByAuthority("LEARNER").get();
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-    
+
             User newUser = userRepo.save(
                     new User(null, username, encoder.encode(password), email, false, roles));
-            return newUser.getDto();   
+            return newUser.getDto();
         } catch (Exception e) {
             throw new Exception("User already exists");
         }

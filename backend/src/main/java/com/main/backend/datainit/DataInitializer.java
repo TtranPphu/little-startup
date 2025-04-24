@@ -1,4 +1,4 @@
-package com.main.backend.authentication.datainit;
+package com.main.backend.datainit;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

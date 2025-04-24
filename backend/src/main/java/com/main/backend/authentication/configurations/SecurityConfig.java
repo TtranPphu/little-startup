@@ -70,7 +70,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     // auth.anyRequest().permitAll(); // Uncomment to disable authentication
 
-                    auth.requestMatchers("/api/*/auth/**").permitAll();
+                    auth.requestMatchers(
+                            "/api/*/auth/**",
+                            "/swagger-ui/*",
+                            "/v3/api-docs*/**",
+                            "/swagger-resources/*").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");

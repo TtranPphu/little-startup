@@ -11,10 +11,5 @@ spring:
         authentication-database: admin
         auto-index-creation: true
 
-    # security:
-    #     user:
-    #         name: admin
-    #         password: admin
-
 server:
     port: 8080
