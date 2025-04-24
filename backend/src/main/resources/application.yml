@@ -2,10 +2,13 @@ spring:
     application:
         name: myapp
     data:
-      mongo:
-        uri: ${SPRING_DATA_MONGODB_URI}
       mongodb:
-        database: madarin
+        host: mongo
+        port: 27017
+        database: little_database
+        username: admin
+        password: admin
+        authentication-database: admin
 
     # security:
     #     user:
