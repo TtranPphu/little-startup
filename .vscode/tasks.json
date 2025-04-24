@@ -16,23 +16,21 @@
     {
       "label": "Build Backend",
       "type": "shell",
-      "command": "./mvnw",
-      "args": ["-s", ".m2/settings.xml", "clean", "package", "-DskipTests"],
+      "command": "mvn",
+      "args": ["clean", "spring-boot:run"],
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
-      "hide": true,
       "problemMatcher": []
     },
     {
       "label": "Run Backend",
       "type": "shell",
-      "command": "java",
-      "args": ["-jar", "target/backend.jar"],
+      "command": "mvn",
+      "args": ["spring-boot:run"],
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
-      "dependsOn": ["Build Backend"],
       "problemMatcher": []
     }
   ]
