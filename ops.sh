@@ -1,15 +1,14 @@
 #! /usr/bin/bash
 
 print_help() {
-  printf "Usage: ./ops.sh <command> [<environmen>] [<service>]\n"
-  printf "  - commands: build, start, stop, down\n"
-  printf "  - environments:\n"
-  printf "    . dev | development\n"
-  printf "    . prod | production\n"
-  printf "  - services (for development environment):\n"
-  printf "    . ex | example\n"
-  printf "    . be | backend\n"
-  printf "    . fe | frontend\n"
+  printf "Usage: ./ops.sh <command> [<environmen> [<service>]]\n"
+  printf "  - commands: build, up | start, stop, down\n"
+  printf "  - environments (omit: all):\n"
+  printf "    + dev | development <service>\n"
+  printf "      . ex | example\n"
+  printf "      . be | backend\n"
+  printf "      . fe | frontend\n"
+  printf "    + prod | production\n"
 }
 
 exe_aloud() { echo "\$ $@"; "$@"; }
@@ -39,7 +38,9 @@ case $2 in
     ;;
   prod | production)
     SERVICES='student-fe tutor-fe faculty-fe'
-    CONTAINERS='little-startup-student-fe-1 little-startup-tutor-fe-1 little-startup-faculty-fe-1'
+    CONTAINERS='little-startup-student-fe-1 '`
+              `'little-startup-tutor-fe-1 '`
+              `'little-startup-faculty-fe-1'
     printf "services: $SERVICES\n"
     printf "containers: $CONTAINERS\n"
     ;;
@@ -51,12 +52,15 @@ esac
 
 case $1 in
   build)
-    exe_aloud docker compose build --parallel $SERVICES
+    printf 'Building containers...\n'
+    exe_aloud docker compose --progress plain build --parallel $SERVICES \
+      &> compose-build.log
     ;;
-  start)
+  up | start)
     sh initialize.sh
     printf 'Building containers...\n'
-    exe_aloud docker compose --progress plain build --parallel $SERVICES > compose.log && \
+    exe_aloud docker compose --progress plain build --parallel $SERVICES \
+      &> compose-build.log && \
     exe_aloud docker compose up -d --remove-orphans $SERVICES
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
     case $2 in
@@ -70,15 +74,18 @@ case $1 in
           $CONTAINERS \
           nvim
         ;;
+      prod | production)
+        ;;
       *)
-        # declare -a contexts=('example' 'backend' 'frontend')
         for context in 'example' 'backend' 'frontend'; do
           service="$context-devcontainer"
           container="little-startup-$service-1"
+          printf "Initiating $service...\n"
           exe_aloud docker exec \
             --workdir /workspaces/little-startup \
-            $CONTAINERS \
-            sh .devcontainer/$CONTEXT/post-create.sh
+            $container \
+            sh .devcontainer/$context/post-create.sh \
+            &> "$service.log"
         done
         ;;
     esac
