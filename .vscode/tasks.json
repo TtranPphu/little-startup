@@ -7,7 +7,9 @@
       "label": "Run (example)",
       "type": "shell",
       "command": "npm",
-      "args": ["start"],
+      "args": [
+        "start"
+      ],
       "options": {
         "cwd": "${workspaceFolder}/example"
       },
@@ -17,7 +19,10 @@
       "label": "Build Backend",
       "type": "shell",
       "command": "mvn",
-      "args": ["clean", "spring-boot:run"],
+      "args": [
+        "clean",
+        "spring-boot:run"
+      ],
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
@@ -27,10 +32,40 @@
       "label": "Run Backend",
       "type": "shell",
       "command": "mvn",
-      "args": ["spring-boot:run"],
+      "args": [
+        "spring-boot:run"
+      ],
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Frontend-Tutor",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend/tutor-fe"
+      },
+      "hide": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Frontend-Tutor",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "dev"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend/tutor-fe"
+      },
+      "dependsOn": "Build Frontend",
       "problemMatcher": []
     }
   ]

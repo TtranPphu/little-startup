@@ -130,4 +130,3 @@ services:
     command: sleep infinity
     depends_on: 
       - backend
-
