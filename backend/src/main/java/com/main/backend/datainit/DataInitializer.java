@@ -22,8 +22,9 @@ public class DataInitializer implements CommandLineRunner {
 
     private void setupRolesTables() {
         insertRoleIfNotExists("ADMIN");
-        insertRoleIfNotExists("LEARNER");
+        insertRoleIfNotExists("FACULTY");
         insertRoleIfNotExists("TUTOR");
+        insertRoleIfNotExists("LEARNER");
     }
 
     private void insertRoleIfNotExists(String roleName) {

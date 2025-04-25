@@ -37,9 +37,9 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public UserDto register(String username, String password, String email) throws Exception {
+    public UserDto register(String role, String username, String password, String email) throws Exception {
         try {
-            Role userRole = roleRepo.findByAuthority("LEARNER").get();
+            Role userRole = roleRepo.findByAuthority(role.toUpperCase()).get();
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
 
@@ -51,20 +51,19 @@ public class AuthenticationService {
         }
     }
 
-    public AuthenticationResponse login(String username, String password) {
+    public AuthenticationResponse login(String role, String username, String password) throws Exception {
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password));
 
-        try {
-            Authentication auth = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password));
+        String token = tokenService.generateJwt(auth);
 
-            String token = tokenService.generateJwt(auth);
+        User user = userRepo.findByUsername(username).orElse(new User());
 
-            User user = userRepo.findByUsername(username).orElse(null);
-
-            return new AuthenticationResponse(user.getDto(), token); // Should not pass token in because we are using
-                                                                     // Http-Only Cookies for JWT
-        } catch (Exception e) {
-            return new AuthenticationResponse();
+        if (!user.getAuthorities().contains(roleRepo.findByAuthority(role.toUpperCase()).get())) {
+            throw new Exception("User does not have the required role");
         }
+
+        // Should not pass token in because we are using Http-Only Cookies for JWT
+        return new AuthenticationResponse(user.getDto(), token);
     }
 }
