@@ -78,14 +78,14 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
-      - /home/duytung13pro/.config/nvim:/home/little/.config/nvim:cached
-      - /home/duytung13pro/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/duytung13pro/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 1234:1234
     environment:
-      - HOST_USERNAME=duytung13pro
+      - HOST_USERNAME=<host-username>
       - UV_LINK_MODE=copy
     command: sleep infinity
     depends_on:
@@ -98,14 +98,14 @@ services:
       target: backend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
-      - /home/duytung13pro/.config/nvim:/home/little/.config/nvim:cached
-      - /home/duytung13pro/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/duytung13pro/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 8080:8080
     environment:
-      - HOST_USERNAME=duytung13pro
+      - HOST_USERNAME=<host-username>
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
     command: sleep infinity
@@ -119,14 +119,14 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - /home/duytung13pro/.ssh:/home/little/.ssh:cached
-      - /home/duytung13pro/.config/nvim:/home/little/.config/nvim:cached
-      - /home/duytung13pro/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/duytung13pro/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/<host-username>/.ssh:/home/little/.ssh:cached
+      - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
+      - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
+      - /home/<host-username>/.local/state/nvim:/home/little/.local/state/nvim:cached
     ports:
       - 3000:3000
     environment:
-      - HOST_USERNAME=duytung13pro
+      - HOST_USERNAME=<host-username>
     command: sleep infinity
     depends_on: 
       - backend
