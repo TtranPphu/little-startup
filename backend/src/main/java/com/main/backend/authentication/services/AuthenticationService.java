@@ -37,7 +37,7 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public UserDto register(String role, String username, String password, String email) throws Exception {
+    public User register(String role, String username, String password, String email) throws Exception {
         try {
             Role userRole = roleRepo.findByAuthority(role.toUpperCase()).get();
             Set<Role> roles = new HashSet<>();
@@ -45,7 +45,7 @@ public class AuthenticationService {
 
             User newUser = userRepo.save(
                     new User(null, username, encoder.encode(password), email, false, roles));
-            return newUser.getDto();
+            return newUser;
         } catch (Exception e) {
             throw new Exception("User already exists");
         }

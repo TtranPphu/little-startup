@@ -1,8 +1,11 @@
 package com.main.backend.authentication.controllers;
 
 import java.time.Duration;
+import java.util.Calendar;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.main.backend.authentication.dtos.AuthenticationRequest;
 import com.main.backend.authentication.dtos.AuthenticationResponse;
 import com.main.backend.authentication.dtos.UserDto;
+import com.main.backend.authentication.events.OnRegistrationCompleteEvent;
+import com.main.backend.authentication.models.User;
+import com.main.backend.authentication.models.VerificationToken;
 import com.main.backend.authentication.services.AuthenticationService;
+import com.main.backend.authentication.services.UserService;
+import com.main.backend.authentication.services.VerificationTokenService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
@@ -29,6 +38,15 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authService;
 
+    @Autowired
+    private VerificationTokenService verificationTokenService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
     @GetMapping("/v1/test")
     public String test() {
         return "Hello from the authentication controller!";
@@ -40,7 +58,13 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest auth,
             HttpServletRequest request) throws Exception {
         String role = request.getHeader("role");
-        return authService.register(role, auth.getUsername(), auth.getPassword(), auth.getEmail());
+        User user = authService.register(role, auth.getUsername(), auth.getPassword(), auth.getEmail());
+
+        Locale locale = request.getLocale();
+        String appUrl = request.getContextPath();
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, locale, appUrl));
+
+        return user.getDto();
     }
 
     @Operation(summary = "Login a user")
@@ -89,5 +113,28 @@ public class AuthenticationController {
         response.addCookie(cookie);
 
         return ResponseEntity.ok("Logout success");
+    }
+
+    @GetMapping("/v1/verification")
+    public ResponseEntity<String> verifyUser(
+            HttpServletRequest request,
+            @RequestParam String token) {
+
+        VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
+        if (verificationToken == null) {
+            // Do something
+        }
+
+        User userDto = verificationToken.getUser();
+        Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            // Do something
+        }
+
+        User user = userService.loadUserByUsername(userDto.getUsername());
+        user.setEnable(true);
+        userService.saveUser(user);
+
+        return ResponseEntity.ok("Verification token: " + token);
     }
 }

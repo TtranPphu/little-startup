@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
 
         return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
@@ -47,5 +47,10 @@ public class UserService implements UserDetailsService {
         UserDto userDto = user.getDto();
 
         return userDto;
+    }
+
+    public UserDto saveUser(User user) {
+        User savedUser = userRepo.save(user);
+        return savedUser.getDto();
     }
 }
