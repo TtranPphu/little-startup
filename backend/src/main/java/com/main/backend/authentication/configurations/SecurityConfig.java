@@ -71,15 +71,16 @@ public class SecurityConfig {
                     // auth.anyRequest().permitAll(); // Uncomment to disable authentication
 
                     auth.requestMatchers(
-                            "/api/*/auth/**",
+                            "/api/auth/**",
                             "/swagger-ui/*",
                             "/v3/api-docs*/**",
                             "/swagger-resources/*",
                             "/swagger-ui.html",
                             "/api/docs/swagger-ui/*").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/learner/**").hasAnyRole("LEARNER", "ADMIN");
+                    auth.requestMatchers("/tutor/**").hasAnyRole("TUTOR", "ADMIN");
+                    auth.requestMatchers("/admin/**").hasAnyRole("ADMIN");
                     auth.anyRequest().authenticated(); // Uncomment to enable authentication
                 })
                 .oauth2ResourceServer(

@@ -17,46 +17,66 @@ import com.main.backend.authentication.dtos.AuthenticationResponse;
 import com.main.backend.authentication.dtos.UserDto;
 import com.main.backend.authentication.services.AuthenticationService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/api/learner/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authService;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Successful Test!");
+    @GetMapping("/v1/test")
+    public String test() {
+        return "Hello from the authentication controller!";
     }
 
-    @PostMapping("/register")
-    public UserDto register(@RequestBody AuthenticationRequest auth) throws Exception {
-        return authService.register(auth.getUsername(), auth.getPassword(), auth.getEmail());
+    @Operation(summary = "Register a new user")
+    @PostMapping("/v1/register")
+    public UserDto register(
+            @RequestBody AuthenticationRequest auth,
+            HttpServletRequest request) throws Exception {
+        String role = request.getHeader("role");
+        return authService.register(role, auth.getUsername(), auth.getPassword(), auth.getEmail());
     }
 
-    @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody AuthenticationRequest auth, HttpServletResponse response) {
-        AuthenticationResponse authResponse = authService.login(auth.getUsername(), auth.getPassword());
+    @Operation(summary = "Login a user")
+    @PostMapping("/v1/login")
+    public ResponseEntity<UserDto> login(
+            @RequestBody AuthenticationRequest auth,
+            HttpServletRequest request,
+            HttpServletResponse response) {
 
-        String token = authResponse.getJwt();
-        authResponse.setJwt(null); // Clear the JWT from the response body
+        try {
+            String role = request.getHeader("role");
 
-        ResponseCookie cookie = ResponseCookie.from("jwt", token)
-                .httpOnly(true) // Prevent JavaScript access
-                .secure(true) // Use Secure flag (Only works on HTTPS)
-                .path("/") // Available for all paths
-                .maxAge(Duration.ofDays(1))
-                .build();
+            AuthenticationResponse authResponse = authService.login(role, auth.getUsername(), auth.getPassword());
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            String token = authResponse.getJwt();
+            authResponse.setJwt(null); // Clear the JWT from the response body
 
-        return authResponse;
+            ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                    .httpOnly(true) // Prevent JavaScript access
+                    .secure(true) // Use Secure flag (Only works on HTTPS)
+                    .path("/") // Available for all paths
+                    .maxAge(Duration.ofDays(1))
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+            return ResponseEntity.ok(authResponse.getUser());
+        } catch (Exception e) {
+            // Log the error
+            System.err.println("Login error: " + e.getMessage());
+            return ResponseEntity.status(401).body(null);
+        }
     }
 
-    @PostMapping("/logout")
+    @Operation(summary = "Logout a user")
+    @PostMapping("/v1/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
 
         // Create an expired cookie to remove the JWT
