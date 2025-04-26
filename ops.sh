@@ -1,20 +1,35 @@
 #! /usr/bin/bash
 
+exe_aloud() { echo "\$ $@"; "$@"; }
+
 print_help() {
   printf "Usage: ./ops.sh <command> [<environmen> [<service>]]\n"
   printf "  - commands: build, up | start, stop, down\n"
   printf "  - environments (omit: all):\n"
-  printf "    + dev | development <service>\n"
-  printf "      . ex | example\n"
-  printf "      . be | backend\n"
-  printf "      . fe | frontend\n"
   printf "    + prod | production\n"
+  printf "    + nvim | neovim <service>\n"
+  printf "    + code | vscode <service>\n"
+  printf "  - services:\n"
+  printf "    + ex | example\n"
+  printf "    + be | backend\n"
+  printf "    + fe | frontend\n"
 }
 
-exe_aloud() { echo "\$ $@"; "$@"; }
+print_vscode() {
+  printf "\n"
+  printf "Because VS Code CLI for devcontainer is not refined, we cannot\n"
+  printf "  launch you dirrectly into devcontainer.\n"
+  printf "We just have built the containers and set-up the general\n"
+  printf "  development environment for you.\n"
+  printf "We will launch VS Code inside WSL for you, once you're there,\n"
+  printf "  Hit [Ctrl + Shift + P]\n"
+  printf "  Select \"Dev Containers: Reopen in Container\"\n"
+  printf "  Then select the service you want to develop.\n"
+  read -p "Press [Enter] to continue!"
+}
 
 case $2 in
-  dev | development)
+  nvim | neovim | code | vscode)
     case $3 in
       ex | example)
         CONTEXT='example'
@@ -64,7 +79,7 @@ case $1 in
     exe_aloud docker compose up -d --remove-orphans $SERVICES
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
     case $2 in
-      dev | development)
+      nvim | neovim)
         exe_aloud docker exec \
           --workdir /workspaces/little-startup \
           $CONTAINERS \
@@ -73,6 +88,14 @@ case $1 in
           --workdir /workspaces/little-startup \
           $CONTAINERS \
           nvim
+        ;;
+      code | vscode)
+        exe_aloud docker exec \
+          --workdir /workspaces/little-startup \
+          $CONTAINERS \
+          sh .devcontainer/$CONTEXT/post-create.sh
+        print_vscode
+        code .
         ;;
       prod | production)
         ;;
