@@ -128,6 +128,5 @@ services:
     environment:
       - HOST_USERNAME=<host-username>
     command: sleep infinity
-    depends_on: 
+    depends_on:
       - backend
-
