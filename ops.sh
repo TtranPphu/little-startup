@@ -67,9 +67,14 @@ esac
 
 case $1 in
   build)
-    printf 'Building containers...\n'
+    printf 'Building containers...'
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log
+    if [ $? != 0 ]; then
+      printf "Failed! Check compose-build.log for more info.\n"
+    else
+      printf "Done!\n"
+    fi
     ;;
   up | start)
     sh initialize.sh
@@ -77,10 +82,13 @@ case $1 in
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log && \
     exe_aloud docker compose up -d --remove-orphans $SERVICES
-    code=$?
-    sed -i "s/$USER/<host-username>/g" docker-compose.yml
-    if [ code -ne 0 ]; then
+    if [ $? != 0 ]; then
+      printf "Failed! Check compose-build.log for more info.\n"
+      sed -i "s/$USER/<host-username>/g" docker-compose.yml
+      exit
     fi
+    printf "Done!\n"
+    sed -i "s/$USER/<host-username>/g" docker-compose.yml
     case $2 in
       nvim | neovim)
         exe_aloud docker exec \
@@ -110,8 +118,13 @@ case $1 in
           exe_aloud docker exec \
             --workdir /workspaces/little-startup \
             $container \
-            sh .devcontainer/$context/post-create.sh \
+            sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
             &> "$service.log"
+          if [ $? != 0 ]; then
+            printf "Failed! check $service.log for more info.\n"
+          else
+            printf "Done!\n"
+          fi
         done
         ;;
     esac
@@ -127,4 +140,3 @@ case $1 in
     exit
     ;;
 esac
-
