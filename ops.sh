@@ -77,7 +77,10 @@ case $1 in
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log && \
     exe_aloud docker compose up -d --remove-orphans $SERVICES
+    code=$?
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    if [ code -ne 0 ]; then
+    fi
     case $2 in
       nvim | neovim)
         exe_aloud docker exec \
