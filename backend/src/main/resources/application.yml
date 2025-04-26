@@ -1,19 +1,27 @@
 spring:
-    application:
-        name: myapp
-    data:
-      mongodb:
-        host: mongo
-        port: 27017
-        database: little_database
-        username: admin
-        password: admin
-        authentication-database: admin
-        auto-index-creation: true
+  application:
+    name: myapp
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: little_database
+      username: admin
+      password: admin
+      authentication-database: admin
+      auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: smtp12344@gmail.com
+    password: eajh axan tiiw blnm
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 springdoc:
   swagger-ui:
     path: /api/docs/index.html
 
 server:
-    port: 8080
+  port: 8080

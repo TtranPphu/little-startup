@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -17,9 +16,6 @@ public class RegistrationEventListener implements ApplicationListener<OnRegistra
     
     @Autowired
     private VerificationTokenService verificationTokenService;
- 
-    @Autowired
-    private MessageSource messages;
  
     @Autowired
     private JavaMailSender mailSender;
@@ -38,12 +34,10 @@ public class RegistrationEventListener implements ApplicationListener<OnRegistra
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
         String confirmationUrl = event.getAppUrl() + "/api/auth/v1/verification?token=" + token;
-        // String message = messages.getMessage("message.regSucc", null, event.getLocale());
         
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        // email.setText(message + "\r\n" + confirmationUrl);
         email.setText("Click on this to activate your account: " + confirmationUrl);
         mailSender.send(email);
     }
