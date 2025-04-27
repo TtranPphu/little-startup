@@ -82,7 +82,7 @@ case $1 in
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log && \
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
-      &> compose-build.log
+      &>> compose-build.log
     if [ $? != 0 ]; then
       printf "Building containers failed! Check compose-build.log for more info.\n"
       sed -i "s/$USER/<host-username>/g" docker-compose.yml
