@@ -5,6 +5,7 @@
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "frontend-devcontainer",
   "runServices": ["frontend-devcontainer"],
+  "shutdownAction": "none",
   "workspaceFolder": "/workspaces/little-startup",
   "customizations": {
     "vscode": {

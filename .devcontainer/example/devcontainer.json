@@ -5,6 +5,7 @@
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "example-devcontainer",
   "runServices": ["example-devcontainer"],
+  "shutdownAction": "none",
   "workspaceFolder": "/workspaces/little-startup",
   "portsAttributes": {
     "1234": {
