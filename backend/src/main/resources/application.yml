@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: myapp
+  data:
+    mongodb:
+      uri: mongodb://admin:admin123@mongo:27017
+      database: madarin
+
+server:
+  port: 8080
