@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import com.main.backend.authentication.models.User;
@@ -18,7 +18,7 @@ public class RegistrationEventListener implements ApplicationListener<OnRegistra
     private VerificationTokenService verificationTokenService;
  
     @Autowired
-    private JavaMailSender mailSender;
+    private MailSender mailSender;
 
     @Override
     @SuppressWarnings("null")

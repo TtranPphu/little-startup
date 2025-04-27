@@ -1,23 +1,23 @@
 spring:
+  config:
+    import: optional:secrets.yml
   application:
     name: myapp
   data:
     mongodb:
-      host: mongo
-      port: 27017
-      database: little_database
-      username: admin
-      password: admin
-      authentication-database: admin
       auto-index-creation: true
   mail:
     host: smtp.gmail.com
     port: 587
-    username: #{your-email}
-    password: #{your-password}
     properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
+        transport:
+          protocol: smtp
 
 springdoc:
   swagger-ui:
