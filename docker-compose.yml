@@ -25,15 +25,12 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile
-      target: backend
     ports:
       - 8008:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - mongo
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
-      - SPRING_PROFILES_ACTIVE=prod
-    command: java -jar /app/target/backend.jar
 
   student-fe:
     build:
@@ -78,6 +75,7 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
+      - ./backend/.m2:/workspaces/little-startup/backend/.m2
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
@@ -106,8 +104,8 @@ services:
       - 8080:8080
     environment:
       - HOST_USERNAME=<host-username>
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017
       - SPRING_PROFILES_ACTIVE=dev
+    env_file: .devcontainer/backend/.env
     command: sleep infinity
     depends_on:
       - mongo
