@@ -81,7 +81,8 @@ case $1 in
     printf 'Building containers...\n'
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log && \
-    exe_aloud docker compose up -d --remove-orphans $SERVICES
+    exe_aloud docker compose up -d --remove-orphans $SERVICES \
+      &> compose-build.log
     if [ $? != 0 ]; then
       printf "Failed! Check compose-build.log for more info.\n"
       sed -i "s/$USER/<host-username>/g" docker-compose.yml
