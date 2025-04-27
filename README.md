@@ -11,7 +11,7 @@
     - **_For Windows_**: Recommended to clone in WSL2 managed directory.
 
     ```sh
-    git clone git@github.com:TtranPphu/little-startup.gitgt
+    git clone git@github.com:TtranPphu/little-startup.git
     cd little-startup
     ```
 
