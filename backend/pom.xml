@@ -8,10 +8,10 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>myapp</artifactId>
+	<groupId>com.backend</groupId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>myapp</name>
+	<name>backend</name>
 	<description>Demo project</description>
 	<url/>
 	<licenses>

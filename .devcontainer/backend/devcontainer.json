@@ -1,10 +1,10 @@
 {
   "name": "backend-devcontainer",
-  "initializeCommand": "sh initialize.sh",
   "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "backend-devcontainer",
   "runServices": ["backend-devcontainer"],
+  "shutdownAction": "none",
   "workspaceFolder": "/workspaces/little-startup",
   "portsAttributes": {
     "8080": {
@@ -16,8 +16,10 @@
     "vscode": {
       "settings": {
         // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
-        "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Hurmit Nerd Font'",
+        "editor.fontFamily": "Hurmit Nerd Font",
+        "editor.fontSize": 12,
         "terminal.integrated.fontFamily": "Hurmit Nerd Font",
+        "terminal.integrated.fontSize": 12,
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
