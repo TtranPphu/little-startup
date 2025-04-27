@@ -67,13 +67,13 @@ esac
 
 case $1 in
   build)
-    printf 'Building containers...'
+    printf 'Building containers...\n'
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log
     if [ $? != 0 ]; then
-      printf "Failed! Check compose-build.log for more info.\n"
+      printf "Building containers failed! Check compose-build.log for more info.\n"
     else
-      printf "Done!\n"
+      printf "Building containers done!\n"
     fi
     ;;
   up | start)
@@ -84,11 +84,11 @@ case $1 in
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
       &> compose-build.log
     if [ $? != 0 ]; then
-      printf "Failed! Check compose-build.log for more info.\n"
+      printf "Building containers failed! Check compose-build.log for more info.\n"
       sed -i "s/$USER/<host-username>/g" docker-compose.yml
       exit
     fi
-    printf "Done!\n"
+    printf "Building containers done!\n"
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
     case $2 in
       nvim | neovim)
@@ -113,20 +113,23 @@ case $1 in
         ;;
       *)
         for context in 'example' 'backend' 'frontend'; do
-          service="$context-devcontainer"
-          container="little-startup-$service-1"
-          printf "Initiating $service...\n"
-          exe_aloud docker exec \
-            --workdir /workspaces/little-startup \
-            $container \
-            sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
-            &> "$service.log"
-          if [ $? != 0 ]; then
-            printf "Failed! check $service.log for more info.\n"
-          else
-            printf "Done!\n"
-          fi
+          {
+              service="$context-devcontainer"
+            container="little-startup-$service-1"
+            printf "Initiating $service...\n"
+            exe_aloud docker exec \
+              --workdir /workspaces/little-startup \
+              $container \
+              sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
+              &> "$service.log"
+            if [ $? != 0 ]; then
+              printf "Initiating $service failed! check $service.log for more info.\n"
+            else
+              printf "Initiating $service done!\n"
+            fi
+          } &
         done
+        wait
         ;;
     esac
     ;;
