@@ -1,10 +1,10 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { ProfilePage } from "@/components/profile-page"
+import { AttendancePage } from "@/components/attendance-page"
 
-export default function Profile() {
+export default function Attendance() {
   return (
     <DashboardLayout>
-      <ProfilePage />
+      <AttendancePage />
     </DashboardLayout>
   )
 }
