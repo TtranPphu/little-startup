@@ -11,21 +11,24 @@
     - **_For Windows_**: Recommended to clone in WSL2 managed directory.
 
     ```sh
-    git clone git@github.com:TtranPphu/little-startup.git
+    git clone git@github.com:TtranPphu/little-startup.gitgt
     cd little-startup
     ```
 
     - in VS Code
+
       ```
-      code .
+      ./ops.sh start code <your-service>
       ```
-      - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: (Rebuild and) Reopen in Container**.
+
+      - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: Reopen in Container**.
       - Select service you want to work on.
+
     - in Neovim
       ```
-      ./ops.sh up dev <your-service> && ./ops.sh start dev <your-service>
+      ./ops.sh start nvim <your-service>
       ```
-      - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
+    - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
 
 2.  **Working on Github codespaces**
 
