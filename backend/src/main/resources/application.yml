@@ -3,8 +3,25 @@ spring:
     name: myapp
   data:
     mongodb:
-      uri: mongodb://admin:admin123@mongo:27017
-      database: madarin
+      host: #{your-mongo-host}
+      port: #{your-mongo-port}
+      database: #{your-mongo-database}
+      username: #{your-mongo-username}
+      password: #{your-mongo-password}
+      authentication-database: #{your-auth-db}
+      auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #{your-email}
+    password: #{your-password}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+springdoc:
+  swagger-ui:
+    path: /api/docs/index.html
 
 server:
   port: 8080
