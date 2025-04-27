@@ -1,6 +1,5 @@
 {
   "name": "frontend-devcontainer",
-  "initializeCommand": "sh initialize.sh",
   "postCreateCommand": "sh .devcontainer/frontend/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "frontend-devcontainer",
