@@ -1,3 +1,5 @@
+# Little Startup
+
 ## Instructions
 
 0.  **Requirement**:
@@ -15,7 +17,7 @@
     cd little-startup
     ```
 
-    - in VS Code
+    - In VS Code
 
       ```
       ./ops.sh start code <your-service>
@@ -24,7 +26,7 @@
       - Open **Command Palette** [Ctrl + Shift + P] -> **Dev Containers: Reopen in Container**.
       - Select service you want to work on.
 
-    - in Neovim
+    - In Neovim
       ```
       ./ops.sh start nvim <your-service>
       ```
