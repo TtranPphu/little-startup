@@ -106,6 +106,7 @@ services:
     environment:
       - HOST_USERNAME=<host-username>
       - SPRING_PROFILES_ACTIVE=dev
+    env_file: .devcontainer/backend/.env
     command: sleep infinity
     depends_on:
       - mongo
