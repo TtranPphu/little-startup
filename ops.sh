@@ -65,49 +65,57 @@ case $2 in
     ;;
 esac
 
+build_containers() {
+  sh initialize.sh
+  printf 'Building containers...\n'
+  exe_aloud docker compose --progress plain build --parallel $SERVICES \
+    &> compose-build.log && \
+  exe_aloud docker compose up -d --remove-orphans $SERVICES \
+    &>> compose-build.log
+  if [ $? != 0 ]; then
+    sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    printf "Building containers failed!\n"
+    exe_aloud nvim compose-build.log
+    exit
+  fi
+  sed -i "s/$USER/<host-username>/g" docker-compose.yml
+  printf "Building containers done!\n"
+}
+
+init_container() {
+  context="$1"
+  service="$context-devcontainer"
+  container="little-startup-$service-1"
+  printf "Initiating $service...\n"
+  exe_aloud docker exec \
+    --workdir /workspaces/little-startup \
+    $container \
+    sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
+    &> "$service.log"
+  if [ $? != 0 ]; then
+    printf "Initiating $service failed! For more info:\n"
+    printf "  nvim $service.log\n"
+  else
+    printf "Initiating $service done!\n"
+  fi
+}
+
 case $1 in
   build)
-    printf 'Building containers...\n'
-    exe_aloud docker compose --progress plain build --parallel $SERVICES \
-      &> compose-build.log
-    if [ $? != 0 ]; then
-      printf "Building containers failed!\n"
-      exe_aloud nvim compose-build.log
-    else
-      printf "Building containers done!\n"
-    fi
+    build_containers
     ;;
   up | start)
-    sh initialize.sh
-    printf 'Building containers...\n'
-    exe_aloud docker compose --progress plain build --parallel $SERVICES \
-      &> compose-build.log && \
-    exe_aloud docker compose up -d --remove-orphans $SERVICES \
-      &>> compose-build.log
-    if [ $? != 0 ]; then
-      sed -i "s/$USER/<host-username>/g" docker-compose.yml
-      printf "Building containers failed!\n"
-      exe_aloud nvim compose-build.log
-      exit
-    fi
-    sed -i "s/$USER/<host-username>/g" docker-compose.yml
-    printf "Building containers done!\n"
+    build_containers
     case $2 in
       nvim | neovim)
-        exe_aloud docker exec \
-          --workdir /workspaces/little-startup \
-          $CONTAINERS \
-          sh .devcontainer/$CONTEXT/post-create.sh
+        init_container $CONTEXT
         exe_aloud docker exec -it \
           --workdir /workspaces/little-startup \
           $CONTAINERS \
           nvim
         ;;
       code | vscode)
-        exe_aloud docker exec \
-          --workdir /workspaces/little-startup \
-          $CONTAINERS \
-          sh .devcontainer/$CONTEXT/post-create.sh
+        init_container $CONTEXT
         print_vscode
         code .
         ;;
@@ -115,22 +123,7 @@ case $1 in
         ;;
       *)
         for context in 'example' 'backend' 'frontend'; do
-          {
-              service="$context-devcontainer"
-            container="little-startup-$service-1"
-            printf "Initiating $service...\n"
-            exe_aloud docker exec \
-              --workdir /workspaces/little-startup \
-              $container \
-              sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
-              &> "$service.log"
-            if [ $? != 0 ]; then
-              printf "Initiating $service failed! For more info:\n"
-              printf "  nvim $service.log\n"
-            else
-              printf "Initiating $service done!\n"
-            fi
-          } &
+          init_container $context &
         done
         wait
         ;;
