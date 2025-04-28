@@ -75,7 +75,6 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
-      - ./backend/.m2:/workspaces/little-startup/backend/.m2
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
