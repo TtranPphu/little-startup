@@ -75,4 +75,5 @@ FROM base-devcontainer AS backend-devcontainer
 COPY backend/.zshrc /home/${USER_NAME}/.zshrc
 
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    openjdk-17-jdk
+    openjdk-17-jdk\
+    ffmpeg

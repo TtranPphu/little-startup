@@ -36,3 +36,8 @@ build/
 .m2/repository/**
 !.m2/repository/
 !.m2/repository/.gitkeep
+
+### Data ###
+data/**
+!data/
+!data/.gitkeep

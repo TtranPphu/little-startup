@@ -1,0 +1,61 @@
+package com.main.backend.video.services;
+
+import com.main.backend.video.dtos.VideoResponseDto;
+import com.main.backend.video.models.Video;
+import com.main.backend.video.repositories.VideoRepo;
+import com.main.backend.video.utils.FFmpegConverter;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+@Service
+public class VideoService {
+
+    private final VideoRepo videoRepo;
+
+    public VideoService(VideoRepo videoRepo) {
+        this.videoRepo = videoRepo;
+    }
+
+    public VideoResponseDto uploadVideo(MultipartFile file) throws IOException, InterruptedException {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Uploaded file is empty!");
+        }
+
+        String basePath = System.getProperty("user.dir") + "/data/videos";
+        String uploadId = UUID.randomUUID().toString();
+
+        File uploadDir = new File(basePath, uploadId);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        File uploadedFile = new File(uploadDir, file.getOriginalFilename());
+        file.transferTo(uploadedFile);
+
+        File hlsOutputDir = new File(uploadDir, "hls");
+        if (!hlsOutputDir.exists()) {
+            hlsOutputDir.mkdirs();
+        }
+        FFmpegConverter.convertMp4ToHls(uploadedFile, hlsOutputDir);
+
+        String m3u8Url = "/data/videos/" + uploadId + "/hls/index.m3u8";
+
+        Video video = Video.builder()
+                .originalFilename(file.getOriginalFilename())
+                .m3u8Url(m3u8Url)
+                .storagePath(uploadDir.getAbsolutePath())
+                .uploadTime(System.currentTimeMillis())
+                .build();
+
+        Video saved = videoRepo.save(video);
+
+        return VideoResponseDto.builder()
+                .id(saved.getId())
+                .m3u8Url(saved.getM3u8Url())
+                .build();
+    }
+}
