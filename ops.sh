@@ -71,7 +71,8 @@ case $1 in
     exe_aloud docker compose --progress plain build --parallel $SERVICES \
       &> compose-build.log
     if [ $? != 0 ]; then
-      printf "Building containers failed! Check compose-build.log for more info.\n"
+      printf "Building containers failed!\n"
+      exe_aloud nvim compose-build.log
     else
       printf "Building containers done!\n"
     fi
@@ -84,12 +85,13 @@ case $1 in
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
       &>> compose-build.log
     if [ $? != 0 ]; then
-      printf "Building containers failed! Check compose-build.log for more info.\n"
       sed -i "s/$USER/<host-username>/g" docker-compose.yml
+      printf "Building containers failed!\n"
+      exe_aloud nvim compose-build.log
       exit
     fi
-    printf "Building containers done!\n"
     sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    printf "Building containers done!\n"
     case $2 in
       nvim | neovim)
         exe_aloud docker exec \
@@ -123,7 +125,8 @@ case $1 in
               sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
               &> "$service.log"
             if [ $? != 0 ]; then
-              printf "Initiating $service failed! check $service.log for more info.\n"
+              printf "Initiating $service failed! For more info:\n"
+              printf "  nvim $service.log\n"
             else
               printf "Initiating $service done!\n"
             fi
