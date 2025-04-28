@@ -46,6 +46,13 @@ public class VideoService {
         }
         FFmpegConverter.convertMp4ToHls(uploadedFile, hlsOutputDir);
 
+        if (uploadedFile.exists()) {
+            boolean deleted = uploadedFile.delete();
+            if (!deleted) {
+                throw new IllegalArgumentException("Cant not delete origin file: " + uploadedFile.getAbsolutePath());
+            }
+        }
+
         String m3u8Url = "/data/videos/" + uploadId + "/hls/index.m3u8";
 
         Video video = Video.builder()
