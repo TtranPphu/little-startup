@@ -10,7 +10,7 @@ public class StaticResourceConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/data/**") // URL mà user gọi tới
-                .addResourceLocations("file:data/"); // Folder ngoài project
+        registry.addResourceHandler("/data/**")
+                .addResourceLocations("file:data/");
     }
 }
