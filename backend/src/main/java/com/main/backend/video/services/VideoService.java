@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 @Service
 public class VideoService {
@@ -26,7 +25,8 @@ public class VideoService {
         }
 
         String basePath = System.getProperty("user.dir") + "/data/videos";
-        String uploadId = UUID.randomUUID().toString();
+        String originalFilename = file.getOriginalFilename();
+        String uploadId = originalFilename != null ? originalFilename.replaceFirst("[.][^.]+$", "") : null;
 
         File uploadDir = new File(basePath, uploadId);
         if (!uploadDir.exists()) {
