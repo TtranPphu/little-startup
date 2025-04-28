@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class VideoResponseDto {
+public class VideoAddResponseDto {
     private String id;
     private String m3u8Url;
 }

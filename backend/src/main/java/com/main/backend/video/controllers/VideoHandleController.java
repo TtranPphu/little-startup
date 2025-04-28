@@ -1,6 +1,7 @@
 package com.main.backend.video.controllers;
 
-import com.main.backend.video.dtos.VideoResponseDto;
+import com.main.backend.video.dtos.VideoAddResponseDto;
+import com.main.backend.video.dtos.VideoDeleteResponseDto;
 import com.main.backend.video.services.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,15 @@ public class VideoHandleController {
     private final VideoService videoService;
 
     @PostMapping("/v1/upload")
-    public ResponseEntity<VideoResponseDto> uploadVideo(@RequestParam("file") MultipartFile file) throws Exception {
-        VideoResponseDto response = videoService.uploadVideo(file);
+    public ResponseEntity<VideoAddResponseDto> addVideo(@RequestParam("file") MultipartFile file) throws Exception {
+        VideoAddResponseDto response = videoService.addVideo(file);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/v1/delete/{id}")
+    public ResponseEntity<VideoDeleteResponseDto> deleteVideoById(@PathVariable String id) throws Exception {
+        VideoDeleteResponseDto response = videoService.deleteVideoById(id);
+        return ResponseEntity.ok(response);
+    }
+
 }
