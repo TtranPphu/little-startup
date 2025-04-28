@@ -1,11 +1,12 @@
 FROM node:22.14.0-alpine AS frontend
+
 WORKDIR /frontend
 
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+RUN npm install --force
 
-COPY . . 
+COPY . .
 RUN npm run build
 
 FROM frontend AS student-fe
@@ -13,3 +14,4 @@ FROM frontend AS student-fe
 FROM frontend AS tutor-fe
 
 FROM frontend AS faculty-fe
+
