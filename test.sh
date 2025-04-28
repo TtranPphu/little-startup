@@ -12,7 +12,7 @@ for context in 'example' 'backend' 'frontend'; do
     $container \
     sh -c ".devcontainer/$context/post-create.sh; exit \$?"
 done && \
-docker compose down
+# docker compose down
 if [ $? != 0 ]; then
   printf "Testing... Failed. You suck!\n"
 else
