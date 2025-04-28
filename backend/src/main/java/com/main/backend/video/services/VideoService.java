@@ -26,7 +26,14 @@ public class VideoService {
 
         String basePath = System.getProperty("user.dir") + "/data/videos";
         String originalFilename = file.getOriginalFilename();
-        String uploadId = originalFilename != null ? originalFilename.replaceFirst("[.][^.]+$", "") : null;
+
+        if (originalFilename == null) {
+            throw new IllegalArgumentException("file's name can't not be empty!");
+        }
+
+        String filenameWithoutExt = originalFilename.replaceFirst("[.][^.]+$", "");
+        String sanitizedFilename = filenameWithoutExt.trim().replaceAll("\\s+", "-");
+        String uploadId = sanitizedFilename;
 
         File uploadDir = new File(basePath, uploadId);
         if (!uploadDir.exists()) {

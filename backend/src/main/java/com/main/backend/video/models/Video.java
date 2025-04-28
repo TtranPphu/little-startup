@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "videos")
+@Document(collection = "little_videos")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -1,5 +1,5 @@
 
-package com.main.backend.config;
+package com.main.backend.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
