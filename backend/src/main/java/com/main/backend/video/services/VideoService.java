@@ -4,20 +4,17 @@ import com.main.backend.video.dtos.VideoResponseDto;
 import com.main.backend.video.models.Video;
 import com.main.backend.video.repositories.VideoRepo;
 import com.main.backend.video.utils.FFmpegConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 
 @Service
+@RequiredArgsConstructor
 public class VideoService {
 
     private final VideoRepo videoRepo;
-
-    public VideoService(VideoRepo videoRepo) {
-        this.videoRepo = videoRepo;
-    }
 
     public VideoResponseDto uploadVideo(MultipartFile file) throws IOException, InterruptedException {
         if (file.isEmpty()) {
