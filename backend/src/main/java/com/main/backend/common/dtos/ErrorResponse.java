@@ -1,7 +1,9 @@
 package com.main.backend.common.dtos;
 
 import java.time.Instant;
+import lombok.Getter;
 
+@Getter
 public class ErrorResponse {
     private int status;
     private String message;
@@ -13,22 +15,5 @@ public class ErrorResponse {
         this.message = message;
         this.timestamp = Instant.now().toString();
         this.path = path;
-    }
-
-    // Getters
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public String getPath() {
-        return path;
     }
 }
