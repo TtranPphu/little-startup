@@ -1,20 +1,35 @@
 #! /usr/bin/bash
 
+exe_aloud() { echo "\$ $@"; "$@"; }
+
 print_help() {
   printf "Usage: ./ops.sh <command> [<environmen> [<service>]]\n"
   printf "  - commands: build, up | start, stop, down\n"
   printf "  - environments (omit: all):\n"
-  printf "    + dev | development <service>\n"
-  printf "      . ex | example\n"
-  printf "      . be | backend\n"
-  printf "      . fe | frontend\n"
   printf "    + prod | production\n"
+  printf "    + nvim | neovim <service>\n"
+  printf "    + code | vscode <service>\n"
+  printf "  - services:\n"
+  printf "    + ex | example\n"
+  printf "    + be | backend\n"
+  printf "    + fe | frontend\n"
 }
 
-exe_aloud() { echo "\$ $@"; "$@"; }
+print_vscode() {
+  printf "\n"
+  printf "Because VS Code CLI for devcontainer is not refined, we cannot\n"
+  printf "  launch you dirrectly into devcontainer.\n"
+  printf "We just have built the containers and set-up the general\n"
+  printf "  development environment for you.\n"
+  printf "We will launch VS Code inside WSL for you, once you're there,\n"
+  printf "  Hit [Ctrl + Shift + P]\n"
+  printf "  Select \"Dev Containers: Reopen in Container\"\n"
+  printf "  Then select the service you want to develop.\n"
+  read -p "Press [Enter] to continue!"
+}
 
 case $2 in
-  dev | development)
+  nvim | neovim | code | vscode)
     case $3 in
       ex | example)
         CONTEXT='example'
@@ -50,43 +65,67 @@ case $2 in
     ;;
 esac
 
+build_containers() {
+  sh initialize.sh
+  printf 'Building containers...\n'
+  exe_aloud docker compose --progress plain build --parallel $SERVICES \
+    &> compose-build.log && \
+  exe_aloud docker compose up -d --remove-orphans $SERVICES \
+    &>> compose-build.log
+  if [ $? != 0 ]; then
+    sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    printf "Building containers failed!\n"
+    exe_aloud nvim compose-build.log
+    exit
+  fi
+  sed -i "s/$USER/<host-username>/g" docker-compose.yml
+  printf "Building containers done!\n"
+}
+
+init_container() {
+  context="$1"
+  service="$context-devcontainer"
+  container="little-startup-$service-1"
+  printf "Initiating $service...\n"
+  exe_aloud docker exec \
+    --workdir /workspaces/little-startup \
+    $container \
+    sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
+    &> "$service.log"
+  if [ $? != 0 ]; then
+    printf "Initiating $service failed! For more info:\n"
+    printf "  nvim $service.log\n"
+  else
+    printf "Initiating $service done!\n"
+  fi
+}
+
 case $1 in
   build)
-    printf 'Building containers...\n'
-    exe_aloud docker compose --progress plain build --parallel $SERVICES \
-      &> compose-build.log
+    build_containers
     ;;
   up | start)
-    sh initialize.sh
-    printf 'Building containers...\n'
-    exe_aloud docker compose --progress plain build --parallel $SERVICES \
-      &> compose-build.log && \
-    exe_aloud docker compose up -d --remove-orphans $SERVICES
-    sed -i "s/$USER/<host-username>/g" docker-compose.yml
+    build_containers
     case $2 in
-      dev | development)
-        exe_aloud docker exec \
-          --workdir /workspaces/little-startup \
-          $CONTAINERS \
-          sh .devcontainer/$CONTEXT/post-create.sh
+      nvim | neovim)
+        init_container $CONTEXT
         exe_aloud docker exec -it \
           --workdir /workspaces/little-startup \
           $CONTAINERS \
           nvim
         ;;
+      code | vscode)
+        init_container $CONTEXT
+        print_vscode
+        code .
+        ;;
       prod | production)
         ;;
       *)
         for context in 'example' 'backend' 'frontend'; do
-          service="$context-devcontainer"
-          container="little-startup-$service-1"
-          printf "Initiating $service...\n"
-          exe_aloud docker exec \
-            --workdir /workspaces/little-startup \
-            $container \
-            sh .devcontainer/$context/post-create.sh \
-            &> "$service.log"
+          init_container $context &
         done
+        wait
         ;;
     esac
     ;;
@@ -101,4 +140,3 @@ case $1 in
     exit
     ;;
 esac
-
