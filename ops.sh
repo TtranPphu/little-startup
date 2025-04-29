@@ -66,7 +66,7 @@ case $2 in
 esac
 
 build_containers() {
-  sh initialize.sh
+  sh devops/initialize.sh
   printf 'Building containers...\n'
   exe_aloud docker compose --progress plain build --parallel $SERVICES \
     &> compose-build.log && \
@@ -100,7 +100,28 @@ init_container() {
   fi
 }
 
+clean_test() {
+  sudo git clean -f -d -x -e ".db-*"
+
+  docker compose down
+  sh initialize.sh
+
+  printf 'Testing...\n'
+  docker compose build --parallel $SERVICES && \
+  docker compose up -d --remove-orphans $SERVICES && \
+  if [ $? != 0 ]; then
+    printf "Testing... Failed. You suck!\n"
+  else
+    printf "Testing... Done. You're awesome!\n"
+  fi
+
+  sed -i "s/$USER/<host-username>/g" docker-compose.yml
+}
+
 case $1 in
+  test)
+    clean_test
+    ;;
   build)
     build_containers
     ;;
