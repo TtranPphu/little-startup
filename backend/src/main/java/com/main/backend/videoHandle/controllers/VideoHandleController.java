@@ -1,12 +1,13 @@
-package com.main.backend.video.controllers;
+package com.main.backend.videoHandle.controllers;
 
-import com.main.backend.video.dtos.VideoAddResponseDto;
-import com.main.backend.video.dtos.VideoDeleteResponseDto;
-import com.main.backend.video.services.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.main.backend.videoHandle.dtos.VideoAddResponseDto;
+import com.main.backend.videoHandle.dtos.VideoDeleteResponseDto;
+import com.main.backend.videoHandle.services.VideoService;
 
 @RestController
 @RequestMapping("/api/videos")

@@ -1,11 +1,12 @@
-package com.main.backend.video.services;
+package com.main.backend.videoHandle.services;
 
 import com.main.backend.common.exceptions.BusinessException;
-import com.main.backend.video.dtos.VideoAddResponseDto;
-import com.main.backend.video.dtos.VideoDeleteResponseDto;
-import com.main.backend.video.models.Video;
-import com.main.backend.video.repositories.VideoRepo;
-import com.main.backend.video.utils.FFmpegConverter;
+import com.main.backend.videoHandle.dtos.VideoAddResponseDto;
+import com.main.backend.videoHandle.dtos.VideoDeleteResponseDto;
+import com.main.backend.videoHandle.models.Video;
+import com.main.backend.videoHandle.repositories.VideoRepo;
+import com.main.backend.videoHandle.utils.FFmpegConverter;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

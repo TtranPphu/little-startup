@@ -1,4 +1,4 @@
-package com.main.backend.video.models;
+package com.main.backend.videoHandle.models;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

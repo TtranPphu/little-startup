@@ -1,4 +1,4 @@
-package com.main.backend.video.dtos;
+package com.main.backend.videoHandle.dtos;
 
 import lombok.Builder;
 import lombok.Data;
