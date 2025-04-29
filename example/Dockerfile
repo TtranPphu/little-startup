@@ -1,4 +1,4 @@
-FROM node:22.14.0-slim AS build
+FROM node:22.14.0-alpine AS build
 
 WORKDIR /example
 
@@ -6,7 +6,9 @@ COPY package*.json .
 RUN npm install
 
 COPY . .
-RUN npm build
+RUN npm run build
 
-FROM node:22.14.0-slim as example
-COPY --from=build dist dist
+FROM nginx:stable-alpine as example
+
+COPY --from=build /example/dist /usr/share/nginx/html
+# CMD ["nginx", "-g", "deamon off;"]

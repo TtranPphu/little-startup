@@ -14,12 +14,10 @@ services:
       context: example
       dockerfile: Dockerfile
       target: example
-    volumes:
-      - ./example:/example
     ports:
-      - 1232:1234
-    working_dir: /example
-    command: npm start
+      - 1232:80
+    depends_on:
+      - backend
 
   backend:
     build:
