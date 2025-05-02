@@ -1,10 +1,15 @@
 #! /usr/bin/bash
 
+if [ -z "$USER" ]; then
+  printf "You should not run this script inside a devcontainer! Bye bye!\n"
+  exit
+fi
+
 exe_aloud() { echo "\$ $@"; "$@"; }
 
 print_help() {
-  printf "Usage: ./ops.sh <command> [<environmen> [<service>]]\n"
-  printf "  - commands: build, up | start, stop, down\n"
+  printf "Usage: ./ops.sh <command> [<environment> [<service>]]\n"
+  printf "  - commands: build, up | start, stop, down, test | rebuild\n"
   printf "  - environments (omit: all):\n"
   printf "    + prod | production\n"
   printf "    + nvim | neovim <service>\n"
@@ -26,6 +31,87 @@ print_vscode() {
   printf "  Select \"Dev Containers: Reopen in Container\"\n"
   printf "  Then select the service you want to develop.\n"
   read -p "Press [Enter] to continue!"
+}
+
+initialize() {
+  sed -i "s/<host-username>/$USER/g" docker-compose.yml
+
+  cp .devcontainer/pre-commit .git/hooks/pre-commit
+  git config --local core.editor "nvim"
+
+  # dummy nvim config
+  mkdir ~/.config/nvim 2>/dev/null | true
+  mkdir ~/.local/share/nvim 2>/dev/null | true
+  mkdir ~/.local/state/nvim 2>/dev/null | true
+
+  # .env for backend
+  if [ ! -f .devcontainer/backend/.env ]; then
+    if [ -f ~/.little-startup/.env ]; then
+      cp ~/.little-startup/.env .devcontainer/backend/.env
+    else
+      cp .devcontainer/backend/.env.default .devcontainer/backend/.env
+    fi
+  fi
+}
+
+deinitialize() {
+  sed -i "s/$USER/<host-username>/g" docker-compose.yml
+}
+
+build_containers() {
+  initialize
+  printf 'Building containers...\n'
+  exe_aloud docker compose --progress plain build --parallel $SERVICES \
+    &> compose-build.log && \
+  exe_aloud docker compose up -d --remove-orphans $SERVICES \
+    &>> compose-build.log
+  if [ $? != 0 ]; then
+    deinitialize
+    printf "Building containers failed!\n"
+    exe_aloud nvim compose-build.log
+    exit
+  fi
+  deinitialize
+  printf "Building containers done!\n"
+}
+
+init_container() {
+  context="$1"
+  service="$context-devcontainer"
+  container="little-startup-$service-1"
+  printf "Initiating $service...\n"
+  exe_aloud docker exec \
+    --workdir /workspaces/little-startup \
+    $container \
+    sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
+    &> "$service.log"
+  if [ $? != 0 ]; then
+    printf "Initiating $service failed! For more info:\n"
+    printf "  nvim $service.log\n"
+  else
+    printf "Initiating $service done!\n"
+  fi
+}
+
+clean() {
+  sudo git clean -f -d -x -e ".db-*"
+  docker compose down
+}
+
+rebuild() {
+  clean
+  initialize
+
+  printf 'Testing...\n'
+  docker compose build --parallel $SERVICES && \
+  docker compose up -d --remove-orphans $SERVICES && \
+  if [ $? != 0 ]; then
+    printf "Testing... Failed. You suck!\n"
+  else
+    printf "Testing... Done. You're awesome!\n"
+  fi
+
+  deinitialize
 }
 
 case $2 in
@@ -65,62 +151,9 @@ case $2 in
     ;;
 esac
 
-build_containers() {
-  sh devops/initialize.sh
-  printf 'Building containers...\n'
-  exe_aloud docker compose --progress plain build --parallel $SERVICES \
-    &> compose-build.log && \
-  exe_aloud docker compose up -d --remove-orphans $SERVICES \
-    &>> compose-build.log
-  if [ $? != 0 ]; then
-    sed -i "s/$USER/<host-username>/g" docker-compose.yml
-    printf "Building containers failed!\n"
-    exe_aloud nvim compose-build.log
-    exit
-  fi
-  sed -i "s/$USER/<host-username>/g" docker-compose.yml
-  printf "Building containers done!\n"
-}
-
-init_container() {
-  context="$1"
-  service="$context-devcontainer"
-  container="little-startup-$service-1"
-  printf "Initiating $service...\n"
-  exe_aloud docker exec \
-    --workdir /workspaces/little-startup \
-    $container \
-    sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
-    &> "$service.log"
-  if [ $? != 0 ]; then
-    printf "Initiating $service failed! For more info:\n"
-    printf "  nvim $service.log\n"
-  else
-    printf "Initiating $service done!\n"
-  fi
-}
-
-clean_test() {
-  sudo git clean -f -d -x -e ".db-*"
-
-  docker compose down
-  sh initialize.sh
-
-  printf 'Testing...\n'
-  docker compose build --parallel $SERVICES && \
-  docker compose up -d --remove-orphans $SERVICES && \
-  if [ $? != 0 ]; then
-    printf "Testing... Failed. You suck!\n"
-  else
-    printf "Testing... Done. You're awesome!\n"
-  fi
-
-  sed -i "s/$USER/<host-username>/g" docker-compose.yml
-}
-
 case $1 in
-  test)
-    clean_test
+  test | rebuild)
+    rebuild
     ;;
   build)
     build_containers
