@@ -5,7 +5,10 @@ if [ -z "$USER" ]; then
   exit
 fi
 
-exe_aloud() { echo "\$ $@"; "$@"; }
+exe_aloud() {
+  echo "\$ $@"
+  "$@"
+}
 
 print_help() {
   printf "Usage: ./ops.sh <command> [<environment> [<service>]]\n"
@@ -62,9 +65,9 @@ build_containers() {
   initialize
   printf 'Building containers...\n'
   exe_aloud docker compose --progress plain build --parallel $SERVICES \
-    &> compose-build.log && \
-  exe_aloud docker compose up -d --remove-orphans $SERVICES \
-    &>> compose-build.log
+    &>compose-build.log &&
+    exe_aloud docker compose up -d --remove-orphans $SERVICES \
+      &>>compose-build.log
   if [ $? != 0 ]; then
     deinitialize
     printf "Building containers failed!\n"
@@ -84,7 +87,7 @@ init_container() {
     --workdir /workspaces/little-startup \
     $container \
     sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
-    &> "$service.log"
+    &>"$service.log"
   if [ $? != 0 ]; then
     printf "Initiating $service failed! For more info:\n"
     printf "  nvim $service.log\n"
@@ -103,97 +106,104 @@ rebuild() {
   initialize
 
   printf 'Testing...\n'
-  docker compose build --parallel $SERVICES && \
-  docker compose up -d --remove-orphans $SERVICES && \
-  if [ $? != 0 ]; then
-    printf "Testing... Failed. You suck!\n"
-  else
-    printf "Testing... Done. You're awesome!\n"
-  fi
+  docker compose build --parallel $SERVICES &&
+    docker compose up -d --remove-orphans $SERVICES &&
+    if [ $? != 0 ]; then
+      printf "Testing... Failed. You suck!\n"
+    else
+      printf "Testing... Done. You're awesome!\n"
+    fi
 
   deinitialize
 }
 
 case $2 in
-  nvim | neovim | code | vscode)
-    case $3 in
-      ex | example)
-        CONTEXT='example'
-        ;;
-      be | backend)
-        CONTEXT='backend'
-        ;;
-      fe | frontend)
-        CONTEXT='frontend'
-        ;;
-      *)
-        print_help
-        exit
-        ;;
-    esac
-    printf "context: $CONTEXT\n"
-    SERVICES="$CONTEXT-devcontainer"
-    CONTAINERS="little-startup-$SERVICES-1"
-    printf "services: $SERVICES\n"
-    printf "containers: $CONTAINERS\n"
+nvim | neovim | code | vscode)
+  case $3 in
+  ex | example)
+    CONTEXT='example'
     ;;
-  prod | production)
-    SERVICES='student-fe tutor-fe faculty-fe'
-    CONTAINERS='little-startup-student-fe-1 '`
-              `'little-startup-tutor-fe-1 '`
-              `'little-startup-faculty-fe-1'
-    printf "services: $SERVICES\n"
-    printf "containers: $CONTAINERS\n"
+  be | backend)
+    CONTEXT='backend'
     ;;
-  *)
-    SERVICES=''
-    CONTAINERS=''
-    ;;
-esac
-
-case $1 in
-  clean)
-    clean
-    ;;
-  rebuild | test)
-    rebuild
-    ;;
-  build)
-    build_containers
-    ;;
-  up | start)
-    build_containers
-    case $2 in
-      nvim | neovim)
-        init_container $CONTEXT
-        exe_aloud docker exec -it \
-          --workdir /workspaces/little-startup \
-          $CONTAINERS \
-          nvim
-        ;;
-      code | vscode)
-        init_container $CONTEXT
-        print_vscode
-        code .
-        ;;
-      prod | production)
-        ;;
-      *)
-        for context in 'example' 'backend' 'frontend'; do
-          init_container $context &
-        done
-        wait
-        ;;
-    esac
-    ;;
-  stop)
-    exe_aloud docker compose stop $SERVICES
-    ;;
-  down)
-    exe_aloud docker compose down $SERVICES
+  fe | frontend)
+    CONTEXT='frontend'
     ;;
   *)
     print_help
     exit
     ;;
+  esac
+  printf "context: $CONTEXT\n"
+  SERVICES="$CONTEXT-devcontainer"
+  CONTAINERS="little-startup-$SERVICES-1"
+  printf "services: $SERVICES\n"
+  printf "containers: $CONTAINERS\n"
+  ;;
+prod | production)
+  SERVICES='student-fe tutor-fe faculty-fe'
+  CONTAINERS='little-startup-student-fe-1 '$(
+  )'little-startup-tutor-fe-1 '$(
+  )'little-startup-faculty-fe-1'
+  printf "services: $SERVICES\n"
+  printf "containers: $CONTAINERS\n"
+  ;;
+*)
+  SERVICES=''
+  CONTAINERS=''
+  ;;
+esac
+
+case $1 in
+clean)
+  clean
+  ;;
+rebuild | test)
+  rebuild
+  ;;
+build)
+  build_containers
+  ;;
+up | start)
+  build_containers
+  case $2 in
+  nvim | neovim)
+    init_container $CONTEXT
+    exe_aloud docker exec -it \
+      --workdir /workspaces/little-startup \
+      $CONTAINERS \
+      nvim
+    ;;
+  code | vscode)
+    init_container $CONTEXT
+    print_vscode
+    code .
+    ;;
+  prod | production) ;;
+  shortlist)
+    echo nvim neovim code vscode prod production
+    exit
+    ;;
+  *)
+    for context in 'example' 'backend' 'frontend'; do
+      init_container $context &
+    done
+    wait
+    ;;
+  esac
+  ;;
+stop)
+  exe_aloud docker compose stop $SERVICES
+  ;;
+down)
+  exe_aloud docker compose down $SERVICES
+  ;;
+shortlist)
+  echo build up start stop down clean rebuild test
+  exit
+  ;;
+*)
+  print_help
+  exit
+  ;;
 esac

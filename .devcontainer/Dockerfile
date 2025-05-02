@@ -27,12 +27,9 @@ COPY --chown=${USER_NAME}:${USER_NAME} gitstatusd-linux-x86_64 \
     /home/${USER_NAME}/.cache/gitstatus/gitstatusd-linux-x86_64
 
 # neo-vim and dependencies
-ARG GITHUB_USER=TtranPphu
-ARG GIT_BRANCH=TtranPphu-patch-1
 RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
 RUN sudo apt-get update && sudo apt-get install make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji -y
-RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
-    --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+# for configurations, recommended checkout: https://github.com/nvim-lua/kickstart.nvim
 
 FROM base-devcontainer AS example-devcontainer
 COPY --chown=${USER_NAME}:${USER_NAME} example/.zshrc /home/${USER_NAME}/.zshrc
