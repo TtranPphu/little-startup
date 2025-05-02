@@ -97,6 +97,7 @@ init_container() {
 }
 
 clean() {
+  printf "Bringing down containers...\n"
   docker compose down &>/dev/null | true
   sudo git clean -f -d -x -e ".db-*"
 }
