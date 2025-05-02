@@ -9,7 +9,7 @@ exe_aloud() { echo "\$ $@"; "$@"; }
 
 print_help() {
   printf "Usage: ./ops.sh <command> [<environment> [<service>]]\n"
-  printf "  - commands: build, up | start, stop, down, test | rebuild\n"
+  printf "  - commands: build, up | start, stop, down, clean, rebuild | test\n"
   printf "  - environments (omit: all):\n"
   printf "    + prod | production\n"
   printf "    + nvim | neovim <service>\n"
@@ -94,8 +94,8 @@ init_container() {
 }
 
 clean() {
+  docker compose down &>/dev/null | true
   sudo git clean -f -d -x -e ".db-*"
-  docker compose down
 }
 
 rebuild() {
@@ -152,7 +152,10 @@ case $2 in
 esac
 
 case $1 in
-  test | rebuild)
+  clean)
+    clean
+    ;;
+  rebuild | test)
     rebuild
     ;;
   build)
