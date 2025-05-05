@@ -4,7 +4,7 @@
   "java.format.settings.profile": "GoogleStyle",
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
-  "ruff.interpreter": ["${workspaceFolder}/example/.venv/bin/python"],
+  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.rulers": [88]
@@ -25,7 +25,7 @@
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "python.defaultInterpreterPath": "./.venv/bin/python",
+  "python.defaultInterpreterPath": "./python/.venv/bin/python",
   "files.exclude": {
     "db-mongodb": true,
     "example/node_modules": true,

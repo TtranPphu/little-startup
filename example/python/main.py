@@ -1,4 +1,4 @@
-#! /workspaces/little-startup/example/.venv/bin/python
+#! /workspaces/little-startup/example/python/.venv/bin/python
 
 
 def main():
