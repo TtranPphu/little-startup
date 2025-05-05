@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run (python)",
+      "type": "shell",
+      "command": "uv",
+      "args": ["run", "main.py"],
+      "options": {
+        "cwd": "${workspaceFolder}/example/python"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run (rust)",
+      "type": "shell",
+      "command": "cargo",
+      "args": ["run"],
+      "options": {
+        "cwd": "${workspaceFolder}/example/rust"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run (react)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}/example"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
