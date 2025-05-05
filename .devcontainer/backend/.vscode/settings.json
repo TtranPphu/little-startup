@@ -4,15 +4,6 @@
   "java.format.settings.profile": "GoogleStyle",
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
-  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.rulers": [88]
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.rulers": [120]
-  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
@@ -21,19 +12,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
   },
-  "shellformat.path": "/usr/bin/shfmt",
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "python.defaultInterpreterPath": "./python/.venv/bin/python",
   "files.exclude": {
-    "db-mongodb": true,
-    "example/node_modules": true,
-    "example/dist": true,
-    "example/package-lock.json": true,
-    "example/.parcel-cache": true,
-    "example/.env": true,
-    "example/uv.lock": true
+    ".db-mongodb": true
   },
   "github.codespaces.devcontainerChangedNotificationStyle": "none",
   "editor.renderWhitespace": "all",
