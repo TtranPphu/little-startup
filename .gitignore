@@ -1,5 +1,2 @@
 **/*.log
 .zsh_history
-.nvimlog
-
-.env
