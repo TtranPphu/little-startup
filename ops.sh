@@ -65,9 +65,9 @@ build_containers() {
   initialize
   printf 'Building containers...\n'
   exe_aloud docker compose --progress plain build --parallel $SERVICES \
-    &> .logs/compose-build.log &&
+    &>.logs/compose-build.log &&
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
-      &>> .logs/compose-build.log
+      &>>.logs/compose-build.log
   if [ $? != 0 ]; then
     deinitialize
     printf "Building containers failed!\n"

@@ -21,6 +21,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
   },
+  "shellformat.path": "/usr/bin/shfmt",
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
