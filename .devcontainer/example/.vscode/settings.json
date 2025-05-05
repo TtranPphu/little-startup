@@ -1,0 +1,48 @@
+{
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.rulers": [88]
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [120]
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "shellformat.path": "/usr/bin/shfmt",
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "python.defaultInterpreterPath": "./python/.venv/bin/python",
+  "github.codespaces.devcontainerChangedNotificationStyle": "none",
+  "editor.renderWhitespace": "all",
+  "code-eol.newlineCharacter": "¬",
+  "code-eol.returnCharacter": "¤",
+  "code-eol.crlfCharacter": "¤¬",
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
+  "editor.fontFamily": "Hurmit Nerd Font",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontFamily": "Hurmit Nerd Font",
+  "terminal.integrated.fontSize": 12,
+  "files.exclude": {
+    ".db-mongodb": true,
+    "example/.parcel-cache": true,
+    "example/python/.venv": true,
+    "example/target": true,
+    "example/Cargo.lock": true,
+    "example/dist": true,
+    "example/node_modules": true,
+    "example/package-lock.json": true,
+    "example/python/uv.lock": true,
+    "target": true
+  }
+}
