@@ -73,6 +73,7 @@ services:
       target: example-devcontainer
     volumes:
       - .:/workspaces/little-startup
+      - ./.devcontainer/example/.vscode:/workspaces/little-startup/.vscode
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
@@ -93,6 +94,7 @@ services:
       target: backend-devcontainer
     volumes:
       - .:/workspaces/little-startup
+      - ./.devcontainer/backend/.vscode:/workspaces/little-startup/.vscode
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
@@ -114,6 +116,7 @@ services:
       target: frontend-devcontainer
     volumes:
       - .:/workspaces/little-startup
+      - ./.devcontainer/frontend/.vscode:/workspaces/little-startup/.vscode
       - /home/<host-username>/.ssh:/home/little/.ssh:cached
       - /home/<host-username>/.config/nvim:/home/little/.config/nvim:cached
       - /home/<host-username>/.local/share/nvim:/home/little/.local/share/nvim:cached
