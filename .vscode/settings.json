@@ -4,8 +4,9 @@
   "java.format.settings.profile": "GoogleStyle",
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
+  "ruff.interpreter": ["${workspaceFolder}/example/.venv/bin/python"],
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.rulers": [88]
   },
   "[typescriptreact]": {
@@ -19,12 +20,6 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
-  },
-  "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  },
-  "[dockercompose]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
@@ -40,7 +35,6 @@
     "example/uv.lock": true
   },
   "github.codespaces.devcontainerChangedNotificationStyle": "none",
-  "docker.extension.dockerEngineAvailabilityPrompt": false,
   "editor.renderWhitespace": "all",
   "code-eol.newlineCharacter": "¬",
   "code-eol.returnCharacter": "¤",

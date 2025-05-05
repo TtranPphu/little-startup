@@ -22,6 +22,7 @@
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
+        "charliermarsh.ruff",
         "chekweitan.compare-view",
         "cweijan.vscode-mysql-client2",
         "eriklynd.json-tools",
@@ -33,8 +34,6 @@
         "mechatroner.rainbow-csv",
         "medo64.render-crlf",
         "ms-azuretools.vscode-containers",
-        "ms-azuretools.vscode-docker",
-        "ms-python.black-formatter",
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-toolsai.jupyter",
