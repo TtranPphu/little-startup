@@ -8,7 +8,6 @@
   "workspaceFolder": "/workspaces/little-startup",
   "portsAttributes": {
     "1234": {
-      "label": "example",
       "onAutoForward": "notify"
     }
   },
@@ -33,6 +32,7 @@
         "github.vscode-pull-request-github",
         "mechatroner.rainbow-csv",
         "medo64.render-crlf",
+        "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
         "ms-python.black-formatter",
         "ms-python.python",
