@@ -65,13 +65,13 @@ build_containers() {
   initialize
   printf 'Building containers...\n'
   exe_aloud docker compose --progress plain build --parallel $SERVICES \
-    &>compose-build.log &&
+    &> .logs/compose-build.log &&
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
-      &>>compose-build.log
+      &>> .logs/compose-build.log
   if [ $? != 0 ]; then
     deinitialize
     printf "Building containers failed!\n"
-    exe_aloud nvim compose-build.log
+    exe_aloud nvim .logs/compose-build.log
     exit
   fi
   deinitialize
@@ -87,10 +87,10 @@ init_container() {
     --workdir /workspaces/little-startup \
     $container \
     sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
-    &>"$service.log"
+    &>".logs/$service.log"
   if [ $? != 0 ]; then
     printf "Initiating $service failed! For more info:\n"
-    printf "  nvim $service.log\n"
+    printf "  nvim .logs/$service.log\n"
   else
     printf "Initiating $service done!\n"
   fi
