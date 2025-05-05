@@ -1,0 +1,3 @@
+[submodule "example/rust/multi_containers"]
+	path = example/rust/multi_containers
+	url = https://github.com/TtranPphu/multi_containers.git

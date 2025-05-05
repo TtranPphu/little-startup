@@ -1,11 +1,22 @@
 {
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
-  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.rulers": [88]
   },
+  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.rulers": [88]
+  },
+  "rust-analyzer.linkedProjects": [
+    "${workspaceFolder}/example/rust/Cargo.toml"
+  ],
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "shellformat.path": "/usr/bin/shfmt",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.rulers": [120]
@@ -17,10 +28,6 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
-  },
-  "shellformat.path": "/usr/bin/shfmt",
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "python.defaultInterpreterPath": "./python/.venv/bin/python",
   "github.codespaces.devcontainerChangedNotificationStyle": "none",

@@ -6,7 +6,7 @@
     cd ../..
 )
 (
-    cd example
+    cd example/react
     npm install
     cd ..
 )
