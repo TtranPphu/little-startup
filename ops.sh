@@ -105,6 +105,7 @@ init_container() {
 }
 
 clean() {
+  sudo true
   printf "Bringing down containers...\n"
   docker compose down &>/dev/null | true
   sudo git clean -f -d -x -e ".db-*"
@@ -119,11 +120,13 @@ rebuild() {
     docker compose up -d --remove-orphans $SERVICES &&
     if [ $? != 0 ]; then
       printf "Testing... Failed. You suck!\n"
+      deinitialize
+      exit 1
     else
       printf "Testing... Done. You're awesome!\n"
+      deinitialize
+      exit 0
     fi
-
-  deinitialize
 }
 
 case $2 in
