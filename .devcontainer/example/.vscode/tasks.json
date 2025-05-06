@@ -27,7 +27,7 @@
       "command": "npm",
       "args": ["start"],
       "options": {
-        "cwd": "${workspaceFolder}/example"
+        "cwd": "${workspaceFolder}/example/react"
       },
       "problemMatcher": []
     }

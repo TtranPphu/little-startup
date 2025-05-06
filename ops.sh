@@ -29,11 +29,19 @@ print_vscode() {
   printf "  launch you dirrectly into devcontainer.\n"
   printf "We just have built the containers and set-up the general\n"
   printf "  development environment for you.\n"
-  printf "We will launch VS Code inside WSL for you, once you're there,\n"
-  printf "  Hit [Ctrl + Shift + P]\n"
-  printf "  Select \"Dev Containers: Reopen in Container\"\n"
-  printf "  Then select the service you want to develop.\n"
-  read -p "Press [Enter] to continue!"
+  if [ "$TERM_PROGRAM" != "vscode" ]; then
+    printf "We will launch VS Code inside WSL for you, once you're there,\n"
+    printf "  Hit [Ctrl + Shift + P]\n"
+    printf "  Select \"Dev Containers: Reopen in Container\"\n"
+    printf "  Then select '$CONTEXT'.\n"
+    read -p "Press [Enter] to continue or [Ctrl + C] to start later... "
+  else
+    printf "Look like you're already in VS Code,\n"
+    printf "  Hit [Ctrl + Shift + P]\n"
+    printf "  Select \"Dev Containers: Reopen in Container\"\n"
+    printf "  Then select '$CONTEXT'.\n"
+    exit
+  fi
 }
 
 initialize() {

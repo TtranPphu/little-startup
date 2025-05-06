@@ -1,16 +1,11 @@
 {
-  "name": "example-devcontainer",
+  "name": "example",
   "postCreateCommand": "sh .devcontainer/example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "example-devcontainer",
   "runServices": ["example-devcontainer"],
   "shutdownAction": "none",
   "workspaceFolder": "/workspaces/little-startup",
-  "portsAttributes": {
-    "1234": {
-      "onAutoForward": "notify"
-    }
-  },
   "customizations": {
     "vscode": {
       "settings": {
