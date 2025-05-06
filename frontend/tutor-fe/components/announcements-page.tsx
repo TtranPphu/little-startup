@@ -65,25 +65,21 @@ const announcements = [
     content:
       "We will be holding parent-teacher conferences on May 25th and 26th. Please sign up for a time slot using the online scheduling tool.",
   },
-];
+]
 
 export function AnnouncementsPage() {
   const [filter, setFilter] = useState({
     target: "all",
     status: "all",
-  });
-  const [searchQuery, setSearchQuery] = useState("");
+  })
+  const [searchQuery, setSearchQuery] = useState("")
 
   const filteredAnnouncements = announcements.filter((announcement) => {
-    const targetMatch =
-      filter.target === "all" || announcement.target === filter.target;
-    const statusMatch =
-      filter.status === "all" || announcement.status === filter.status;
-    const searchMatch =
-      searchQuery === "" ||
-      announcement.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return targetMatch && statusMatch && searchMatch;
-  });
+    const targetMatch = filter.target === "all" || announcement.target === filter.target
+    const statusMatch = filter.status === "all" || announcement.status === filter.status
+    const searchMatch = searchQuery === "" || announcement.title.toLowerCase().includes(searchQuery.toLowerCase())
+    return targetMatch && statusMatch && searchMatch
+  })
 
   return (
     <div className="flex flex-col gap-4">
@@ -99,9 +95,7 @@ export function AnnouncementsPage() {
           <DialogContent className="sm:max-w-[525px]">
             <DialogHeader>
               <DialogTitle>Create New Announcement</DialogTitle>
-              <DialogDescription>
-                Create an announcement for your students.
-              </DialogDescription>
+              <DialogDescription>Create an announcement for your students.</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -117,9 +111,7 @@ export function AnnouncementsPage() {
                   <SelectContent>
                     <SelectItem value="all">All Classes</SelectItem>
                     <SelectItem value="beginner">Beginner Mandarin</SelectItem>
-                    <SelectItem value="intermediate">
-                      Intermediate Conversation
-                    </SelectItem>
+                    <SelectItem value="intermediate">Intermediate Conversation</SelectItem>
                     <SelectItem value="advanced">Advanced Writing</SelectItem>
                     <SelectItem value="business">Business Mandarin</SelectItem>
                     <SelectItem value="hsk4">HSK 4 Preparation</SelectItem>
@@ -128,11 +120,7 @@ export function AnnouncementsPage() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="content">Content</Label>
-                <Textarea
-                  id="content"
-                  placeholder="Enter announcement content"
-                  rows={6}
-                />
+                <Textarea id="content" placeholder="Enter announcement content" rows={6} />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="schedule">Schedule Post</Label>
@@ -141,18 +129,8 @@ export function AnnouncementsPage() {
                   <div className="grid gap-1.5">
                     <Label htmlFor="schedule-date">Date</Label>
                     <div className="flex items-center gap-2">
-                      <Input
-                        id="schedule-date"
-                        type="date"
-                        className="w-[180px]"
-                        disabled
-                      />
-                      <Input
-                        id="schedule-time"
-                        type="time"
-                        className="w-[120px]"
-                        disabled
-                      />
+                      <Input id="schedule-date" type="date" className="w-[180px]" disabled />
+                      <Input id="schedule-time" type="time" className="w-[120px]" disabled />
                     </div>
                   </div>
                 </div>
@@ -190,32 +168,20 @@ export function AnnouncementsPage() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Select
-            value={filter.target}
-            onValueChange={(value) => setFilter({ ...filter, target: value })}
-          >
+          <Select value={filter.target} onValueChange={(value) => setFilter({ ...filter, target: value })}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by target" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Targets</SelectItem>
               <SelectItem value="All Classes">All Classes</SelectItem>
-              <SelectItem value="Beginner Mandarin">
-                Beginner Mandarin
-              </SelectItem>
-              <SelectItem value="Intermediate Conversation">
-                Intermediate Conversation
-              </SelectItem>
+              <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
+              <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
               <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-              <SelectItem value="HSK 4 Preparation">
-                HSK 4 Preparation
-              </SelectItem>
+              <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
             </SelectContent>
           </Select>
-          <Select
-            value={filter.status}
-            onValueChange={(value) => setFilter({ ...filter, status: value })}
-          >
+          <Select value={filter.status} onValueChange={(value) => setFilter({ ...filter, status: value })}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
@@ -234,23 +200,12 @@ export function AnnouncementsPage() {
           </div>
         ) : (
           filteredAnnouncements.map((announcement) => (
-            <div
-              key={announcement.id}
-              className="rounded-lg border bg-card text-card-foreground shadow-sm"
-            >
+            <div key={announcement.id} className="rounded-lg border bg-card text-card-foreground shadow-sm">
               <div className="flex flex-col space-y-1.5 p-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-semibold leading-none tracking-tight">
-                    {announcement.title}
-                  </h3>
+                  <h3 className="text-2xl font-semibold leading-none tracking-tight">{announcement.title}</h3>
                   <div className="flex items-center gap-2">
-                    <Badge
-                      variant={
-                        announcement.status === "Published"
-                          ? "default"
-                          : "outline"
-                      }
-                    >
+                    <Badge variant={announcement.status === "Published" ? "default" : "outline"}>
                       {announcement.status}
                     </Badge>
                     <Button variant="ghost" size="icon">
@@ -276,5 +231,5 @@ export function AnnouncementsPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

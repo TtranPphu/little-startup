@@ -15,7 +15,7 @@ import { RecentMessages } from "@/components/recent-messages";
 
 export function DashboardPage() {
   return (
-    <div className="flex flex-col gap-4 ">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
       </div>
@@ -26,6 +26,7 @@ export function DashboardPage() {
           <TabsTrigger value="reports">Reports</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
+          {/* Stats Cards */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -135,26 +136,30 @@ export function DashboardPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4">
-              <CardHeader>
-                <CardTitle>Recent Classes</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RecentClasses />
-              </CardContent>
-            </Card>
-            <Card className="col-span-3">
-              <CardHeader>
-                <CardTitle>Upcoming Assignments</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <UpcomingAssignments />
-              </CardContent>
-            </Card>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-3">
+
+          {/* Recent Classes - Full Width Row */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Classes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RecentClasses />
+            </CardContent>
+          </Card>
+
+          {/* Upcoming Assignments - Full Width Row */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Assignments</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <UpcomingAssignments />
+            </CardContent>
+          </Card>
+
+          {/* Student Attendance and Recent Messages */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12">
+            <Card className="col-span-2 lg:col-span-4">
               <CardHeader>
                 <CardTitle>Student Attendance</CardTitle>
                 <CardDescription>Last 7 days</CardDescription>
@@ -163,7 +168,7 @@ export function DashboardPage() {
                 <StudentAttendance />
               </CardContent>
             </Card>
-            <Card className="col-span-4">
+            <Card className="col-span-2 lg:col-span-8">
               <CardHeader>
                 <CardTitle>Recent Messages</CardTitle>
               </CardHeader>

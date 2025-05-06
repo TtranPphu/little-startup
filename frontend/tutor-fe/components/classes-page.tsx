@@ -225,7 +225,7 @@ export function ClassesPage() {
                   <TableCell className="hidden md:table-cell">{classItem.time}</TableCell>
                   <TableCell className="hidden md:table-cell">{classItem.days}</TableCell>
                   <TableCell className="hidden md:table-cell">{classItem.students}</TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">
                     <Badge
                       variant={
                         classItem.status === "Active"

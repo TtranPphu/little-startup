@@ -1,0 +1,2 @@
+$ docker exec --workdir /workspaces/little-startup little-startup-example-devcontainer-1 sh .devcontainer/example/post-create.sh
+Error response from daemon: No such container: little-startup-example-devcontainer-1
