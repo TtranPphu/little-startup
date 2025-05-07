@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: myapp
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+  web:
+    resources:
+      static-locations: file:data/
+  data:
+    mongodb:
+      host: #{your-mongo-host}
+      port: #{your-mongo-port}
+      database: #{your-mongo-database}
+      username: #{your-mongo-username}
+      password: #{your-mongo-password}
+      authentication-database: #{your-auth-db}
+      auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #{your-email}
+    password: #{your-password}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+springdoc:
+  swagger-ui:
+    path: /api/docs/index.html
+
+server:
+  port: 8080
