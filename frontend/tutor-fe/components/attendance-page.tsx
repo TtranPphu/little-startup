@@ -207,7 +207,7 @@ export function AttendancePage() {
                       <div>{record.student}</div>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">
                     <Badge
                       variant={
                         record.status === "Present" ? "default" : record.status === "Late" ? "outline" : "destructive"

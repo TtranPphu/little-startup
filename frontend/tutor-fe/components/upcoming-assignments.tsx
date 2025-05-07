@@ -40,14 +40,15 @@ const upcomingAssignments = [
 
 export function UpcomingAssignments() {
   return (
-    <div className="space-y-4">
+    <div className="w-full">
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Assignment</TableHead>
-              <TableHead className="hidden md:table-cell">Class</TableHead>
-              <TableHead className="hidden md:table-cell">Deadline</TableHead>
+              <TableHead className="w-[300px]">Assignment</TableHead>
+              <TableHead>Class</TableHead>
+              <TableHead>Deadline</TableHead>
+              <TableHead>Submissions</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
@@ -55,9 +56,10 @@ export function UpcomingAssignments() {
             {upcomingAssignments.map((assignment) => (
               <TableRow key={assignment.id}>
                 <TableCell className="font-medium">{assignment.title}</TableCell>
-                <TableCell className="hidden md:table-cell">{assignment.class}</TableCell>
-                <TableCell className="hidden md:table-cell">{assignment.deadline}</TableCell>
-                <TableCell>
+                <TableCell>{assignment.class}</TableCell>
+                <TableCell>{assignment.deadline}</TableCell>
+                <TableCell>{assignment.submissions}</TableCell>
+                <TableCell className="whitespace-nowrap">
                   <Badge
                     variant={
                       assignment.status === "Open"
