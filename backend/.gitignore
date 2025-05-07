@@ -31,12 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Deps ###
-.m2/repository/**
-!.m2/repository/
-!.m2/repository/.gitkeep
-
-### Environment Variables ###
-.env
-secrets.yml

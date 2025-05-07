@@ -1,0 +1,28 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.format.settings.profile": "GoogleStyle",
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "files.exclude": {
+    ".db-mongodb": true
+  },
+  "github.codespaces.devcontainerChangedNotificationStyle": "none",
+  "editor.renderWhitespace": "all",
+  "code-eol.newlineCharacter": "¬",
+  "code-eol.returnCharacter": "¤",
+  "code-eol.crlfCharacter": "¤¬",
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
+  "editor.fontFamily": "Hurmit Nerd Font",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontFamily": "Hurmit Nerd Font",
+  "terminal.integrated.fontSize": 12
+}

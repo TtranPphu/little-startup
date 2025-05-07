@@ -4,7 +4,7 @@ FROM ubuntu:22.04 AS base-devcontainer
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip \
     build-essential software-properties-common \
-    python3-pip bpytop tree ncdu cloc neofetch
+    python3-pip python3.10-venv bpytop tree ncdu cloc neofetch
 
 # user
 ARG USER_NAME=little
@@ -27,12 +27,10 @@ COPY --chown=${USER_NAME}:${USER_NAME} gitstatusd-linux-x86_64 \
     /home/${USER_NAME}/.cache/gitstatus/gitstatusd-linux-x86_64
 
 # neo-vim and dependencies
-ARG GITHUB_USER=TtranPphu
-ARG GIT_BRANCH=TtranPphu-patch-1
 RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
-RUN sudo apt-get update && sudo apt-get install make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji -y
-RUN git clone https://github.com/${GITHUB_USER}/kickstart.nvim \
-    --branch ${GIT_BRANCH} "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
+    make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji
+# for configurations, recommended checkout: https://github.com/nvim-lua/kickstart.nvim
 
 FROM base-devcontainer AS example-devcontainer
 COPY --chown=${USER_NAME}:${USER_NAME} example/.zshrc /home/${USER_NAME}/.zshrc
@@ -46,12 +44,17 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
 ARG PYTHON_VERSION=3.12
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://astral.sh/uv/install.sh | sh -s --
 RUN . /home/${USER_NAME}/.local/bin/env && uv python install ${PYTHON_VERSION}
-RUN pip3 install ruff ruff-lsp
+RUN pip3 install ruff
+
+# shellscript
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
+    shfmt
 
 # mongodbcli
 RUN sudo apt-get install -y gnupg
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | \
+    sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 RUN sudo apt-get update && sudo apt-get install -y mongodb-mongosh
 
 # npm
@@ -72,7 +75,8 @@ RUN sudo n stable
 RUN sudo npm update npm -g
 
 FROM base-devcontainer AS backend-devcontainer
-COPY backend/.zshrc /home/${USER_NAME}/.zshrc
+COPY --chown=${USER_NAME}:${USER_NAME} backend/.zshrc /home/${USER_NAME}/.zshrc
 
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    openjdk-17-jdk
+    openjdk-17-jdk \
+    ffmpeg

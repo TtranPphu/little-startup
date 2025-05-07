@@ -1,17 +1,11 @@
 {
-  "name": "example-devcontainer",
-  "initializeCommand": "sh initialize.sh",
+  "name": "example",
   "postCreateCommand": "sh .devcontainer/example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "example-devcontainer",
   "runServices": ["example-devcontainer"],
+  "shutdownAction": "none",
   "workspaceFolder": "/workspaces/little-startup",
-  "portsAttributes": {
-    "1234": {
-      "label": "example",
-      "onAutoForward": "notify"
-    }
-  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -23,17 +17,18 @@
         "workbench.colorTheme": "Default Dark Modern"
       },
       "extensions": [
+        "charliermarsh.ruff",
         "chekweitan.compare-view",
         "cweijan.vscode-mysql-client2",
         "eriklynd.json-tools",
         "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
         "github.codespaces",
         "github.copilot",
         "github.vscode-pull-request-github",
         "mechatroner.rainbow-csv",
         "medo64.render-crlf",
-        "ms-azuretools.vscode-docker",
-        "ms-python.black-formatter",
+        "ms-azuretools.vscode-containers",
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-toolsai.jupyter",
