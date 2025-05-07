@@ -1,13 +1,6 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.compile.nullAnalysis.mode": "automatic",
-  "java.format.settings.profile": "GoogleStyle",
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.rulers": [88]
-  },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.rulers": [120]
@@ -20,18 +13,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2
   },
-  "python.defaultInterpreterPath": "./.venv/bin/python",
   "files.exclude": {
-    "db-mongodb": true,
-    "example/node_modules": true,
-    "example/dist": true,
-    "example/package-lock.json": true,
-    "example/.parcel-cache": true,
-    "example/.env": true,
-    "example/uv.lock": true
+    ".db-mongodb": true
   },
   "github.codespaces.devcontainerChangedNotificationStyle": "none",
-  "docker.extension.dockerEngineAvailabilityPrompt": false,
   "editor.renderWhitespace": "all",
   "code-eol.newlineCharacter": "¬",
   "code-eol.returnCharacter": "¤",

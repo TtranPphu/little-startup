@@ -1,0 +1,29 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Frontend-Tutor",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend/tutor-fe"
+      },
+      "hide": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Frontend-Tutor",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend/tutor-fe"
+      },
+      "dependsOn": "Build Frontend",
+      "problemMatcher": []
+    }
+  ]
+}

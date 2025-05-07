@@ -1,5 +1,5 @@
 {
-  "name": "frontend-devcontainer",
+  "name": "frontend",
   "postCreateCommand": "sh .devcontainer/frontend/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "frontend-devcontainer",
@@ -24,8 +24,7 @@
         "github.vscode-pull-request-github",
         "mechatroner.rainbow-csv",
         "medo64.render-crlf",
-        "ms-azuretools.vscode-docker",
-        "ms-python.black-formatter",
+        "ms-azuretools.vscode-containers",
         "tamasfe.even-better-toml",
         "bradlc.vscode-tailwindcss",
         "usernamehw.errorlens"
