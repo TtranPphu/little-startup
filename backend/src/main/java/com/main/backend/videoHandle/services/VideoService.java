@@ -26,7 +26,7 @@ public class VideoService {
                 throw new Exception("Uploaded file is empty!");
             }
 
-            String basePath = System.getProperty("user.dir") + "/data/videos";
+            String basePath = System.getProperty("user.dir") + "/.data/videos";
             String originalFilename = file.getOriginalFilename();
 
             if (originalFilename == null) {
@@ -58,7 +58,7 @@ public class VideoService {
                 }
             }
 
-            String m3u8Url = "/data/videos/" + uploadId + "/hls/index.m3u8";
+            String m3u8Url = "/.data/videos/" + uploadId + "/hls/index.m3u8";
 
             Video video = Video.builder()
                     .originalFilename(file.getOriginalFilename())
