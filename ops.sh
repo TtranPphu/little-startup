@@ -174,6 +174,7 @@ up | start)
     exit
     ;;
   *)
+    initialize
     for context in 'example' 'backend' 'frontend'; do
       init_container $context &
     done

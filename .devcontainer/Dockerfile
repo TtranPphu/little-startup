@@ -2,9 +2,15 @@ FROM ubuntu:22.04 AS base-devcontainer
 
 # common utilities
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    sudo zsh wget curl git tmux vim zip unzip \
+    sudo zsh wget curl git tmux vim zip unzip locales \
     build-essential software-properties-common \
-    python3-pip python3.10-venv btop tree ncdu cloc neofetch
+    python3-pip python3.10-venv btop tree cloc neofetch
+
+# locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 # user
 ARG USER_NAME=little
@@ -25,6 +31,12 @@ RUN git clone --depth=1 \
 COPY --chown=${USER_NAME}:${USER_NAME} .p10k.zsh /home/${USER_NAME}/.p10k.zsh
 COPY --chown=${USER_NAME}:${USER_NAME} gitstatusd-linux-x86_64 \
     /home/${USER_NAME}/.cache/gitstatus/gitstatusd-linux-x86_64
+
+# gdu
+RUN sudo add-apt-repository ppa:daniel-milde/gdu -y
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
+    gdu
+COPY --chown=${USER_NAME}:${USER_NAME} .gdu.yaml /home/${USER_NAME}/.gdu.yaml
 
 # neo-vim and dependencies
 RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
