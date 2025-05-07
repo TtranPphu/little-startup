@@ -9,12 +9,16 @@
   "customizations": {
     "vscode": {
       "settings": {
+        // ui
         // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
+        "workbench.colorTheme": "Default Dark Modern",
         "editor.fontFamily": "Hurmit Nerd Font",
         "editor.fontSize": 12,
         "terminal.integrated.fontFamily": "Hurmit Nerd Font",
         "terminal.integrated.fontSize": 12,
-        "workbench.colorTheme": "Default Dark Modern"
+        // python
+        "python.locator": "js",
+        "python.defaultInterpreterPath": "${workspaceFolder}/example/python/.venv/bin/python"
       },
       "extensions": [
         "charliermarsh.ruff",
