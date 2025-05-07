@@ -4,7 +4,7 @@ FROM ubuntu:22.04 AS base-devcontainer
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip \
     build-essential software-properties-common \
-    python3-pip python3.10-venv bpytop tree ncdu cloc neofetch
+    python3-pip python3.10-venv btop tree ncdu cloc neofetch
 
 # user
 ARG USER_NAME=little
