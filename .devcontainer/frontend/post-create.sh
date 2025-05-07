@@ -1,7 +1,6 @@
 #! /usr/bin/bash
 
-cp .devcontainer/pre-commit .git/hooks/pre-commit
-git config core.editor "nvim"
+sh .devcontainer/post-create.sh
 
 (cd frontend/student-fe; npm install --legacy-peer-deps)
 (cd frontend/tutor-fe; npm install --legacy-peer-deps)
