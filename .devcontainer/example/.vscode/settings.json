@@ -2,7 +2,7 @@
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   // python
-  "python.defaultInterpreterPath": "./python/.venv/bin/python",
+  "python.defaultInterpreterPath": "${workspaceFolder}/example/python/.venv/bin/python",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.rulers": [88]

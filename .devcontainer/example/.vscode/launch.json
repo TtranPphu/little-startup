@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: main",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "cwd": "${workspaceFolder}/example/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/example/python/.venv/bin/python"
+      },
+      "console": "internalConsole",
+      "justMyCode": false
+    },
+    {
+      "name": "Python: test",
+      "type": "debugpy",
+      "request": "launch",
+      "program": ".venv/bin/pytest",
+      "args": ["--pdb", "${input:python_test_cases}"],
+      "cwd": "${workspaceFolder}/example/python",
+      "console": "internalConsole",
+      "justMyCode": false
+    },
+    {
+      "name": "Python: this file",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}/example/python",
+      "console": "internalConsole",
+      "justMyCode": false
+    },
+    {
+      "name": "Rust: main",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/example/rust/target/debug/example",
+      "args": [],
+      "cwd": "${workspaceFolder}/example/rust",
+      "preLaunchTask": "Build (rust)",
+      "sourceLanguages": ["rust"],
+      "initCommands": ["settings set target.disable-aslr false"]
+    }
+  ]
+}

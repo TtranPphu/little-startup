@@ -12,7 +12,7 @@ exe_aloud() {
 
 print_help() {
   printf "Usage: ./ops.sh <command> [<environment> [<service>]]\n"
-  printf "  - commands: build, up | start, stop, down, clean, rebuild | test\n"
+  printf "  - commands: up | start, stop, down, build | prebuild, rebuild | test, clean, init\n"
   printf "  - environments (omit: all):\n"
   printf "    + prod | production\n"
   printf "    + nvim | neovim <service>\n"
@@ -45,15 +45,9 @@ print_vscode() {
 }
 
 initialize() {
-  sed -i "s/<host-username>/$USER/g" docker-compose.yml
-
   cp .devcontainer/pre-commit .git/hooks/pre-commit
   git config --local core.editor "nvim"
-
-  # dummy nvim config
-  mkdir ~/.config/nvim 2>/dev/null | true
-  mkdir ~/.local/share/nvim 2>/dev/null | true
-  mkdir ~/.local/state/nvim 2>/dev/null | true
+  git config --local core.autocrlf false
 
   # .env for backend
   if [ ! -f .devcontainer/backend/.env ]; then
@@ -65,10 +59,6 @@ initialize() {
   fi
 }
 
-deinitialize() {
-  sed -i "s/$USER/<host-username>/g" docker-compose.yml
-}
-
 build_containers() {
   initialize
   printf 'Building containers...\n'
@@ -77,12 +67,10 @@ build_containers() {
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
       &>>.logs/compose-build.log
   if [ $? != 0 ]; then
-    deinitialize
     printf "Building containers failed!\n"
     exe_aloud nvim .logs/compose-build.log
     exit
   fi
-  deinitialize
   printf "Building containers done!\n"
 }
 
@@ -107,8 +95,8 @@ init_container() {
 clean() {
   sudo true
   printf "Bringing down containers...\n"
-  docker compose down &>/dev/null | true
-  sudo git clean -f -d -x -e ".db-*"
+  docker compose down &>.logs/compose-down.log | true
+  sudo git clean -f -d -x -e ".db-*" -e ".logs/*"
 }
 
 rebuild() {
@@ -120,11 +108,9 @@ rebuild() {
     docker compose up -d --remove-orphans $SERVICES &&
     if [ $? != 0 ]; then
       printf "Testing... Failed. You suck!\n"
-      deinitialize
       exit 1
     else
       printf "Testing... Done. You're awesome!\n"
-      deinitialize
       exit 0
     fi
 }
@@ -167,15 +153,6 @@ prod | production)
 esac
 
 case $1 in
-clean)
-  clean
-  ;;
-rebuild | test)
-  rebuild
-  ;;
-build)
-  build_containers
-  ;;
 up | start)
   build_containers
   case $2 in
@@ -210,8 +187,20 @@ stop)
 down)
   exe_aloud docker compose down $SERVICES
   ;;
+build | prebuild)
+  build_containers
+  ;;
+rebuild | test)
+  rebuild
+  ;;
+clean)
+  clean
+  ;;
+init)
+  initialize
+  ;;
 shortlist)
-  echo build up start stop down clean rebuild test
+  echo up start stop down build prebuild rebuild test clean init
   exit
   ;;
 *)
