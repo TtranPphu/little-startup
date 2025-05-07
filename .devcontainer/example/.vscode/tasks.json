@@ -12,6 +12,17 @@
       "problemMatcher": []
     },
     {
+      "label": "Build (rust)",
+      "type": "shell",
+      "command": "cargo",
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}/example/rust"
+      },
+      "problemMatcher": [],
+      "hide": true
+    },
+    {
       "label": "Run (rust)",
       "type": "shell",
       "command": "cargo",
@@ -19,7 +30,9 @@
       "options": {
         "cwd": "${workspaceFolder}/example/rust"
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "dependsOn": ["Build (rust)"],
+      "dependsOrder": "sequence"
     },
     {
       "label": "Run (react)",
