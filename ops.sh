@@ -29,11 +29,19 @@ print_vscode() {
   printf "  launch you dirrectly into devcontainer.\n"
   printf "We just have built the containers and set-up the general\n"
   printf "  development environment for you.\n"
-  printf "We will launch VS Code inside WSL for you, once you're there,\n"
-  printf "  Hit [Ctrl + Shift + P]\n"
-  printf "  Select \"Dev Containers: Reopen in Container\"\n"
-  printf "  Then select the service you want to develop.\n"
-  read -p "Press [Enter] to continue!"
+  if [ "$TERM_PROGRAM" != "vscode" ]; then
+    printf "We will launch VS Code inside WSL for you, once you're there,\n"
+    printf "  Hit [Ctrl + Shift + P]\n"
+    printf "  Select \"Dev Containers: Reopen in Container\"\n"
+    printf "  Then select '$CONTEXT'.\n"
+    read -p "Press [Enter] to continue or [Ctrl + C] to start later... "
+  else
+    printf "Look like you're already in VS Code,\n"
+    printf "  Hit [Ctrl + Shift + P]\n"
+    printf "  Select \"Dev Containers: Reopen in Container\"\n"
+    printf "  Then select '$CONTEXT'.\n"
+    exit
+  fi
 }
 
 initialize() {
@@ -65,9 +73,9 @@ build_containers() {
   initialize
   printf 'Building containers...\n'
   exe_aloud docker compose --progress plain build --parallel $SERVICES \
-    &> .logs/compose-build.log &&
+    &>.logs/compose-build.log &&
     exe_aloud docker compose up -d --remove-orphans $SERVICES \
-      &>> .logs/compose-build.log
+      &>>.logs/compose-build.log
   if [ $? != 0 ]; then
     deinitialize
     printf "Building containers failed!\n"
@@ -97,6 +105,7 @@ init_container() {
 }
 
 clean() {
+  sudo true
   printf "Bringing down containers...\n"
   docker compose down &>/dev/null | true
   sudo git clean -f -d -x -e ".db-*"
@@ -111,11 +120,13 @@ rebuild() {
     docker compose up -d --remove-orphans $SERVICES &&
     if [ $? != 0 ]; then
       printf "Testing... Failed. You suck!\n"
+      deinitialize
+      exit 1
     else
       printf "Testing... Done. You're awesome!\n"
+      deinitialize
+      exit 0
     fi
-
-  deinitialize
 }
 
 case $2 in

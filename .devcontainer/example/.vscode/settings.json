@@ -1,0 +1,61 @@
+{
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  // python
+  "python.defaultInterpreterPath": "./python/.venv/bin/python",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.rulers": [88]
+  },
+  "ruff.interpreter": ["${workspaceFolder}/example/python/.venv/bin/python"],
+  // rust
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.rulers": [88]
+  },
+  "rust-analyzer.linkedProjects": [
+    "${workspaceFolder}/example/rust/Cargo.toml"
+  ],
+  // shellscript
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "shellformat.path": "/usr/bin/shfmt",
+  // typescript
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [120]
+  },
+  // json
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  // yaml
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "github.codespaces.devcontainerChangedNotificationStyle": "none",
+  "editor.renderWhitespace": "all",
+  "code-eol.newlineCharacter": "¬",
+  "code-eol.returnCharacter": "¤",
+  "code-eol.crlfCharacter": "¤¬",
+  // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
+  "editor.fontFamily": "Hurmit Nerd Font",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontFamily": "Hurmit Nerd Font",
+  "terminal.integrated.fontSize": 12,
+  "files.exclude": {
+    ".db-mongodb": true,
+    ".gitmodules": true,
+    "example/python/.venv": true,
+    "example/python/uv.lock": true,
+    "example/react/.parcel-cache": true,
+    "example/react/dist": true,
+    "example/react/node_modules": true,
+    "example/react/package-lock.json": true,
+    "example/rust/Cargo.lock": true,
+    "example/rust/target": true
+  }
+}
