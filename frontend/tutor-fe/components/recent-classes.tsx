@@ -61,16 +61,16 @@ const recentClasses = [
 
 export function RecentClasses() {
   return (
-    <div className="space-y-4">
+    <div className="w-full">
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Class Name</TableHead>
+              <TableHead className="w-[250px]">Class Name</TableHead>
               <TableHead>Level</TableHead>
-              <TableHead className="hidden md:table-cell">Time</TableHead>
-              <TableHead className="hidden md:table-cell">Days</TableHead>
-              <TableHead className="hidden md:table-cell">Students</TableHead>
+              <TableHead>Time</TableHead>
+              <TableHead>Days</TableHead>
+              <TableHead>Students</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -80,16 +80,10 @@ export function RecentClasses() {
               <TableRow key={classItem.id}>
                 <TableCell className="font-medium">{classItem.name}</TableCell>
                 <TableCell>{classItem.level}</TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {classItem.time}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {classItem.days}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {classItem.students}
-                </TableCell>
-                <TableCell>
+                <TableCell>{classItem.time}</TableCell>
+                <TableCell>{classItem.days}</TableCell>
+                <TableCell>{classItem.students}</TableCell>
+                <TableCell className="whitespace-nowrap">
                   <Badge
                     variant={
                       classItem.status === "Active"

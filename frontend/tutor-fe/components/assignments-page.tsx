@@ -224,7 +224,7 @@ export function AssignmentsPage() {
                   <TableCell className="hidden md:table-cell">{assignment.class}</TableCell>
                   <TableCell className="hidden md:table-cell">{assignment.deadline}</TableCell>
                   <TableCell className="hidden md:table-cell">{assignment.submissions}</TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">
                     <Badge
                       variant={
                         assignment.status === "Open"
