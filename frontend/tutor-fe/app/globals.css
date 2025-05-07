@@ -92,3 +92,29 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom styles for notification badge */
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Sidebar hover styles */
+@media (hover: hover) {
+  .sidebar-hover-expand:hover {
+    width: 16rem;
+  }
+}
