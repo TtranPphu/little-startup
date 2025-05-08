@@ -3,7 +3,9 @@ package com.main.backend.authentication.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.main.backend.common.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,28 +43,29 @@ public class AuthenticationService {
             Role userRole = roleRepo.findByAuthority(role.toUpperCase()).get();
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-
             User newUser = userRepo.save(
                     new User(null, username, encoder.encode(password), email, false, roles));
+
             return newUser;
         } catch (Exception e) {
-            throw new Exception("User already exists");
+            throw new BusinessException("User already exists", HttpStatus.BAD_REQUEST);
         }
     }
 
     public AuthenticationResponse login(String role, String username, String password) throws Exception {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
+        try {
+            Authentication auth = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
+            String token = tokenService.generateJwt(auth);
+            User user = userRepo.findByUsername(username).orElse(new User());
+            if (!user.getAuthorities().contains(roleRepo.findByAuthority(role.toUpperCase()).get())) {
+                throw new Exception("User does not have the required role");
+            }
 
-        String token = tokenService.generateJwt(auth);
-
-        User user = userRepo.findByUsername(username).orElse(new User());
-
-        if (!user.getAuthorities().contains(roleRepo.findByAuthority(role.toUpperCase()).get())) {
-            throw new Exception("User does not have the required role");
+            // Should not pass token in because we are using Http-Only Cookies for JWT
+            return new AuthenticationResponse(user.getDto(), token);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-        // Should not pass token in because we are using Http-Only Cookies for JWT
-        return new AuthenticationResponse(user.getDto(), token);
     }
 }
