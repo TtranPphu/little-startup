@@ -1,17 +1,12 @@
-"use client";
+"use client"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RecentClasses } from "@/components/recent-classes";
-import { UpcomingAssignments } from "@/components/upcoming-assignments";
-import { StudentAttendance } from "@/components/student-attendance";
-import { RecentMessages } from "@/components/recent-messages";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { RecentClasses } from "@/components/recent-classes"
+import { UpcomingAssignments } from "@/components/upcoming-assignments"
+import { StudentAttendance } from "@/components/student-attendance"
+import { RecentMessages } from "@/components/recent-messages"
+import { AnalyticsDashboard } from "@/components/analytics-dashboard"
 
 export function DashboardPage() {
   return (
@@ -30,9 +25,7 @@ export function DashboardPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Students
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Total Students</CardTitle>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -51,16 +44,12 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">42</div>
-                <p className="text-xs text-muted-foreground">
-                  +2 from last month
-                </p>
+                <p className="text-xs text-muted-foreground">+2 from last month</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Active Classes
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Active Classes</CardTitle>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -79,16 +68,12 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">5</div>
-                <p className="text-xs text-muted-foreground">
-                  +1 from last month
-                </p>
+                <p className="text-xs text-muted-foreground">+1 from last month</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Pending Assignments
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Pending Assignments</CardTitle>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -105,16 +90,12 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">12</div>
-                <p className="text-xs text-muted-foreground">
-                  +3 since yesterday
-                </p>
+                <p className="text-xs text-muted-foreground">+3 since yesterday</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Unread Messages
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Unread Messages</CardTitle>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -130,9 +111,7 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">7</div>
-                <p className="text-xs text-muted-foreground">
-                  +2 since yesterday
-                </p>
+                <p className="text-xs text-muted-foreground">+2 since yesterday</p>
               </CardContent>
             </Card>
           </div>
@@ -179,36 +158,20 @@ export function DashboardPage() {
           </div>
         </TabsContent>
         <TabsContent value="analytics" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Analytics</CardTitle>
-              <CardDescription>
-                View detailed analytics about your classes and students.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
-              <p className="text-muted-foreground">
-                Analytics content coming soon
-              </p>
-            </CardContent>
-          </Card>
+          <AnalyticsDashboard />
         </TabsContent>
         <TabsContent value="reports" className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle>Reports</CardTitle>
-              <CardDescription>
-                Generate and view reports about student performance.
-              </CardDescription>
+              <CardDescription>Generate and view reports about student performance.</CardDescription>
             </CardHeader>
             <CardContent className="h-[400px] flex items-center justify-center">
-              <p className="text-muted-foreground">
-                Reports content coming soon
-              </p>
+              <p className="text-muted-foreground">Reports content coming soon</p>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

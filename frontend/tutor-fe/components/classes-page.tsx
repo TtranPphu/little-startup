@@ -1,8 +1,8 @@
 "use client"
 
 import { Textarea } from "@/components/ui/textarea"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -20,7 +20,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Search, Users, BookOpen, Calendar, FileText } from "lucide-react"
+import { Plus, Search, Users, BookOpen, Calendar, FileText, Star } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const classes = [
@@ -189,6 +189,8 @@ const calendarEvents = [
 ]
 
 export function ClassesPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [filter, setFilter] = useState({
     level: "all",
     status: "all",
@@ -196,6 +198,16 @@ export function ClassesPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedClass, setSelectedClass] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState("overview")
+  const [showReviewDialog, setShowReviewDialog] = useState(false)
+  const [selectedStudent, setSelectedStudent] = useState<any>(null)
+
+  // Check if there's a class ID in the URL params
+  useEffect(() => {
+    const classId = searchParams.get("id")
+    if (classId) {
+      setSelectedClass(classId)
+    }
+  }, [searchParams])
 
   const filteredClasses = classes.filter((classItem) => {
     const levelMatch = filter.level === "all" || classItem.level === filter.level
@@ -205,6 +217,17 @@ export function ClassesPage() {
   })
 
   const selectedClassData = classes.find((c) => c.id === selectedClass)
+
+  const handleClassClick = (classId: string) => {
+    setSelectedClass(classId)
+    // Update URL without full navigation
+    router.push(`/classes?id=${classId}`, { scroll: false })
+  }
+
+  const handleStudentReview = (student: any) => {
+    setSelectedStudent(student)
+    setShowReviewDialog(true)
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -267,7 +290,13 @@ export function ClassesPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={() => setSelectedClass(null)}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSelectedClass(null)
+                  router.push("/classes", { scroll: false })
+                }}
+              >
                 Back to All Classes
               </Button>
               <h2 className="text-2xl font-bold">{selectedClassData?.name}</h2>
@@ -317,6 +346,16 @@ export function ClassesPage() {
                     <dd>{selectedClassData?.nextLesson}</dd>
                   </div>
                 </dl>
+
+                {/* Add class review button if class is active and has a lesson today */}
+                {selectedClassData?.status === "Active" && (
+                  <div className="mt-4">
+                    <Button className="w-full" variant="outline">
+                      <Star className="mr-2 h-4 w-4" />
+                      Review Today's Class
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -362,7 +401,11 @@ export function ClassesPage() {
                         </TableHeader>
                         <TableBody>
                           {students.map((student) => (
-                            <TableRow key={student.id}>
+                            <TableRow
+                              key={student.id}
+                              className="cursor-pointer hover:bg-muted/50 transition-colors"
+                              onClick={() => handleStudentReview(student)}
+                            >
                               <TableCell>
                                 <div className="flex items-center gap-3">
                                   <Avatar className="h-8 w-8">
@@ -376,8 +419,15 @@ export function ClassesPage() {
                               <TableCell>{student.email}</TableCell>
                               <TableCell>{student.attendance}</TableCell>
                               <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
-                                  View
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleStudentReview(student)
+                                  }}
+                                >
+                                  Review
                                 </Button>
                               </TableCell>
                             </TableRow>
@@ -408,7 +458,7 @@ export function ClassesPage() {
                         </TableHeader>
                         <TableBody>
                           {syllabusItems.map((item) => (
-                            <TableRow key={item.id}>
+                            <TableRow key={item.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
                               <TableCell>
                                 <div className="flex items-center gap-3">
                                   <FileText className="h-4 w-4 text-muted-foreground" />
@@ -451,7 +501,7 @@ export function ClassesPage() {
                         </TableHeader>
                         <TableBody>
                           {calendarEvents.map((event) => (
-                            <TableRow key={event.id}>
+                            <TableRow key={event.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
                               <TableCell>
                                 <div className="font-medium">{event.title}</div>
                               </TableCell>
@@ -539,19 +589,22 @@ export function ClassesPage() {
                   <TableHead className="hidden md:table-cell">Students</TableHead>
                   <TableHead className="hidden md:table-cell">Next Lesson</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredClasses.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-24 text-center">
+                    <TableCell colSpan={7} className="h-24 text-center">
                       No classes found.
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredClasses.map((classItem) => (
-                    <TableRow key={classItem.id}>
+                    <TableRow
+                      key={classItem.id}
+                      className="cursor-pointer hover:bg-muted/50 transition-colors"
+                      onClick={() => handleClassClick(classItem.id)}
+                    >
                       <TableCell className="font-medium">{classItem.name}</TableCell>
                       <TableCell>{classItem.level}</TableCell>
                       <TableCell className="hidden md:table-cell">{classItem.time}</TableCell>
@@ -571,11 +624,6 @@ export function ClassesPage() {
                           {classItem.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedClass(classItem.id)}>
-                          View
-                        </Button>
-                      </TableCell>
                     </TableRow>
                   ))
                 )}
@@ -584,6 +632,64 @@ export function ClassesPage() {
           </div>
         </>
       )}
+
+      {/* Student Review Dialog */}
+      <Dialog open={showReviewDialog} onOpenChange={setShowReviewDialog}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Student Review</DialogTitle>
+            <DialogDescription>Review {selectedStudent?.name}'s performance after today's class</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="flex items-center gap-4">
+              <Avatar className="h-12 w-12">
+                <AvatarImage src={`/placeholder.svg?height=48&width=48`} alt={selectedStudent?.name} />
+                <AvatarFallback>{selectedStudent?.avatar}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-medium">{selectedStudent?.name}</h3>
+                <p className="text-sm text-muted-foreground">{selectedStudent?.level} Level</p>
+              </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="participation">Class Participation (1-10)</Label>
+              <Input id="participation" type="number" min="1" max="10" placeholder="8" />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="comprehension">Comprehension (1-10)</Label>
+              <Input id="comprehension" type="number" min="1" max="10" placeholder="7" />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="homework">Homework Completion</Label>
+              <Select>
+                <SelectTrigger id="homework">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="complete">Complete</SelectItem>
+                  <SelectItem value="partial">Partially Complete</SelectItem>
+                  <SelectItem value="incomplete">Incomplete</SelectItem>
+                  <SelectItem value="missing">Missing</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="notes">Additional Notes</Label>
+              <Textarea id="notes" placeholder="Enter notes about student's performance" rows={4} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowReviewDialog(false)}>
+              Cancel
+            </Button>
+            <Button>Save Review</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

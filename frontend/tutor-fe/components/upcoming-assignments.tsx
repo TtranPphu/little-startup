@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
@@ -39,6 +40,12 @@ const upcomingAssignments = [
 ]
 
 export function UpcomingAssignments() {
+  const router = useRouter()
+
+  const handleAssignmentClick = (assignmentId: string) => {
+    router.push(`/assignments?id=${assignmentId}`)
+  }
+
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -54,7 +61,11 @@ export function UpcomingAssignments() {
           </TableHeader>
           <TableBody>
             {upcomingAssignments.map((assignment) => (
-              <TableRow key={assignment.id}>
+              <TableRow
+                key={assignment.id}
+                className="cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => handleAssignmentClick(assignment.id)}
+              >
                 <TableCell className="font-medium">{assignment.title}</TableCell>
                 <TableCell>{assignment.class}</TableCell>
                 <TableCell>{assignment.deadline}</TableCell>

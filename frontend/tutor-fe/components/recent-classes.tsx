@@ -1,15 +1,8 @@
-"use client";
+"use client"
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { useRouter } from "next/navigation"
+import { Badge } from "@/components/ui/badge"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 const recentClasses = [
   {
@@ -57,9 +50,15 @@ const recentClasses = [
     students: 15,
     status: "Completed",
   },
-];
+]
 
 export function RecentClasses() {
+  const router = useRouter()
+
+  const handleClassClick = (classId: string) => {
+    router.push(`/classes?id=${classId}`)
+  }
+
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -72,12 +71,15 @@ export function RecentClasses() {
               <TableHead>Days</TableHead>
               <TableHead>Students</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {recentClasses.map((classItem) => (
-              <TableRow key={classItem.id}>
+              <TableRow
+                key={classItem.id}
+                className="cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => handleClassClick(classItem.id)}
+              >
                 <TableCell className="font-medium">{classItem.name}</TableCell>
                 <TableCell>{classItem.level}</TableCell>
                 <TableCell>{classItem.time}</TableCell>
@@ -89,17 +91,12 @@ export function RecentClasses() {
                       classItem.status === "Active"
                         ? "default"
                         : classItem.status === "Upcoming"
-                        ? "outline"
-                        : "secondary"
+                          ? "outline"
+                          : "secondary"
                     }
                   >
                     {classItem.status}
                   </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button variant="ghost" size="sm">
-                    View
-                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -107,5 +104,5 @@ export function RecentClasses() {
         </Table>
       </div>
     </div>
-  );
+  )
 }
