@@ -9,4 +9,5 @@ dependencies = [
     "nbconvert>=7.16.6",
     "pip>=25.0.1",
     "pylance>=0.25.2",
+    "ruff>=0.11.8",
 ]
