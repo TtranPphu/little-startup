@@ -1,4 +1,4 @@
-package com.main.backend.authentication.configurations;
+package com.main.backend.configurations;
 
 import java.io.IOException;
 
