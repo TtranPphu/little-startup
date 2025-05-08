@@ -1,4 +1,4 @@
-package com.main.backend.authentication.configurations;
+package com.main.backend.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
