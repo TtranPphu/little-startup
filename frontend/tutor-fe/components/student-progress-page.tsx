@@ -26,11 +26,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, MessageSquare, BarChart } from "lucide-react";
+import { Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const students = [
@@ -225,19 +224,22 @@ export function StudentProgressPage() {
                 Last Activity
               </TableHead>
               <TableHead className="hidden md:table-cell">Feedback</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredStudents.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
+                <TableCell colSpan={5} className="h-24 text-center">
                   No students found.
                 </TableCell>
               </TableRow>
             ) : (
               filteredStudents.map((student) => (
-                <TableRow key={student.id}>
+                <TableRow
+                  key={student.id}
+                  className="cursor-pointer hover:bg-muted/50"
+                  onClick={() => setSelectedStudent(student)}
+                >
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
@@ -266,54 +268,39 @@ export function StudentProgressPage() {
                   <TableCell className="hidden md:table-cell max-w-[200px] truncate">
                     {student.feedback}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setSelectedStudent(student)}
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                            <span className="sr-only">Add Feedback</span>
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Add Feedback</DialogTitle>
-                            <DialogDescription>
-                              Add feedback for {selectedStudent?.name}
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid gap-4 py-4">
-                            <div className="grid gap-2">
-                              <Label htmlFor="feedback">Feedback</Label>
-                              <Textarea
-                                id="feedback"
-                                placeholder="Enter your feedback"
-                                rows={4}
-                                defaultValue={selectedStudent?.feedback}
-                              />
-                            </div>
-                          </div>
-                          <DialogFooter>
-                            <Button type="submit">Save Feedback</Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                      <Button variant="ghost" size="icon">
-                        <BarChart className="h-4 w-4" />
-                        <span className="sr-only">View Progress</span>
-                      </Button>
-                    </div>
-                  </TableCell>
                 </TableRow>
               ))
             )}
           </TableBody>
         </Table>
       </div>
+      <Dialog
+        open={!!selectedStudent}
+        onOpenChange={(open) => !open && setSelectedStudent(null)}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add Feedback</DialogTitle>
+            <DialogDescription>
+              Add feedback for {selectedStudent?.name}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="feedback">Feedback</Label>
+              <Textarea
+                id="feedback"
+                placeholder="Enter your feedback"
+                rows={4}
+                defaultValue={selectedStudent?.feedback}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit">Save Feedback</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

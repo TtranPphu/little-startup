@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const upcomingAssignments = [
   {
@@ -37,14 +44,14 @@ const upcomingAssignments = [
     submissions: "0/15",
     status: "Past Due",
   },
-]
+];
 
 export function UpcomingAssignments() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleAssignmentClick = (assignmentId: string) => {
-    router.push(`/assignments?id=${assignmentId}`)
-  }
+    router.push(`/assignments?id=${assignmentId}`);
+  };
 
   return (
     <div className="w-full">
@@ -66,7 +73,9 @@ export function UpcomingAssignments() {
                 className="cursor-pointer hover:bg-muted/50 transition-colors"
                 onClick={() => handleAssignmentClick(assignment.id)}
               >
-                <TableCell className="font-medium">{assignment.title}</TableCell>
+                <TableCell className="font-medium">
+                  {assignment.title}
+                </TableCell>
                 <TableCell>{assignment.class}</TableCell>
                 <TableCell>{assignment.deadline}</TableCell>
                 <TableCell>{assignment.submissions}</TableCell>
@@ -76,8 +85,8 @@ export function UpcomingAssignments() {
                       assignment.status === "Open"
                         ? "default"
                         : assignment.status === "Due Soon"
-                          ? "outline"
-                          : "destructive"
+                        ? "outline"
+                        : "destructive"
                     }
                   >
                     {assignment.status}
@@ -89,5 +98,5 @@ export function UpcomingAssignments() {
         </Table>
       </div>
     </div>
-  )
+  );
 }
