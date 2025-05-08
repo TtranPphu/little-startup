@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:secrets.yml
   application:
     name: myapp
   servlet:
