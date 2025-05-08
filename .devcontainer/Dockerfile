@@ -1,15 +1,23 @@
-FROM ubuntu:22.04 AS base-devcontainer
+FROM ubuntu:24.04 AS base-devcontainer
 
 # common utilities
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    sudo zsh wget curl git tmux vim zip unzip \
+    sudo zsh wget curl git tmux vim zip unzip locales \
     build-essential software-properties-common \
-    python3-pip python3.10-venv btop tree ncdu cloc neofetch
+    python3-pip python3.12-venv \
+    btop tree cloc neofetch
+
+# locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 # user
+RUN userdel -r ubuntu
 ARG USER_NAME=little
 RUN groupadd ${USER_NAME}
-RUN adduser --shell /usr/bin/zsh --gecos '' --ingroup ${USER_NAME} --disabled-password ${USER_NAME}
+RUN adduser --shell /usr/bin/zsh --gecos '' --ingroup ${USER_NAME} -u 1000 --disabled-password ${USER_NAME}
 RUN usermod -aG sudo ${USER_NAME}
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER_NAME}
@@ -26,6 +34,12 @@ COPY --chown=${USER_NAME}:${USER_NAME} .p10k.zsh /home/${USER_NAME}/.p10k.zsh
 COPY --chown=${USER_NAME}:${USER_NAME} gitstatusd-linux-x86_64 \
     /home/${USER_NAME}/.cache/gitstatus/gitstatusd-linux-x86_64
 
+# gdu
+RUN sudo add-apt-repository ppa:daniel-milde/gdu -y
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
+    gdu
+COPY --chown=${USER_NAME}:${USER_NAME} .gdu.yaml /home/${USER_NAME}/.gdu.yaml
+
 # neo-vim and dependencies
 RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
@@ -40,11 +54,10 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     . $HOME/.cargo/env && \
     rustc --version
 
-# uv and ruff for python
+# uv for python
 ARG PYTHON_VERSION=3.12
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://astral.sh/uv/install.sh | sh -s --
 RUN . /home/${USER_NAME}/.local/bin/env && uv python install ${PYTHON_VERSION}
-RUN pip3 install ruff
 
 # shellscript
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
