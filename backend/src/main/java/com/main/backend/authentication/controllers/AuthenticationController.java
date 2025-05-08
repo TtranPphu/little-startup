@@ -53,7 +53,6 @@ public class AuthenticationController {
             HttpServletRequest request) throws Exception {
         String role = request.getHeader("role");
         User user = authService.register(role, auth.getUsername(), auth.getPassword(), auth.getEmail());
-
         Locale locale = request.getLocale();
         String appUrl = request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, locale, appUrl));
@@ -66,44 +65,33 @@ public class AuthenticationController {
     public ResponseEntity<UserDto> login(
             @RequestBody AuthenticationRequest auth,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws Exception {
+        String role = request.getHeader("role");
+        AuthenticationResponse authResponse = authService.login(role, auth.getUsername(), auth.getPassword());
 
-        try {
-            String role = request.getHeader("role");
+        String token = authResponse.getJwt();
+        authResponse.setJwt(null); // Clear the JWT from the response body
 
-            AuthenticationResponse authResponse = authService.login(role, auth.getUsername(), auth.getPassword());
+        ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true) // Prevent JavaScript access
+                .secure(true) // Use Secure flag (Only works on HTTPS)
+                .path("/") // Available for all paths
+                .maxAge(Duration.ofDays(1))
+                .build();
 
-            String token = authResponse.getJwt();
-            authResponse.setJwt(null); // Clear the JWT from the response body
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-            ResponseCookie cookie = ResponseCookie.from("jwt", token)
-                    .httpOnly(true) // Prevent JavaScript access
-                    .secure(true) // Use Secure flag (Only works on HTTPS)
-                    .path("/") // Available for all paths
-                    .maxAge(Duration.ofDays(1))
-                    .build();
-
-            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-            return ResponseEntity.ok(authResponse.getUser());
-        } catch (Exception e) {
-            // Log the error
-            System.err.println("Login error: " + e.getMessage());
-            return ResponseEntity.status(401).body(null);
-        }
+        return ResponseEntity.ok(authResponse.getUser());
     }
 
     @Operation(summary = "Logout a user")
     @PostMapping("/v1/logout")
-    public ResponseEntity<String> logout(HttpServletResponse response) {
-
-        // Create an expired cookie to remove the JWT
+    public ResponseEntity<String> logout(HttpServletResponse response) throws Exception {
         Cookie cookie = new Cookie("jwt", "");
         cookie.setHttpOnly(true);
         cookie.setSecure(true); // Ensure Secure flag is set in production (HTTPS)
         cookie.setPath("/");
         cookie.setMaxAge(0); // Expire immediately
-
         response.addCookie(cookie);
 
         return ResponseEntity.ok("Logout success");
@@ -112,9 +100,9 @@ public class AuthenticationController {
     @GetMapping("/v1/verification")
     public ResponseEntity<String> verifyUser(
             HttpServletRequest request,
-            @RequestParam String token) {
+            @RequestParam String token) throws Exception {
 
-        boolean verified = verificationTokenService.verifyToken(token);   
+        boolean verified = verificationTokenService.verifyToken(token);
 
         return ResponseEntity.ok("Token verified: " + verified);
     }
