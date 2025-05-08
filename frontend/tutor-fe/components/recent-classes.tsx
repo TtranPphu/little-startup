@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const recentClasses = [
   {
@@ -50,14 +57,14 @@ const recentClasses = [
     students: 15,
     status: "Completed",
   },
-]
+];
 
 export function RecentClasses() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleClassClick = (classId: string) => {
-    router.push(`/classes?id=${classId}`)
-  }
+    router.push(`/classes?id=${classId}`);
+  };
 
   return (
     <div className="w-full">
@@ -91,8 +98,8 @@ export function RecentClasses() {
                       classItem.status === "Active"
                         ? "default"
                         : classItem.status === "Upcoming"
-                          ? "outline"
-                          : "secondary"
+                        ? "outline"
+                        : "secondary"
                     }
                   >
                     {classItem.status}
@@ -104,5 +111,5 @@ export function RecentClasses() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

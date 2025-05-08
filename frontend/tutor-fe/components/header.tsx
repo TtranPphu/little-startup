@@ -1,9 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Bell, Globe, Moon, Sun, LogOut, UserIcon, Settings } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Bell,
+  Globe,
+  Moon,
+  Sun,
+  LogOut,
+  UserIcon,
+  Settings,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,15 +19,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useTheme } from "next-themes"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { NotificationsPanel } from "@/components/notifications-panel"
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { NotificationsPanel } from "@/components/notifications-panel";
 
 export function Header() {
-  const { setTheme } = useTheme()
-  const [notificationsOpen, setNotificationsOpen] = useState(false)
+  const { setTheme } = useTheme();
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center border-b bg-background px-4 md:px-6">
@@ -56,9 +64,15 @@ export function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Sheet open={notificationsOpen} onOpenChange={setNotificationsOpen}>
@@ -77,7 +91,10 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Teacher" />
+                  <AvatarImage
+                    src="/placeholder.svg?height=32&width=32"
+                    alt="Teacher"
+                  />
                   <AvatarFallback>LW</AvatarFallback>
                 </Avatar>
               </Button>
@@ -86,7 +103,9 @@ export function Header() {
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">Li Wei</p>
-                  <p className="text-xs leading-none text-muted-foreground">liwei@mandarinlearning.com</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    liwei@mandarinlearning.com
+                  </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -112,5 +131,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -1,10 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Check, Filter } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState } from "react";
+import { Check, Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const notifications = [
   {
@@ -47,22 +52,27 @@ const notifications = [
     read: true,
     category: "system",
   },
-]
+];
 
 export function NotificationsPanel() {
-  const [activeNotifications, setActiveNotifications] = useState(notifications)
+  const [activeNotifications, setActiveNotifications] = useState(notifications);
 
   const markAsRead = (id: string) => {
     setActiveNotifications(
       activeNotifications.map((notification) =>
-        notification.id === id ? { ...notification, read: true } : notification,
-      ),
-    )
-  }
+        notification.id === id ? { ...notification, read: true } : notification
+      )
+    );
+  };
 
   const markAllAsRead = () => {
-    setActiveNotifications(activeNotifications.map((notification) => ({ ...notification, read: true })))
-  }
+    setActiveNotifications(
+      activeNotifications.map((notification) => ({
+        ...notification,
+        read: true,
+      }))
+    );
+  };
 
   return (
     <div className="flex h-full flex-col">
@@ -120,11 +130,17 @@ export function NotificationsPanel() {
                 <div className="flex items-center justify-between">
                   <h3 className="font-medium">{notification.title}</h3>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{notification.timestamp}</span>
-                    {!notification.read && <div className="h-2 w-2 rounded-full bg-primary"></div>}
+                    <span className="text-xs text-muted-foreground">
+                      {notification.timestamp}
+                    </span>
+                    {!notification.read && (
+                      <div className="h-2 w-2 rounded-full bg-primary"></div>
+                    )}
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground">{notification.summary}</p>
+                <p className="text-sm text-muted-foreground">
+                  {notification.summary}
+                </p>
               </div>
             ))}
           </div>
@@ -142,16 +158,20 @@ export function NotificationsPanel() {
                   <div className="flex items-center justify-between">
                     <h3 className="font-medium">{notification.title}</h3>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">{notification.timestamp}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {notification.timestamp}
+                      </span>
                       <div className="h-2 w-2 rounded-full bg-primary"></div>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{notification.summary}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {notification.summary}
+                  </p>
                 </div>
               ))}
           </div>
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -1,11 +1,24 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Progress } from "@/components/ui/progress"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -14,11 +27,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Search, MessageSquare, BarChart } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Search, MessageSquare, BarChart } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const students = [
   {
@@ -101,28 +114,32 @@ const students = [
     class: "Beginner Mandarin",
     avatar: "WF",
   },
-]
+];
 
 export function StudentProgressPage() {
   const [filter, setFilter] = useState({
     class: "all",
     level: "all",
     progress: "all",
-  })
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedStudent, setSelectedStudent] = useState(null)
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const filteredStudents = students.filter((student) => {
-    const classMatch = filter.class === "all" || student.class === filter.class
-    const levelMatch = filter.level === "all" || student.level === filter.level
+    const classMatch = filter.class === "all" || student.class === filter.class;
+    const levelMatch = filter.level === "all" || student.level === filter.level;
     const progressMatch =
       filter.progress === "all" ||
       (filter.progress === "low" && student.progress < 50) ||
-      (filter.progress === "medium" && student.progress >= 50 && student.progress < 80) ||
-      (filter.progress === "high" && student.progress >= 80)
-    const searchMatch = searchQuery === "" || student.name.toLowerCase().includes(searchQuery.toLowerCase())
-    return classMatch && levelMatch && progressMatch && searchMatch
-  })
+      (filter.progress === "medium" &&
+        student.progress >= 50 &&
+        student.progress < 80) ||
+      (filter.progress === "high" && student.progress >= 80);
+    const searchMatch =
+      searchQuery === "" ||
+      student.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return classMatch && levelMatch && progressMatch && searchMatch;
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -143,20 +160,34 @@ export function StudentProgressPage() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Select value={filter.class} onValueChange={(value) => setFilter({ ...filter, class: value })}>
+          <Select
+            value={filter.class}
+            onValueChange={(value) => setFilter({ ...filter, class: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by class" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Classes</SelectItem>
-              <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
-              <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
+              <SelectItem value="Beginner Mandarin">
+                Beginner Mandarin
+              </SelectItem>
+              <SelectItem value="Intermediate Conversation">
+                Intermediate Conversation
+              </SelectItem>
               <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-              <SelectItem value="Business Mandarin">Business Mandarin</SelectItem>
-              <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
+              <SelectItem value="Business Mandarin">
+                Business Mandarin
+              </SelectItem>
+              <SelectItem value="HSK 4 Preparation">
+                HSK 4 Preparation
+              </SelectItem>
             </SelectContent>
           </Select>
-          <Select value={filter.level} onValueChange={(value) => setFilter({ ...filter, level: value })}>
+          <Select
+            value={filter.level}
+            onValueChange={(value) => setFilter({ ...filter, level: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by level" />
             </SelectTrigger>
@@ -167,7 +198,10 @@ export function StudentProgressPage() {
               <SelectItem value="Advanced">Advanced</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={filter.progress} onValueChange={(value) => setFilter({ ...filter, progress: value })}>
+          <Select
+            value={filter.progress}
+            onValueChange={(value) => setFilter({ ...filter, progress: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by progress" />
             </SelectTrigger>
@@ -187,7 +221,9 @@ export function StudentProgressPage() {
               <TableHead>Student</TableHead>
               <TableHead>Level</TableHead>
               <TableHead>Progress</TableHead>
-              <TableHead className="hidden md:table-cell">Last Activity</TableHead>
+              <TableHead className="hidden md:table-cell">
+                Last Activity
+              </TableHead>
               <TableHead className="hidden md:table-cell">Feedback</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -205,7 +241,10 @@ export function StudentProgressPage() {
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={student.name} />
+                        <AvatarImage
+                          src={`/placeholder.svg?height=32&width=32`}
+                          alt={student.name}
+                        />
                         <AvatarFallback>{student.avatar}</AvatarFallback>
                       </Avatar>
                       <div className="font-medium">{student.name}</div>
@@ -214,17 +253,28 @@ export function StudentProgressPage() {
                   <TableCell>{student.level}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Progress value={student.progress} className="h-2 w-[60px] md:w-[100px]" />
+                      <Progress
+                        value={student.progress}
+                        className="h-2 w-[60px] md:w-[100px]"
+                      />
                       <span className="text-xs">{student.progress}%</span>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">{student.lastActivity}</TableCell>
-                  <TableCell className="hidden md:table-cell max-w-[200px] truncate">{student.feedback}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {student.lastActivity}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell max-w-[200px] truncate">
+                    {student.feedback}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="ghost" size="icon" onClick={() => setSelectedStudent(student)}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setSelectedStudent(student)}
+                          >
                             <MessageSquare className="h-4 w-4" />
                             <span className="sr-only">Add Feedback</span>
                           </Button>
@@ -232,7 +282,9 @@ export function StudentProgressPage() {
                         <DialogContent>
                           <DialogHeader>
                             <DialogTitle>Add Feedback</DialogTitle>
-                            <DialogDescription>Add feedback for {selectedStudent?.name}</DialogDescription>
+                            <DialogDescription>
+                              Add feedback for {selectedStudent?.name}
+                            </DialogDescription>
                           </DialogHeader>
                           <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
@@ -263,5 +315,5 @@ export function StudentProgressPage() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

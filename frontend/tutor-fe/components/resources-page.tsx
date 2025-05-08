@@ -1,9 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -12,11 +18,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { FileText, Film, ImageIcon, Music, Plus, Search, Share2, Download, Trash } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  FileText,
+  Film,
+  ImageIcon,
+  Music,
+  Plus,
+  Search,
+  Share2,
+  Download,
+  Trash,
+} from "lucide-react";
 
 const resources = [
   {
@@ -91,26 +114,31 @@ const resources = [
     size: "2.9 MB",
     icon: FileText,
   },
-]
+];
 
 export function ResourcesPage() {
   const [filter, setFilter] = useState({
     type: "all",
     class: "all",
-  })
-  const [searchQuery, setSearchQuery] = useState("")
+  });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredResources = resources.filter((resource) => {
-    const typeMatch = filter.type === "all" || resource.type === filter.type
-    const classMatch = filter.class === "all" || resource.class === filter.class
-    const searchMatch = searchQuery === "" || resource.name.toLowerCase().includes(searchQuery.toLowerCase())
-    return typeMatch && classMatch && searchMatch
-  })
+    const typeMatch = filter.type === "all" || resource.type === filter.type;
+    const classMatch =
+      filter.class === "all" || resource.class === filter.class;
+    const searchMatch =
+      searchQuery === "" ||
+      resource.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return typeMatch && classMatch && searchMatch;
+  });
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Resources & Materials</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Resources & Materials
+        </h1>
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -121,7 +149,9 @@ export function ResourcesPage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Upload New Material</DialogTitle>
-              <DialogDescription>Upload a new resource for your students.</DialogDescription>
+              <DialogDescription>
+                Upload a new resource for your students.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -156,7 +186,9 @@ export function ResourcesPage() {
                   <SelectContent>
                     <SelectItem value="all">All Classes</SelectItem>
                     <SelectItem value="beginner">Beginner Mandarin</SelectItem>
-                    <SelectItem value="intermediate">Intermediate Conversation</SelectItem>
+                    <SelectItem value="intermediate">
+                      Intermediate Conversation
+                    </SelectItem>
                     <SelectItem value="advanced">Advanced Writing</SelectItem>
                     <SelectItem value="business">Business Mandarin</SelectItem>
                     <SelectItem value="hsk4">HSK 4 Preparation</SelectItem>
@@ -165,7 +197,10 @@ export function ResourcesPage() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="tags">Tags (comma separated)</Label>
-                <Input id="tags" placeholder="Grammar, Vocabulary, Culture, etc." />
+                <Input
+                  id="tags"
+                  placeholder="Grammar, Vocabulary, Culture, etc."
+                />
               </div>
             </div>
             <DialogFooter>
@@ -188,7 +223,10 @@ export function ResourcesPage() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Select value={filter.type} onValueChange={(value) => setFilter({ ...filter, type: value })}>
+          <Select
+            value={filter.type}
+            onValueChange={(value) => setFilter({ ...filter, type: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
@@ -200,18 +238,29 @@ export function ResourcesPage() {
               <SelectItem value="Slide">Slide</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={filter.class} onValueChange={(value) => setFilter({ ...filter, class: value })}>
+          <Select
+            value={filter.class}
+            onValueChange={(value) => setFilter({ ...filter, class: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by class" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Classes</SelectItem>
               <SelectItem value="All Classes">All Classes</SelectItem>
-              <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
-              <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
+              <SelectItem value="Beginner Mandarin">
+                Beginner Mandarin
+              </SelectItem>
+              <SelectItem value="Intermediate Conversation">
+                Intermediate Conversation
+              </SelectItem>
               <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-              <SelectItem value="Business Mandarin">Business Mandarin</SelectItem>
-              <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
+              <SelectItem value="Business Mandarin">
+                Business Mandarin
+              </SelectItem>
+              <SelectItem value="HSK 4 Preparation">
+                HSK 4 Preparation
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -251,18 +300,24 @@ export function ResourcesPage() {
                         resource.type === "PDF"
                           ? "border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400"
                           : resource.type === "Audio"
-                            ? "border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-400"
-                            : resource.type === "Video"
-                              ? "border-purple-200 bg-purple-50 text-purple-600 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-400"
-                              : "border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-green-950 dark:text-green-400"
+                          ? "border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-400"
+                          : resource.type === "Video"
+                          ? "border-purple-200 bg-purple-50 text-purple-600 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-400"
+                          : "border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-green-950 dark:text-green-400"
                       }
                     >
                       {resource.type}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">{resource.class}</TableCell>
-                  <TableCell className="hidden md:table-cell">{resource.date}</TableCell>
-                  <TableCell className="hidden md:table-cell">{resource.size}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {resource.class}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {resource.date}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {resource.size}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon">
@@ -286,5 +341,5 @@ export function ResourcesPage() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

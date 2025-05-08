@@ -1,63 +1,102 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import { Plus, Clock, Calendar, FileText, MessageSquare, Megaphone, BookMarked, Star } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import {
+  Plus,
+  Clock,
+  Calendar,
+  FileText,
+  MessageSquare,
+  Megaphone,
+  BookMarked,
+  Star,
+} from "lucide-react";
 
 type TodoItem = {
-  id: string
-  text: string
-  completed: boolean
-  date: string
-}
+  id: string;
+  text: string;
+  completed: boolean;
+  date: string;
+};
 
 type NoteItem = {
-  id: string
-  title: string
-  content: string
-  date: string
-  starred: boolean
-}
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  starred: boolean;
+};
 
 export function ProductivityToolsPage() {
   const [todos, setTodos] = useState<TodoItem[]>([
-    { id: "1", text: "Prepare materials for tomorrow's class", completed: false, date: "2023-05-21" },
-    { id: "2", text: "Grade student essays", completed: false, date: "2023-05-21" },
-    { id: "3", text: "Schedule parent meetings", completed: true, date: "2023-05-20" },
-    { id: "4", text: "Update syllabus for next semester", completed: false, date: "2023-05-22" },
-  ])
+    {
+      id: "1",
+      text: "Prepare materials for tomorrow's class",
+      completed: false,
+      date: "2023-05-21",
+    },
+    {
+      id: "2",
+      text: "Grade student essays",
+      completed: false,
+      date: "2023-05-21",
+    },
+    {
+      id: "3",
+      text: "Schedule parent meetings",
+      completed: true,
+      date: "2023-05-20",
+    },
+    {
+      id: "4",
+      text: "Update syllabus for next semester",
+      completed: false,
+      date: "2023-05-22",
+    },
+  ]);
   const [notes, setNotes] = useState<NoteItem[]>([
     {
       id: "1",
       title: "Teaching Ideas",
-      content: "Use more interactive activities for beginner classes. Consider incorporating more cultural elements.",
+      content:
+        "Use more interactive activities for beginner classes. Consider incorporating more cultural elements.",
       date: "2023-05-20",
       starred: true,
     },
     {
       id: "2",
       title: "Student Feedback",
-      content: "Students requested more speaking practice in intermediate class. Consider adding more pair work.",
+      content:
+        "Students requested more speaking practice in intermediate class. Consider adding more pair work.",
       date: "2023-05-19",
       starred: false,
     },
     {
       id: "3",
       title: "Curriculum Changes",
-      content: "Need to update the advanced writing curriculum to include more business writing examples.",
+      content:
+        "Need to update the advanced writing curriculum to include more business writing examples.",
       date: "2023-05-18",
       starred: true,
     },
-  ])
-  const [newTodo, setNewTodo] = useState("")
-  const [newNoteTitle, setNewNoteTitle] = useState("")
-  const [newNoteContent, setNewNoteContent] = useState("")
+  ]);
+  const [newTodo, setNewTodo] = useState("");
+  const [newNoteTitle, setNewNoteTitle] = useState("");
+  const [newNoteContent, setNewNoteContent] = useState("");
 
   const addTodo = () => {
     if (newTodo.trim()) {
@@ -69,14 +108,18 @@ export function ProductivityToolsPage() {
           completed: false,
           date: new Date().toISOString().split("T")[0],
         },
-      ])
-      setNewTodo("")
+      ]);
+      setNewTodo("");
     }
-  }
+  };
 
   const toggleTodo = (id: string) => {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)))
-  }
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
 
   const addNote = () => {
     if (newNoteTitle.trim() && newNoteContent.trim()) {
@@ -89,20 +132,26 @@ export function ProductivityToolsPage() {
           date: new Date().toISOString().split("T")[0],
           starred: false,
         },
-      ])
-      setNewNoteTitle("")
-      setNewNoteContent("")
+      ]);
+      setNewNoteTitle("");
+      setNewNoteContent("");
     }
-  }
+  };
 
   const toggleStarNote = (id: string) => {
-    setNotes(notes.map((note) => (note.id === id ? { ...note, starred: !note.starred } : note)))
-  }
+    setNotes(
+      notes.map((note) =>
+        note.id === id ? { ...note, starred: !note.starred } : note
+      )
+    );
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Productivity Tools</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Productivity Tools
+        </h1>
       </div>
       <Tabs defaultValue="todo" className="space-y-4">
         <TabsList>
@@ -114,7 +163,9 @@ export function ProductivityToolsPage() {
           <Card>
             <CardHeader>
               <CardTitle>My To-Do List</CardTitle>
-              <CardDescription>Manage your personal tasks and reminders</CardDescription>
+              <CardDescription>
+                Manage your personal tasks and reminders
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-2">
@@ -131,7 +182,10 @@ export function ProductivityToolsPage() {
               </div>
               <div className="space-y-2">
                 {todos.map((todo) => (
-                  <div key={todo.id} className="flex items-center gap-2 rounded-md border p-3 hover:bg-muted/50">
+                  <div
+                    key={todo.id}
+                    className="flex items-center gap-2 rounded-md border p-3 hover:bg-muted/50"
+                  >
                     <Checkbox
                       id={`todo-${todo.id}`}
                       checked={todo.completed}
@@ -139,7 +193,11 @@ export function ProductivityToolsPage() {
                     />
                     <Label
                       htmlFor={`todo-${todo.id}`}
-                      className={`flex-1 ${todo.completed ? "line-through text-muted-foreground" : ""}`}
+                      className={`flex-1 ${
+                        todo.completed
+                          ? "line-through text-muted-foreground"
+                          : ""
+                      }`}
                     >
                       {todo.text}
                     </Label>
@@ -153,7 +211,8 @@ export function ProductivityToolsPage() {
             </CardContent>
             <CardFooter>
               <div className="text-sm text-muted-foreground">
-                {todos.filter((todo) => todo.completed).length} of {todos.length} tasks completed
+                {todos.filter((todo) => todo.completed).length} of{" "}
+                {todos.length} tasks completed
               </div>
             </CardFooter>
           </Card>
@@ -162,7 +221,9 @@ export function ProductivityToolsPage() {
           <Card>
             <CardHeader>
               <CardTitle>My Notes</CardTitle>
-              <CardDescription>Keep track of important information and ideas</CardDescription>
+              <CardDescription>
+                Keep track of important information and ideas
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -188,12 +249,26 @@ export function ProductivityToolsPage() {
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg">{note.title}</CardTitle>
-                        <Button variant="ghost" size="icon" onClick={() => toggleStarNote(note.id)}>
-                          <Star className={`h-4 w-4 ${note.starred ? "fill-yellow-400 text-yellow-400" : ""}`} />
-                          <span className="sr-only">{note.starred ? "Unstar" : "Star"} note</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => toggleStarNote(note.id)}
+                        >
+                          <Star
+                            className={`h-4 w-4 ${
+                              note.starred
+                                ? "fill-yellow-400 text-yellow-400"
+                                : ""
+                            }`}
+                          />
+                          <span className="sr-only">
+                            {note.starred ? "Unstar" : "Star"} note
+                          </span>
                         </Button>
                       </div>
-                      <CardDescription className="text-xs">{note.date}</CardDescription>
+                      <CardDescription className="text-xs">
+                        {note.date}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm">{note.content}</p>
@@ -208,14 +283,20 @@ export function ProductivityToolsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Template Library</CardTitle>
-              <CardDescription>Reusable templates for common tasks</CardDescription>
+              <CardDescription>
+                Reusable templates for common tasks
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Lesson Plan Template</CardTitle>
-                    <CardDescription>Standard lesson plan format</CardDescription>
+                    <CardTitle className="text-lg">
+                      Lesson Plan Template
+                    </CardTitle>
+                    <CardDescription>
+                      Standard lesson plan format
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-2 text-sm">
@@ -232,8 +313,12 @@ export function ProductivityToolsPage() {
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Assignment Feedback</CardTitle>
-                    <CardDescription>Structured feedback format</CardDescription>
+                    <CardTitle className="text-lg">
+                      Assignment Feedback
+                    </CardTitle>
+                    <CardDescription>
+                      Structured feedback format
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-2 text-sm">
@@ -250,8 +335,12 @@ export function ProductivityToolsPage() {
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Parent Communication</CardTitle>
-                    <CardDescription>Email template for parents</CardDescription>
+                    <CardTitle className="text-lg">
+                      Parent Communication
+                    </CardTitle>
+                    <CardDescription>
+                      Email template for parents
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-2 text-sm">
@@ -268,8 +357,12 @@ export function ProductivityToolsPage() {
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Class Announcement</CardTitle>
-                    <CardDescription>Standard announcement format</CardDescription>
+                    <CardTitle className="text-lg">
+                      Class Announcement
+                    </CardTitle>
+                    <CardDescription>
+                      Standard announcement format
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-2 text-sm">
@@ -308,5 +401,5 @@ export function ProductivityToolsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

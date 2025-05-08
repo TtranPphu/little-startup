@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Progress } from "@/components/ui/progress"
+import { Progress } from "@/components/ui/progress";
 
 const attendanceData = [
   { day: "Monday", present: 90 },
@@ -8,7 +8,7 @@ const attendanceData = [
   { day: "Wednesday", present: 95 },
   { day: "Thursday", present: 80 },
   { day: "Friday", present: 88 },
-]
+];
 
 export function StudentAttendance() {
   return (
@@ -23,5 +23,5 @@ export function StudentAttendance() {
         </div>
       ))}
     </div>
-  )
+  );
 }

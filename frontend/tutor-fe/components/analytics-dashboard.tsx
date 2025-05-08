@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 import {
   BarChart,
   LineChart,
@@ -15,12 +15,29 @@ import {
   Legend,
   ResponsiveContainer,
   Cell,
-} from "recharts"
-import { GripVertical, Maximize2, Minimize2 } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+} from "recharts";
+import { GripVertical, Maximize2, Minimize2 } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import {
   DndContext,
   closestCenter,
@@ -29,15 +46,15 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
-} from "@dnd-kit/core"
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 // Dummy data for charts
 const gradeDistributionData = [
@@ -46,7 +63,7 @@ const gradeDistributionData = [
   { name: "C", count: 15, fill: "#FFC107" },
   { name: "D", count: 8, fill: "#FF9800" },
   { name: "F", count: 5, fill: "#F44336" },
-]
+];
 
 const progressData = [
   { week: "Week 1", average: 72, topStudent: 92 },
@@ -57,13 +74,13 @@ const progressData = [
   { week: "Week 6", average: 83, topStudent: 98 },
   { week: "Week 7", average: 85, topStudent: 99 },
   { week: "Week 8", average: 88, topStudent: 100 },
-]
+];
 
 const submissionData = [
   { name: "On-time", value: 68, fill: "#4CAF50" },
   { name: "Late", value: 23, fill: "#FFC107" },
   { name: "Missing", value: 9, fill: "#F44336" },
-]
+];
 
 const quizResultsData = [
   { name: "Quiz 1", classA: 78, classB: 82, classC: 75 },
@@ -71,7 +88,7 @@ const quizResultsData = [
   { name: "Quiz 3", classA: 75, classB: 78, classC: 72 },
   { name: "Quiz 4", classA: 85, classB: 88, classC: 80 },
   { name: "Quiz 5", classA: 88, classB: 90, classC: 84 },
-]
+];
 
 const attendanceData = [
   { day: "Mon", present: 25, excused: 3, unexcused: 2 },
@@ -79,7 +96,7 @@ const attendanceData = [
   { day: "Wed", present: 24, excused: 4, unexcused: 2 },
   { day: "Thu", present: 26, excused: 2, unexcused: 2 },
   { day: "Fri", present: 23, excused: 5, unexcused: 2 },
-]
+];
 
 // Sortable Chart Card Component
 function SortableChartCard({
@@ -90,18 +107,29 @@ function SortableChartCard({
   getChartTitle,
   getChartDescription,
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
     id: chart.id.toString(),
-  })
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 1 : 0,
-  }
+  };
 
   return (
-    <Card ref={setNodeRef} style={style} className={`shadow-md ${chart.expanded ? "col-span-full" : ""}`}>
+    <Card
+      ref={setNodeRef}
+      style={style}
+      className={`shadow-md ${chart.expanded ? "col-span-full" : ""}`}
+    >
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div>
@@ -109,11 +137,25 @@ function SortableChartCard({
             <CardDescription>{getChartDescription(chart.type)}</CardDescription>
           </div>
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" onClick={() => toggleExpand(chart.id)}>
-              <span className="sr-only">{chart.expanded ? "Minimize" : "Maximize"}</span>
-              {chart.expanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => toggleExpand(chart.id)}
+            >
+              <span className="sr-only">
+                {chart.expanded ? "Minimize" : "Maximize"}
+              </span>
+              {chart.expanded ? (
+                <Minimize2 className="h-4 w-4" />
+              ) : (
+                <Maximize2 className="h-4 w-4" />
+              )}
             </Button>
-            <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
+            <div
+              className="cursor-grab active:cursor-grabbing"
+              {...attributes}
+              {...listeners}
+            >
               <GripVertical className="h-4 w-4 text-muted-foreground" />
             </div>
           </div>
@@ -124,45 +166,51 @@ function SortableChartCard({
         {renderChartContent(chart.type, chart.expanded)}
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export function AnalyticsDashboard() {
-  const [activeView, setActiveView] = useState("overview")
+  const [activeView, setActiveView] = useState("overview");
   const [charts, setCharts] = useState([
     { id: 1, type: "gradeDistribution", expanded: false },
     { id: 2, type: "progressOverTime", expanded: false },
     { id: 3, type: "submissionStatus", expanded: false },
     { id: 4, type: "quizResults", expanded: false },
     { id: 5, type: "attendanceTracking", expanded: false },
-  ])
+  ]);
 
   // Set up sensors for drag and drop
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  )
+    })
+  );
 
   const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event
+    const { active, over } = event;
 
     if (over && active.id !== over.id) {
       setCharts((items) => {
-        const oldIndex = items.findIndex((item) => item.id.toString() === active.id)
-        const newIndex = items.findIndex((item) => item.id.toString() === over.id)
+        const oldIndex = items.findIndex(
+          (item) => item.id.toString() === active.id
+        );
+        const newIndex = items.findIndex(
+          (item) => item.id.toString() === over.id
+        );
 
-        return arrayMove(items, oldIndex, newIndex)
-      })
+        return arrayMove(items, oldIndex, newIndex);
+      });
     }
-  }
+  };
 
   const toggleExpand = (id: number) => {
     setCharts((prevCharts) =>
-      prevCharts.map((chart) => (chart.id === id ? { ...chart, expanded: !chart.expanded } : chart)),
-    )
-  }
+      prevCharts.map((chart) =>
+        chart.id === id ? { ...chart, expanded: !chart.expanded } : chart
+      )
+    );
+  };
 
   const renderChartContent = (chartType: string, expanded: boolean) => {
     switch (chartType) {
@@ -170,7 +218,10 @@ export function AnalyticsDashboard() {
         return (
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={gradeDistributionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <BarChart
+                data={gradeDistributionData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
@@ -184,23 +235,37 @@ export function AnalyticsDashboard() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        )
+        );
       case "progressOverTime":
         return (
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={progressData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <LineChart
+                data={progressData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="week" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="average" stroke="#8884d8" name="Class Average" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="topStudent" stroke="#82ca9d" name="Top Student" />
+                <Line
+                  type="monotone"
+                  dataKey="average"
+                  stroke="#8884d8"
+                  name="Class Average"
+                  activeDot={{ r: 8 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="topStudent"
+                  stroke="#82ca9d"
+                  name="Top Student"
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        )
+        );
       case "submissionStatus":
         return (
           <div className="h-[300px] w-full">
@@ -214,7 +279,9 @@ export function AnalyticsDashboard() {
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) =>
+                    `${name}: ${(percent * 100).toFixed(0)}%`
+                  }
                 >
                   {submissionData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -225,12 +292,15 @@ export function AnalyticsDashboard() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-        )
+        );
       case "quizResults":
         return (
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={quizResultsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <BarChart
+                data={quizResultsData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
@@ -242,62 +312,80 @@ export function AnalyticsDashboard() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        )
+        );
       case "attendanceTracking":
         return (
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={attendanceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <BarChart
+                data={attendanceData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="present" stackId="a" name="Present" fill="#4CAF50" />
-                <Bar dataKey="excused" stackId="a" name="Excused Absence" fill="#FFC107" />
-                <Bar dataKey="unexcused" stackId="a" name="Unexcused Absence" fill="#F44336" />
+                <Bar
+                  dataKey="present"
+                  stackId="a"
+                  name="Present"
+                  fill="#4CAF50"
+                />
+                <Bar
+                  dataKey="excused"
+                  stackId="a"
+                  name="Excused Absence"
+                  fill="#FFC107"
+                />
+                <Bar
+                  dataKey="unexcused"
+                  stackId="a"
+                  name="Unexcused Absence"
+                  fill="#F44336"
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getChartTitle = (chartType: string) => {
     switch (chartType) {
       case "gradeDistribution":
-        return "Grade Distribution"
+        return "Grade Distribution";
       case "progressOverTime":
-        return "Student Progress Over Time"
+        return "Student Progress Over Time";
       case "submissionStatus":
-        return "Assignment Submission Status"
+        return "Assignment Submission Status";
       case "quizResults":
-        return "Quiz/Test Results Comparison"
+        return "Quiz/Test Results Comparison";
       case "attendanceTracking":
-        return "Attendance Tracking"
+        return "Attendance Tracking";
       default:
-        return ""
+        return "";
     }
-  }
+  };
 
   const getChartDescription = (chartType: string) => {
     switch (chartType) {
       case "gradeDistribution":
-        return "Student grades by category"
+        return "Student grades by category";
       case "progressOverTime":
-        return "Performance trends across weeks/months"
+        return "Performance trends across weeks/months";
       case "submissionStatus":
-        return "On-time, late, and missing submissions"
+        return "On-time, late, and missing submissions";
       case "quizResults":
-        return "Performance across classes and topics"
+        return "Performance across classes and topics";
       case "attendanceTracking":
-        return "Daily/weekly attendance and absence reasons"
+        return "Daily/weekly attendance and absence reasons";
       default:
-        return ""
+        return "";
     }
-  }
+  };
 
   const renderFilterControls = (chartType: string) => {
     switch (chartType) {
@@ -326,7 +414,7 @@ export function AnalyticsDashboard() {
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       case "progressOverTime":
         return (
           <div className="flex gap-2 mt-2">
@@ -346,11 +434,13 @@ export function AnalyticsDashboard() {
               <SelectContent>
                 <SelectItem value="grades">Grades</SelectItem>
                 <SelectItem value="quiz-scores">Quiz Scores</SelectItem>
-                <SelectItem value="module-completion">Module Completion</SelectItem>
+                <SelectItem value="module-completion">
+                  Module Completion
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       case "submissionStatus":
         return (
           <div className="flex gap-2 mt-2">
@@ -377,7 +467,7 @@ export function AnalyticsDashboard() {
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       case "quizResults":
         return (
           <div className="flex gap-2 mt-2">
@@ -402,7 +492,7 @@ export function AnalyticsDashboard() {
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       case "attendanceTracking":
         return (
           <div className="flex gap-2 mt-2">
@@ -429,17 +519,21 @@ export function AnalyticsDashboard() {
               </SelectContent>
             </Select>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const renderAnalyticsView = () => {
     switch (activeView) {
       case "overview":
         return (
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <SortableContext
                 items={charts.map((chart) => chart.id.toString())}
@@ -459,7 +553,7 @@ export function AnalyticsDashboard() {
               </SortableContext>
             </div>
           </DndContext>
-        )
+        );
       case "grades":
         return (
           <div className="grid grid-cols-1 gap-4">
@@ -476,7 +570,9 @@ export function AnalyticsDashboard() {
             <Card className="shadow-md">
               <CardHeader>
                 <CardTitle>Student Progress Over Time</CardTitle>
-                <CardDescription>Performance trends across weeks/months</CardDescription>
+                <CardDescription>
+                  Performance trends across weeks/months
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {renderFilterControls("progressOverTime")}
@@ -484,14 +580,16 @@ export function AnalyticsDashboard() {
               </CardContent>
             </Card>
           </div>
-        )
+        );
       case "attendance":
         return (
           <div className="grid grid-cols-1 gap-4">
             <Card className="shadow-md">
               <CardHeader>
                 <CardTitle>Attendance Tracking</CardTitle>
-                <CardDescription>Daily/weekly attendance and absence reasons</CardDescription>
+                <CardDescription>
+                  Daily/weekly attendance and absence reasons
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {renderFilterControls("attendanceTracking")}
@@ -499,14 +597,16 @@ export function AnalyticsDashboard() {
               </CardContent>
             </Card>
           </div>
-        )
+        );
       case "assignments":
         return (
           <div className="grid grid-cols-1 gap-4">
             <Card className="shadow-md">
               <CardHeader>
                 <CardTitle>Assignment Submission Status</CardTitle>
-                <CardDescription>On-time, late, and missing submissions</CardDescription>
+                <CardDescription>
+                  On-time, late, and missing submissions
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {renderFilterControls("submissionStatus")}
@@ -516,7 +616,9 @@ export function AnalyticsDashboard() {
             <Card className="shadow-md">
               <CardHeader>
                 <CardTitle>Quiz/Test Results Comparison</CardTitle>
-                <CardDescription>Performance across classes and topics</CardDescription>
+                <CardDescription>
+                  Performance across classes and topics
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {renderFilterControls("quizResults")}
@@ -524,11 +626,11 @@ export function AnalyticsDashboard() {
               </CardContent>
             </Card>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="space-y-4">
@@ -539,10 +641,10 @@ export function AnalyticsDashboard() {
               {activeView === "overview"
                 ? "Overview"
                 : activeView === "grades"
-                  ? "Grades"
-                  : activeView === "attendance"
-                    ? "Attendance"
-                    : "Assignments"}
+                ? "Grades"
+                : activeView === "attendance"
+                ? "Attendance"
+                : "Assignments"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -560,15 +662,23 @@ export function AnalyticsDashboard() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => setActiveView("overview")}>Overview</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setActiveView("grades")}>Grades</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setActiveView("attendance")}>Attendance</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setActiveView("assignments")}>Assignments</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setActiveView("overview")}>
+              Overview
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setActiveView("grades")}>
+              Grades
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setActiveView("attendance")}>
+              Attendance
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setActiveView("assignments")}>
+              Assignments
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
       {renderAnalyticsView()}
     </div>
-  )
+  );
 }

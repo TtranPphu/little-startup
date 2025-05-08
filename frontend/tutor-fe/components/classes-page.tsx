@@ -1,13 +1,26 @@
-"use client"
+"use client";
 
-import { Textarea } from "@/components/ui/textarea"
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Textarea } from "@/components/ui/textarea";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -16,12 +29,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Search, Users, BookOpen, Calendar, FileText, Star } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Plus,
+  Search,
+  Users,
+  BookOpen,
+  Calendar,
+  FileText,
+  Star,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const classes = [
   {
@@ -104,7 +125,7 @@ const classes = [
     status: "Completed",
     nextLesson: "N/A",
   },
-]
+];
 
 const students = [
   {
@@ -131,7 +152,7 @@ const students = [
     attendance: "95%",
     avatar: "WC",
   },
-]
+];
 
 const syllabusItems = [
   {
@@ -155,7 +176,7 @@ const syllabusItems = [
     date: "May 1, 2023",
     size: "0.5 MB",
   },
-]
+];
 
 const calendarEvents = [
   {
@@ -186,48 +207,52 @@ const calendarEvents = [
     time: "9:00 AM - 11:00 AM",
     type: "Exam",
   },
-]
+];
 
 export function ClassesPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [filter, setFilter] = useState({
     level: "all",
     status: "all",
-  })
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedClass, setSelectedClass] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState("overview")
-  const [showReviewDialog, setShowReviewDialog] = useState(false)
-  const [selectedStudent, setSelectedStudent] = useState<any>(null)
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<any>(null);
 
   // Check if there's a class ID in the URL params
   useEffect(() => {
-    const classId = searchParams.get("id")
+    const classId = searchParams.get("id");
     if (classId) {
-      setSelectedClass(classId)
+      setSelectedClass(classId);
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const filteredClasses = classes.filter((classItem) => {
-    const levelMatch = filter.level === "all" || classItem.level === filter.level
-    const statusMatch = filter.status === "all" || classItem.status === filter.status
-    const searchMatch = searchQuery === "" || classItem.name.toLowerCase().includes(searchQuery.toLowerCase())
-    return levelMatch && statusMatch && searchMatch
-  })
+    const levelMatch =
+      filter.level === "all" || classItem.level === filter.level;
+    const statusMatch =
+      filter.status === "all" || classItem.status === filter.status;
+    const searchMatch =
+      searchQuery === "" ||
+      classItem.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return levelMatch && statusMatch && searchMatch;
+  });
 
-  const selectedClassData = classes.find((c) => c.id === selectedClass)
+  const selectedClassData = classes.find((c) => c.id === selectedClass);
 
   const handleClassClick = (classId: string) => {
-    setSelectedClass(classId)
+    setSelectedClass(classId);
     // Update URL without full navigation
-    router.push(`/classes?id=${classId}`, { scroll: false })
-  }
+    router.push(`/classes?id=${classId}`, { scroll: false });
+  };
 
   const handleStudentReview = (student: any) => {
-    setSelectedStudent(student)
-    setShowReviewDialog(true)
-  }
+    setSelectedStudent(student);
+    setShowReviewDialog(true);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -243,7 +268,9 @@ export function ClassesPage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create New Class</DialogTitle>
-              <DialogDescription>Fill in the details to create a new class.</DialogDescription>
+              <DialogDescription>
+                Fill in the details to create a new class.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -276,7 +303,11 @@ export function ClassesPage() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter class description" rows={3} />
+                <Textarea
+                  id="description"
+                  placeholder="Enter class description"
+                  rows={3}
+                />
               </div>
             </div>
             <DialogFooter>
@@ -293,8 +324,8 @@ export function ClassesPage() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setSelectedClass(null)
-                  router.push("/classes", { scroll: false })
+                  setSelectedClass(null);
+                  router.push("/classes", { scroll: false });
                 }}
               >
                 Back to All Classes
@@ -305,8 +336,8 @@ export function ClassesPage() {
                   selectedClassData?.status === "Active"
                     ? "default"
                     : selectedClassData?.status === "Upcoming"
-                      ? "outline"
-                      : "secondary"
+                    ? "outline"
+                    : "secondary"
                 }
               >
                 {selectedClassData?.status}
@@ -396,7 +427,9 @@ export function ClassesPage() {
                             <TableHead>Level</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Attendance</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
+                            <TableHead className="text-right">
+                              Actions
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -409,10 +442,17 @@ export function ClassesPage() {
                               <TableCell>
                                 <div className="flex items-center gap-3">
                                   <Avatar className="h-8 w-8">
-                                    <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={student.name} />
-                                    <AvatarFallback>{student.avatar}</AvatarFallback>
+                                    <AvatarImage
+                                      src={`/placeholder.svg?height=32&width=32`}
+                                      alt={student.name}
+                                    />
+                                    <AvatarFallback>
+                                      {student.avatar}
+                                    </AvatarFallback>
                                   </Avatar>
-                                  <div className="font-medium">{student.name}</div>
+                                  <div className="font-medium">
+                                    {student.name}
+                                  </div>
                                 </div>
                               </TableCell>
                               <TableCell>{student.level}</TableCell>
@@ -423,8 +463,8 @@ export function ClassesPage() {
                                   variant="ghost"
                                   size="sm"
                                   onClick={(e) => {
-                                    e.stopPropagation()
-                                    handleStudentReview(student)
+                                    e.stopPropagation();
+                                    handleStudentReview(student);
                                   }}
                                 >
                                   Review
@@ -439,7 +479,9 @@ export function ClassesPage() {
 
                   <TabsContent value="syllabus" className="mt-4">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-medium">Syllabus Materials</h3>
+                      <h3 className="text-lg font-medium">
+                        Syllabus Materials
+                      </h3>
                       <Button size="sm">
                         <Plus className="mr-2 h-4 w-4" />
                         Upload
@@ -453,16 +495,23 @@ export function ClassesPage() {
                             <TableHead>Type</TableHead>
                             <TableHead>Date</TableHead>
                             <TableHead>Size</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
+                            <TableHead className="text-right">
+                              Actions
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {syllabusItems.map((item) => (
-                            <TableRow key={item.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
+                            <TableRow
+                              key={item.id}
+                              className="cursor-pointer hover:bg-muted/50 transition-colors"
+                            >
                               <TableCell>
                                 <div className="flex items-center gap-3">
                                   <FileText className="h-4 w-4 text-muted-foreground" />
-                                  <div className="font-medium">{item.title}</div>
+                                  <div className="font-medium">
+                                    {item.title}
+                                  </div>
                                 </div>
                               </TableCell>
                               <TableCell>{item.type}</TableCell>
@@ -496,12 +545,17 @@ export function ClassesPage() {
                             <TableHead>Date</TableHead>
                             <TableHead>Time</TableHead>
                             <TableHead>Type</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
+                            <TableHead className="text-right">
+                              Actions
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {calendarEvents.map((event) => (
-                            <TableRow key={event.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
+                            <TableRow
+                              key={event.id}
+                              className="cursor-pointer hover:bg-muted/50 transition-colors"
+                            >
                               <TableCell>
                                 <div className="font-medium">{event.title}</div>
                               </TableCell>
@@ -513,10 +567,10 @@ export function ClassesPage() {
                                     event.type === "Lesson"
                                       ? "default"
                                       : event.type === "Quiz"
-                                        ? "outline"
-                                        : event.type === "Exam"
-                                          ? "destructive"
-                                          : "secondary"
+                                      ? "outline"
+                                      : event.type === "Exam"
+                                      ? "destructive"
+                                      : "secondary"
                                   }
                                 >
                                   {event.type}
@@ -554,7 +608,12 @@ export function ClassesPage() {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Select value={filter.level} onValueChange={(value) => setFilter({ ...filter, level: value })}>
+              <Select
+                value={filter.level}
+                onValueChange={(value) =>
+                  setFilter({ ...filter, level: value })
+                }
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by level" />
                 </SelectTrigger>
@@ -565,7 +624,12 @@ export function ClassesPage() {
                   <SelectItem value="Advanced">Advanced</SelectItem>
                 </SelectContent>
               </Select>
-              <Select value={filter.status} onValueChange={(value) => setFilter({ ...filter, status: value })}>
+              <Select
+                value={filter.status}
+                onValueChange={(value) =>
+                  setFilter({ ...filter, status: value })
+                }
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
@@ -586,8 +650,12 @@ export function ClassesPage() {
                   <TableHead>Level</TableHead>
                   <TableHead className="hidden md:table-cell">Time</TableHead>
                   <TableHead className="hidden md:table-cell">Days</TableHead>
-                  <TableHead className="hidden md:table-cell">Students</TableHead>
-                  <TableHead className="hidden md:table-cell">Next Lesson</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Students
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Next Lesson
+                  </TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -605,20 +673,30 @@ export function ClassesPage() {
                       className="cursor-pointer hover:bg-muted/50 transition-colors"
                       onClick={() => handleClassClick(classItem.id)}
                     >
-                      <TableCell className="font-medium">{classItem.name}</TableCell>
+                      <TableCell className="font-medium">
+                        {classItem.name}
+                      </TableCell>
                       <TableCell>{classItem.level}</TableCell>
-                      <TableCell className="hidden md:table-cell">{classItem.time}</TableCell>
-                      <TableCell className="hidden md:table-cell">{classItem.days}</TableCell>
-                      <TableCell className="hidden md:table-cell">{classItem.students}</TableCell>
-                      <TableCell className="hidden md:table-cell">{classItem.nextLesson}</TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {classItem.time}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {classItem.days}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {classItem.students}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {classItem.nextLesson}
+                      </TableCell>
                       <TableCell className="whitespace-nowrap">
                         <Badge
                           variant={
                             classItem.status === "Active"
                               ? "default"
                               : classItem.status === "Upcoming"
-                                ? "outline"
-                                : "secondary"
+                              ? "outline"
+                              : "secondary"
                           }
                         >
                           {classItem.status}
@@ -638,28 +716,47 @@ export function ClassesPage() {
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Student Review</DialogTitle>
-            <DialogDescription>Review {selectedStudent?.name}'s performance after today's class</DialogDescription>
+            <DialogDescription>
+              Review {selectedStudent?.name}'s performance after today's class
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="flex items-center gap-4">
               <Avatar className="h-12 w-12">
-                <AvatarImage src={`/placeholder.svg?height=48&width=48`} alt={selectedStudent?.name} />
+                <AvatarImage
+                  src={`/placeholder.svg?height=48&width=48`}
+                  alt={selectedStudent?.name}
+                />
                 <AvatarFallback>{selectedStudent?.avatar}</AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="font-medium">{selectedStudent?.name}</h3>
-                <p className="text-sm text-muted-foreground">{selectedStudent?.level} Level</p>
+                <p className="text-sm text-muted-foreground">
+                  {selectedStudent?.level} Level
+                </p>
               </div>
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="participation">Class Participation (1-10)</Label>
-              <Input id="participation" type="number" min="1" max="10" placeholder="8" />
+              <Input
+                id="participation"
+                type="number"
+                min="1"
+                max="10"
+                placeholder="8"
+              />
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="comprehension">Comprehension (1-10)</Label>
-              <Input id="comprehension" type="number" min="1" max="10" placeholder="7" />
+              <Input
+                id="comprehension"
+                type="number"
+                min="1"
+                max="10"
+                placeholder="7"
+              />
             </div>
 
             <div className="grid gap-2">
@@ -679,11 +776,18 @@ export function ClassesPage() {
 
             <div className="grid gap-2">
               <Label htmlFor="notes">Additional Notes</Label>
-              <Textarea id="notes" placeholder="Enter notes about student's performance" rows={4} />
+              <Textarea
+                id="notes"
+                placeholder="Enter notes about student's performance"
+                rows={4}
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowReviewDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowReviewDialog(false)}
+            >
               Cancel
             </Button>
             <Button>Save Review</Button>
@@ -691,5 +795,5 @@ export function ClassesPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

@@ -1,14 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Calendar } from "@/components/ui/calendar"
-import { Plus, Search, FileText, Copy, Trash, CalendarIcon } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Plus,
+  Search,
+  FileText,
+  Copy,
+  Trash,
+  CalendarIcon,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -17,11 +36,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { format } from "date-fns"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { format } from "date-fns";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const lessonPlans = [
   {
@@ -64,24 +87,28 @@ const lessonPlans = [
     status: "Template",
     template: true,
   },
-]
+];
 
 export function LessonPlansPage() {
   const [filter, setFilter] = useState({
     class: "all",
     status: "all",
     date: null,
-  })
-  const [searchQuery, setSearchQuery] = useState("")
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   const filteredLessonPlans = lessonPlans.filter((plan) => {
-    const classMatch = filter.class === "all" || plan.class === filter.class
-    const statusMatch = filter.status === "all" || plan.status === filter.status
-    const dateMatch = !filter.date || plan.date === format(filter.date, "yyyy-MM-dd")
-    const searchMatch = searchQuery === "" || plan.title.toLowerCase().includes(searchQuery.toLowerCase())
-    return classMatch && statusMatch && dateMatch && searchMatch
-  })
+    const classMatch = filter.class === "all" || plan.class === filter.class;
+    const statusMatch =
+      filter.status === "all" || plan.status === filter.status;
+    const dateMatch =
+      !filter.date || plan.date === format(filter.date, "yyyy-MM-dd");
+    const searchMatch =
+      searchQuery === "" ||
+      plan.title.toLowerCase().includes(searchQuery.toLowerCase());
+    return classMatch && statusMatch && dateMatch && searchMatch;
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -97,7 +124,9 @@ export function LessonPlansPage() {
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Create New Lesson Plan</DialogTitle>
-              <DialogDescription>Create a new lesson plan or use a template.</DialogDescription>
+              <DialogDescription>
+                Create a new lesson plan or use a template.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -112,10 +141,16 @@ export function LessonPlansPage() {
                       <SelectValue placeholder="Select class" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="beginner">Beginner Mandarin</SelectItem>
-                      <SelectItem value="intermediate">Intermediate Conversation</SelectItem>
+                      <SelectItem value="beginner">
+                        Beginner Mandarin
+                      </SelectItem>
+                      <SelectItem value="intermediate">
+                        Intermediate Conversation
+                      </SelectItem>
                       <SelectItem value="advanced">Advanced Writing</SelectItem>
-                      <SelectItem value="business">Business Mandarin</SelectItem>
+                      <SelectItem value="business">
+                        Business Mandarin
+                      </SelectItem>
                       <SelectItem value="hsk4">HSK 4 Preparation</SelectItem>
                     </SelectContent>
                   </Select>
@@ -124,32 +159,57 @@ export function LessonPlansPage() {
                   <Label htmlFor="date">Date</Label>
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" className="w-full justify-start text-left font-normal" id="date">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start text-left font-normal"
+                        id="date"
+                      >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? format(date, "PPP") : "Select date"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
-                      <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
                     </PopoverContent>
                   </Popover>
                 </div>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="objectives">Learning Objectives</Label>
-                <Textarea id="objectives" placeholder="Enter learning objectives" rows={2} />
+                <Textarea
+                  id="objectives"
+                  placeholder="Enter learning objectives"
+                  rows={2}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="activities">Activities</Label>
-                <Textarea id="activities" placeholder="Enter lesson activities" rows={4} />
+                <Textarea
+                  id="activities"
+                  placeholder="Enter lesson activities"
+                  rows={4}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="materials">Materials Needed</Label>
-                <Textarea id="materials" placeholder="Enter required materials" rows={2} />
+                <Textarea
+                  id="materials"
+                  placeholder="Enter required materials"
+                  rows={2}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="assessment">Assessment</Label>
-                <Textarea id="assessment" placeholder="Enter assessment methods" rows={2} />
+                <Textarea
+                  id="assessment"
+                  placeholder="Enter assessment methods"
+                  rows={2}
+                />
               </div>
               <div className="flex items-center gap-2">
                 <Label htmlFor="save-template" className="flex-1">
@@ -183,17 +243,30 @@ export function LessonPlansPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Select value={filter.class} onValueChange={(value) => setFilter({ ...filter, class: value })}>
+            <Select
+              value={filter.class}
+              onValueChange={(value) => setFilter({ ...filter, class: value })}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by class" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Classes</SelectItem>
-                <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
-                <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
-                <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-                <SelectItem value="Business Mandarin">Business Mandarin</SelectItem>
-                <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
+                <SelectItem value="Beginner Mandarin">
+                  Beginner Mandarin
+                </SelectItem>
+                <SelectItem value="Intermediate Conversation">
+                  Intermediate Conversation
+                </SelectItem>
+                <SelectItem value="Advanced Writing">
+                  Advanced Writing
+                </SelectItem>
+                <SelectItem value="Business Mandarin">
+                  Business Mandarin
+                </SelectItem>
+                <SelectItem value="HSK 4 Preparation">
+                  HSK 4 Preparation
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -211,7 +284,11 @@ export function LessonPlansPage() {
                     <div className="flex items-center justify-between">
                       <Badge
                         variant={
-                          plan.status === "Upcoming" ? "default" : plan.status === "Draft" ? "outline" : "secondary"
+                          plan.status === "Upcoming"
+                            ? "default"
+                            : plan.status === "Draft"
+                            ? "outline"
+                            : "secondary"
                         }
                       >
                         {plan.status}
@@ -238,7 +315,9 @@ export function LessonPlansPage() {
                     <div className="mt-4 flex justify-end">
                       <Button variant="outline" size="sm" className="w-full">
                         <FileText className="mr-2 h-4 w-4" />
-                        {plan.status === "Template" ? "Use Template" : "Edit Plan"}
+                        {plan.status === "Template"
+                          ? "Use Template"
+                          : "Edit Plan"}
                       </Button>
                     </div>
                   </CardContent>
@@ -362,5 +441,5 @@ export function LessonPlansPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

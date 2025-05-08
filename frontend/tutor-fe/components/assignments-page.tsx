@@ -1,12 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -15,13 +28,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Plus, Search, Calendar, FileText, Users } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Search, Calendar, FileText, Users } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const assignments = [
   {
@@ -67,7 +80,8 @@ const assignments = [
     deadline: "May 20, 11:59 PM",
     submissions: "0/15",
     status: "Past Due",
-    description: "Complete the online vocabulary quiz covering the words from Chapters 8-10 in the HSK 4 textbook.",
+    description:
+      "Complete the online vocabulary quiz covering the words from Chapters 8-10 in the HSK 4 textbook.",
     instructions:
       "1. Log in to the online learning platform\n2. You will have 30 minutes to complete the quiz\n3. The quiz includes matching, multiple choice, and fill-in-the-blank questions\n4. You may take the quiz only once",
   },
@@ -78,7 +92,8 @@ const assignments = [
     deadline: "May 18, 11:59 PM",
     submissions: "8/8",
     status: "Completed",
-    description: "Read the short story provided in class and answer the comprehension questions that follow.",
+    description:
+      "Read the short story provided in class and answer the comprehension questions that follow.",
     instructions:
       "1. Read the story at least twice\n2. Answer all 10 questions in complete sentences\n3. Use evidence from the text to support your answers\n4. Submit as a Word document or PDF",
   },
@@ -89,7 +104,8 @@ const assignments = [
     deadline: "May 27, 11:59 PM",
     submissions: "0/10",
     status: "Open",
-    description: "Write three professional emails in Chinese based on the business scenarios provided in class.",
+    description:
+      "Write three professional emails in Chinese based on the business scenarios provided in class.",
     instructions:
       "1. Follow the formal email structure discussed in class\n2. Use appropriate business vocabulary and formal language\n3. Each email should be 150-200 words\n4. Submit all three emails in a single document",
   },
@@ -100,7 +116,8 @@ const assignments = [
     deadline: "May 24, 11:59 PM",
     submissions: "5/12",
     status: "Open",
-    description: "Record yourself pronouncing the difficult sound pairs we practiced in class.",
+    description:
+      "Record yourself pronouncing the difficult sound pairs we practiced in class.",
     instructions:
       "1. Record each pair of sounds 3 times\n2. Include the example words for each sound\n3. Submit as an MP3 file\n4. Recording should be 1-2 minutes in length",
   },
@@ -115,7 +132,7 @@ const assignments = [
     instructions:
       "1. Complete all exercises on the assigned pages\n2. Write full sentences for each answer\n3. Check your work for accuracy\n4. Submit photos or scans of your completed work",
   },
-]
+];
 
 const studentSubmissions = [
   {
@@ -142,41 +159,49 @@ const studentSubmissions = [
     grade: "Not graded",
     avatar: "WC",
   },
-]
+];
 
 export function AssignmentsPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [filter, setFilter] = useState({
     class: "all",
     status: "all",
-  })
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState("details")
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedAssignment, setSelectedAssignment] = useState<string | null>(
+    null
+  );
+  const [activeTab, setActiveTab] = useState("details");
 
   // Check if there's an assignment ID in the URL params
   useEffect(() => {
-    const assignmentId = searchParams.get("id")
+    const assignmentId = searchParams.get("id");
     if (assignmentId) {
-      setSelectedAssignment(assignmentId)
+      setSelectedAssignment(assignmentId);
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const filteredAssignments = assignments.filter((assignment) => {
-    const classMatch = filter.class === "all" || assignment.class === filter.class
-    const statusMatch = filter.status === "all" || assignment.status === filter.status
-    const searchMatch = searchQuery === "" || assignment.title.toLowerCase().includes(searchQuery.toLowerCase())
-    return classMatch && statusMatch && searchMatch
-  })
+    const classMatch =
+      filter.class === "all" || assignment.class === filter.class;
+    const statusMatch =
+      filter.status === "all" || assignment.status === filter.status;
+    const searchMatch =
+      searchQuery === "" ||
+      assignment.title.toLowerCase().includes(searchQuery.toLowerCase());
+    return classMatch && statusMatch && searchMatch;
+  });
 
-  const selectedAssignmentData = assignments.find((a) => a.id === selectedAssignment)
+  const selectedAssignmentData = assignments.find(
+    (a) => a.id === selectedAssignment
+  );
 
   const handleAssignmentClick = (assignmentId: string) => {
-    setSelectedAssignment(assignmentId)
+    setSelectedAssignment(assignmentId);
     // Update URL without full navigation
-    router.push(`/assignments?id=${assignmentId}`, { scroll: false })
-  }
+    router.push(`/assignments?id=${assignmentId}`, { scroll: false });
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -192,7 +217,9 @@ export function AssignmentsPage() {
           <DialogContent className="sm:max-w-[525px]">
             <DialogHeader>
               <DialogTitle>Create New Assignment</DialogTitle>
-              <DialogDescription>Fill in the details to create a new assignment.</DialogDescription>
+              <DialogDescription>
+                Fill in the details to create a new assignment.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -207,7 +234,9 @@ export function AssignmentsPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="beginner">Beginner Mandarin</SelectItem>
-                    <SelectItem value="intermediate">Intermediate Conversation</SelectItem>
+                    <SelectItem value="intermediate">
+                      Intermediate Conversation
+                    </SelectItem>
                     <SelectItem value="advanced">Advanced Writing</SelectItem>
                     <SelectItem value="business">Business Mandarin</SelectItem>
                     <SelectItem value="hsk4">HSK 4 Preparation</SelectItem>
@@ -216,7 +245,11 @@ export function AssignmentsPage() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter assignment description" rows={4} />
+                <Textarea
+                  id="description"
+                  placeholder="Enter assignment description"
+                  rows={4}
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
@@ -243,22 +276,24 @@ export function AssignmentsPage() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setSelectedAssignment(null)
-                  router.push("/assignments", { scroll: false })
+                  setSelectedAssignment(null);
+                  router.push("/assignments", { scroll: false });
                 }}
               >
                 Back to All Assignments
               </Button>
-              <h2 className="text-2xl font-bold">{selectedAssignmentData?.title}</h2>
+              <h2 className="text-2xl font-bold">
+                {selectedAssignmentData?.title}
+              </h2>
               <Badge
                 variant={
                   selectedAssignmentData?.status === "Open"
                     ? "default"
                     : selectedAssignmentData?.status === "Due Soon"
-                      ? "outline"
-                      : selectedAssignmentData?.status === "Past Due"
-                        ? "destructive"
-                        : "secondary"
+                    ? "outline"
+                    : selectedAssignmentData?.status === "Past Due"
+                    ? "destructive"
+                    : "secondary"
                 }
               >
                 {selectedAssignmentData?.status}
@@ -321,11 +356,17 @@ export function AssignmentsPage() {
                   <TabsContent value="details" className="mt-4">
                     <div className="space-y-4">
                       <div>
-                        <h3 className="text-lg font-medium mb-2">Description</h3>
-                        <p className="text-sm text-muted-foreground">{selectedAssignmentData?.description}</p>
+                        <h3 className="text-lg font-medium mb-2">
+                          Description
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {selectedAssignmentData?.description}
+                        </p>
                       </div>
                       <div>
-                        <h3 className="text-lg font-medium mb-2">Instructions</h3>
+                        <h3 className="text-lg font-medium mb-2">
+                          Instructions
+                        </h3>
                         <div className="text-sm text-muted-foreground whitespace-pre-line">
                           {selectedAssignmentData?.instructions}
                         </div>
@@ -339,7 +380,9 @@ export function AssignmentsPage() {
 
                   <TabsContent value="submissions" className="mt-4">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-medium">Student Submissions</h3>
+                      <h3 className="text-lg font-medium">
+                        Student Submissions
+                      </h3>
                       <Button size="sm">Download All</Button>
                     </div>
                     <div className="rounded-md border">
@@ -350,7 +393,9 @@ export function AssignmentsPage() {
                             <TableHead>Status</TableHead>
                             <TableHead>Submission Date</TableHead>
                             <TableHead>Grade</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
+                            <TableHead className="text-right">
+                              Actions
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -359,10 +404,17 @@ export function AssignmentsPage() {
                               <TableCell>
                                 <div className="flex items-center gap-3">
                                   <Avatar className="h-8 w-8">
-                                    <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={submission.student} />
-                                    <AvatarFallback>{submission.avatar}</AvatarFallback>
+                                    <AvatarImage
+                                      src={`/placeholder.svg?height=32&width=32`}
+                                      alt={submission.student}
+                                    />
+                                    <AvatarFallback>
+                                      {submission.avatar}
+                                    </AvatarFallback>
                                   </Avatar>
-                                  <div className="font-medium">{submission.student}</div>
+                                  <div className="font-medium">
+                                    {submission.student}
+                                  </div>
                                 </div>
                               </TableCell>
                               <TableCell>
@@ -371,8 +423,8 @@ export function AssignmentsPage() {
                                     submission.status === "Submitted"
                                       ? "default"
                                       : submission.status === "Late"
-                                        ? "outline"
-                                        : "destructive"
+                                      ? "outline"
+                                      : "destructive"
                                   }
                                 >
                                   {submission.status}
@@ -400,7 +452,9 @@ export function AssignmentsPage() {
                   <TabsContent value="schedule" className="mt-4">
                     <div className="space-y-4">
                       <div>
-                        <h3 className="text-lg font-medium mb-2">Assignment Schedule</h3>
+                        <h3 className="text-lg font-medium mb-2">
+                          Assignment Schedule
+                        </h3>
                         <div className="rounded-md border p-4">
                           <div className="space-y-4">
                             <div className="flex justify-between">
@@ -412,7 +466,9 @@ export function AssignmentsPage() {
                               <div>{selectedAssignmentData?.deadline}</div>
                             </div>
                             <div className="flex justify-between">
-                              <div className="font-medium">Late Submission Deadline:</div>
+                              <div className="font-medium">
+                                Late Submission Deadline:
+                              </div>
                               <div>May 25, 2023 (with penalty)</div>
                             </div>
                             <div className="flex justify-between">
@@ -448,20 +504,40 @@ export function AssignmentsPage() {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Select value={filter.class} onValueChange={(value) => setFilter({ ...filter, class: value })}>
+              <Select
+                value={filter.class}
+                onValueChange={(value) =>
+                  setFilter({ ...filter, class: value })
+                }
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by class" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Classes</SelectItem>
-                  <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
-                  <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
-                  <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-                  <SelectItem value="Business Mandarin">Business Mandarin</SelectItem>
-                  <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
+                  <SelectItem value="Beginner Mandarin">
+                    Beginner Mandarin
+                  </SelectItem>
+                  <SelectItem value="Intermediate Conversation">
+                    Intermediate Conversation
+                  </SelectItem>
+                  <SelectItem value="Advanced Writing">
+                    Advanced Writing
+                  </SelectItem>
+                  <SelectItem value="Business Mandarin">
+                    Business Mandarin
+                  </SelectItem>
+                  <SelectItem value="HSK 4 Preparation">
+                    HSK 4 Preparation
+                  </SelectItem>
                 </SelectContent>
               </Select>
-              <Select value={filter.status} onValueChange={(value) => setFilter({ ...filter, status: value })}>
+              <Select
+                value={filter.status}
+                onValueChange={(value) =>
+                  setFilter({ ...filter, status: value })
+                }
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
@@ -481,8 +557,12 @@ export function AssignmentsPage() {
                 <TableRow>
                   <TableHead>Assignment Title</TableHead>
                   <TableHead className="hidden md:table-cell">Class</TableHead>
-                  <TableHead className="hidden md:table-cell">Deadline</TableHead>
-                  <TableHead className="hidden md:table-cell">Submissions</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Deadline
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Submissions
+                  </TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -500,20 +580,28 @@ export function AssignmentsPage() {
                       className="cursor-pointer hover:bg-muted/50 transition-colors"
                       onClick={() => handleAssignmentClick(assignment.id)}
                     >
-                      <TableCell className="font-medium">{assignment.title}</TableCell>
-                      <TableCell className="hidden md:table-cell">{assignment.class}</TableCell>
-                      <TableCell className="hidden md:table-cell">{assignment.deadline}</TableCell>
-                      <TableCell className="hidden md:table-cell">{assignment.submissions}</TableCell>
+                      <TableCell className="font-medium">
+                        {assignment.title}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {assignment.class}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {assignment.deadline}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {assignment.submissions}
+                      </TableCell>
                       <TableCell className="whitespace-nowrap">
                         <Badge
                           variant={
                             assignment.status === "Open"
                               ? "default"
                               : assignment.status === "Due Soon"
-                                ? "outline"
-                                : assignment.status === "Past Due"
-                                  ? "destructive"
-                                  : "secondary"
+                              ? "outline"
+                              : assignment.status === "Past Due"
+                              ? "destructive"
+                              : "secondary"
                           }
                         >
                           {assignment.status}
@@ -528,5 +616,5 @@ export function AssignmentsPage() {
         </>
       )}
     </div>
-  )
+  );
 }

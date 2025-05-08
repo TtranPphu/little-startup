@@ -1,16 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Calendar } from "@/components/ui/calendar"
-import { Search, Download, CalendarIcon } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { format } from "date-fns"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { Search, Download, CalendarIcon } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
 
 const attendanceRecords = [
   {
@@ -93,28 +110,34 @@ const attendanceRecords = [
     status: "Late",
     avatar: "LM",
   },
-]
+];
 
 export function AttendancePage() {
   const [filter, setFilter] = useState({
     class: "all",
     status: "all",
     date: null,
-  })
-  const [searchQuery, setSearchQuery] = useState("")
+  });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredAttendance = attendanceRecords.filter((record) => {
-    const classMatch = filter.class === "all" || record.class === filter.class
-    const statusMatch = filter.status === "all" || record.status === filter.status
-    const dateMatch = !filter.date || record.date === format(filter.date, "yyyy-MM-dd")
-    const searchMatch = searchQuery === "" || record.student.toLowerCase().includes(searchQuery.toLowerCase())
-    return classMatch && statusMatch && dateMatch && searchMatch
-  })
+    const classMatch = filter.class === "all" || record.class === filter.class;
+    const statusMatch =
+      filter.status === "all" || record.status === filter.status;
+    const dateMatch =
+      !filter.date || record.date === format(filter.date, "yyyy-MM-dd");
+    const searchMatch =
+      searchQuery === "" ||
+      record.student.toLowerCase().includes(searchQuery.toLowerCase());
+    return classMatch && statusMatch && dateMatch && searchMatch;
+  });
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Attendance Tracker</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Attendance Tracker
+        </h1>
         <Button>
           <Download className="mr-2 h-4 w-4" />
           Export
@@ -134,19 +157,31 @@ export function AttendancePage() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Select value={filter.class} onValueChange={(value) => setFilter({ ...filter, class: value })}>
+          <Select
+            value={filter.class}
+            onValueChange={(value) => setFilter({ ...filter, class: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by class" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Classes</SelectItem>
-              <SelectItem value="Beginner Mandarin">Beginner Mandarin</SelectItem>
-              <SelectItem value="Intermediate Conversation">Intermediate Conversation</SelectItem>
+              <SelectItem value="Beginner Mandarin">
+                Beginner Mandarin
+              </SelectItem>
+              <SelectItem value="Intermediate Conversation">
+                Intermediate Conversation
+              </SelectItem>
               <SelectItem value="Advanced Writing">Advanced Writing</SelectItem>
-              <SelectItem value="HSK 4 Preparation">HSK 4 Preparation</SelectItem>
+              <SelectItem value="HSK 4 Preparation">
+                HSK 4 Preparation
+              </SelectItem>
             </SelectContent>
           </Select>
-          <Select value={filter.status} onValueChange={(value) => setFilter({ ...filter, status: value })}>
+          <Select
+            value={filter.status}
+            onValueChange={(value) => setFilter({ ...filter, status: value })}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
@@ -159,7 +194,10 @@ export function AttendancePage() {
           </Select>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-[180px] justify-start text-left font-normal">
+              <Button
+                variant="outline"
+                className="w-[180px] justify-start text-left font-normal"
+              >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {filter.date ? format(filter.date, "PPP") : "Pick a date"}
               </Button>
@@ -201,7 +239,10 @@ export function AttendancePage() {
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={record.student} />
+                        <AvatarImage
+                          src={`/placeholder.svg?height=32&width=32`}
+                          alt={record.student}
+                        />
                         <AvatarFallback>{record.avatar}</AvatarFallback>
                       </Avatar>
                       <div>{record.student}</div>
@@ -210,7 +251,11 @@ export function AttendancePage() {
                   <TableCell className="whitespace-nowrap">
                     <Badge
                       variant={
-                        record.status === "Present" ? "default" : record.status === "Late" ? "outline" : "destructive"
+                        record.status === "Present"
+                          ? "default"
+                          : record.status === "Late"
+                          ? "outline"
+                          : "destructive"
                       }
                     >
                       {record.status}
@@ -235,5 +280,5 @@ export function AttendancePage() {
         </Table>
       </div>
     </div>
-  )
+  );
 }
