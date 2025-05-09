@@ -13,18 +13,18 @@ spring:
       static-locations: file:data/
   data:
     mongodb:
-      host: #{your-mongo-host}
-      port: #{your-mongo-port}
-      database: #{your-mongo-database}
-      username: #{your-mongo-username}
-      password: #{your-mongo-password}
-      authentication-database: #{your-auth-db}
+      host: ${SPRING_MONGO_HOST}
+      port: ${SPRING_MONGO_PORT}
+      database: ${SPRING_MONGO_DB}
+      username: ${SPRING_MONGO_USERNAME}
+      password: ${SPRING_MONGO_PASSWORD}
+      authentication-database: ${SPRING_MONGO_AUTH_DB}
       auto-index-creation: true
   mail:
     host: smtp.gmail.com
     port: 587
-    username: #{your-email}
-    password: #{your-password}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
