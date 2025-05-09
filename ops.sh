@@ -52,9 +52,9 @@ initialize() {
   # .env for backend
   if [ ! -f .devcontainer/backend/.env ]; then
     if [ -f ~/.little-startup/.env ]; then
-      cp ~/.little-startup/.env .devcontainer/backend/.env
+      cp ~/.little-startup/.env backend/.env
     else
-      cp .devcontainer/backend/.env.default .devcontainer/backend/.env
+      cp .devcontainer/backend/.env.default backend/.env
     fi
   fi
 }
