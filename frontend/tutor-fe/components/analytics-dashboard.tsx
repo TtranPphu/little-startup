@@ -106,6 +106,16 @@ function SortableChartCard({
   renderChartContent,
   getChartTitle,
   getChartDescription,
+}: {
+  chart: { id: number; type: string; expanded: boolean };
+  toggleExpand: (id: number) => void;
+  renderFilterControls: (chartType: string) => JSX.Element | null;
+  renderChartContent: (
+    chartType: string,
+    expanded: boolean
+  ) => JSX.Element | null;
+  getChartTitle: (chartType: string) => string;
+  getChartDescription: (chartType: string) => string;
 }) {
   const {
     attributes,
