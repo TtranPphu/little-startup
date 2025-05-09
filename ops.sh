@@ -50,11 +50,11 @@ initialize() {
   git config --local core.autocrlf false
 
   # .env for backend
-  if [ ! -f .devcontainer/backend/.env ]; then
+  if [ ! -f backend/.env ]; then
     if [ -f ~/.little-startup/.env ]; then
       cp ~/.little-startup/.env backend/.env
     else
-      cp .devcontainer/backend/.env.default backend/.env
+      cp backend/.env.default backend/.env
     fi
   fi
 }
