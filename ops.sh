@@ -49,19 +49,12 @@ initialize() {
   git config --local core.editor "nvim"
   git config --local core.autocrlf false
 
-  # Determine env target based on context
-  if [ "$1" = "prod" ]; then
-    BACKEND_ENV_TARGET="backend/.env"
-  else
-    BACKEND_ENV_TARGET=".devcontainer/backend/.env"
-  fi
-
   # .env for backend
-  if [ ! -f "$BACKEND_ENV_TARGET" ]; then
+  if [ ! -f .devcontainer/backend/.env ]; then
     if [ -f ~/.little-startup/.env ]; then
-      cp ~/.little-startup/.env "$BACKEND_ENV_TARGET"
+      cp ~/.little-startup/.env backend/.env
     else
-      cp .devcontainer/backend/.env.default "$BACKEND_ENV_TARGET"
+      cp .devcontainer/backend/.env.default backend/.env
     fi
   fi
 }
