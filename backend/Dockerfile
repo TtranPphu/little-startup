@@ -8,4 +8,4 @@ RUN mvn -s .m2/settings.xml clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/backend.jar .
-CMD ["java", "-jar", "backend.jar"]
+CMD ["java", "-jar", "target/backend.jar"]
