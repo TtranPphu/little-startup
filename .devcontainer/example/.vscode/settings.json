@@ -1,6 +1,15 @@
 {
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
+  // docker
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers",
+    "editor.rulers": [120]
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers",
+    "editor.rulers": [120]
+  },
   // python
   "python.defaultInterpreterPath": "${workspaceFolder}/example/python/.venv/bin/python",
   "[python]": {
@@ -18,7 +27,8 @@
   ],
   // shellscript
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.rulers": [120]
   },
   "shellformat.path": "/usr/bin/shfmt",
   // typescript
