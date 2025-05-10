@@ -113,10 +113,14 @@ const attendanceRecords = [
 ];
 
 export function AttendancePage() {
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<{
+    class: string;
+    status: string;
+    date: Date | undefined;
+  }>({
     class: "all",
     status: "all",
-    date: null,
+    date: undefined,
   });
   const [searchQuery, setSearchQuery] = useState("");
 
