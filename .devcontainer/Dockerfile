@@ -1,10 +1,11 @@
 FROM ubuntu:24.04 AS base-devcontainer
 
-# common utilities
+# common utilities and dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip locales \
-    build-essential software-properties-common \
-    python3-pip python3.12-venv \
+    build-essential software-properties-common gnupg \
+    python3-pip python3.12-venv npm \
+    shfmt luarocks fd-find \
     btop tree cloc neofetch
 
 # locale
@@ -40,28 +41,30 @@ RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     gdu
 COPY --chown=${USER_NAME}:${USER_NAME} .gdu.yaml /home/${USER_NAME}/.gdu.yaml
 
-# neo-vim and dependencies
-RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
-RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji
-# for configurations, recommended checkout: https://github.com/nvim-lua/kickstart.nvim
-
-FROM base-devcontainer AS example-devcontainer
-COPY --chown=${USER_NAME}:${USER_NAME} example/.zshrc /home/${USER_NAME}/.zshrc
-
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    . $HOME/.cargo/env && \
-    rustc --version
+    . $HOME/.cargo/env && rustc --version
 
 # uv for python
 ARG PYTHON_VERSION=3.12
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://astral.sh/uv/install.sh | sh -s --
 RUN . /home/${USER_NAME}/.local/bin/env && uv python install ${PYTHON_VERSION}
 
-# shellscript
+# npm
+RUN sudo npm install n -g
+RUN sudo n stable
+RUN sudo npm update npm -g
+
+# neo-vim and dependencies
+RUN sudo add-apt-repository ppa:neovim-ppa/unstable -y
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    shfmt
+    make gcc ripgrep unzip git xclip neovim fonts-noto-color-emoji
+# for configurations, recommended checkout: https://github.com/nvim-lua/kickstart.nvim
+
+# lsp, linters, formatters
+RUN . /home/${USER_NAME}/.local/bin/env && uv tool install ruff
+RUN . $HOME/.cargo/env && cargo install stylua
+RUN sudo npm install prettier -g
 
 # mongodbcli
 RUN sudo apt-get install -y gnupg
@@ -70,22 +73,8 @@ RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mon
     sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 RUN sudo apt-get update && sudo apt-get install -y mongodb-mongosh
 
-# npm
-RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    npm
-RUN sudo npm install n -g
-RUN sudo n stable
-RUN sudo npm update npm -g
-
-FROM base-devcontainer AS frontend-devcontainer
-COPY --chown=${USER_NAME}:${USER_NAME} frontend/.zshrc /home/${USER_NAME}/.zshrc
-
-# npm and node
-RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
-    npm
-RUN sudo npm install n -g
-RUN sudo n stable
-RUN sudo npm update npm -g
+FROM base-devcontainer AS example-devcontainer
+COPY --chown=${USER_NAME}:${USER_NAME} example/.zshrc /home/${USER_NAME}/.zshrc
 
 FROM base-devcontainer AS backend-devcontainer
 COPY --chown=${USER_NAME}:${USER_NAME} backend/.zshrc /home/${USER_NAME}/.zshrc
@@ -93,3 +82,6 @@ COPY --chown=${USER_NAME}:${USER_NAME} backend/.zshrc /home/${USER_NAME}/.zshrc
 RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     openjdk-17-jdk \
     ffmpeg
+
+FROM base-devcontainer AS frontend-devcontainer
+COPY --chown=${USER_NAME}:${USER_NAME} frontend/.zshrc /home/${USER_NAME}/.zshrc
