@@ -76,9 +76,7 @@ services:
       - .:/workspaces/little-startup
       - ./.devcontainer/example/.vscode:/workspaces/little-startup/.vscode
       - /home/${HOST_USERNAME}/.ssh:/home/little/.ssh:cached
-      - /home/${HOST_USERNAME}/.config/nvim:/home/little/.config/nvim:cached
-      - /home/${HOST_USERNAME}/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/${HOST_USERNAME}/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/${HOST_USERNAME}/.config:/home/little/.config:cached
     ports:
       - 1234:1234
     environment:
@@ -96,9 +94,7 @@ services:
       - .:/workspaces/little-startup
       - ./.devcontainer/backend/.vscode:/workspaces/little-startup/.vscode
       - /home/${HOST_USERNAME}/.ssh:/home/little/.ssh:cached
-      - /home/${HOST_USERNAME}/.config/nvim:/home/little/.config/nvim:cached
-      - /home/${HOST_USERNAME}/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/${HOST_USERNAME}/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/${HOST_USERNAME}/.config:/home/little/.config:cached
     ports:
       - 8080:8080
     environment:
@@ -117,9 +113,7 @@ services:
       - .:/workspaces/little-startup
       - ./.devcontainer/frontend/.vscode:/workspaces/little-startup/.vscode
       - /home/${HOST_USERNAME}/.ssh:/home/little/.ssh:cached
-      - /home/${HOST_USERNAME}/.config/nvim:/home/little/.config/nvim:cached
-      - /home/${HOST_USERNAME}/.local/share/nvim:/home/little/.local/share/nvim:cached
-      - /home/${HOST_USERNAME}/.local/state/nvim:/home/little/.local/state/nvim:cached
+      - /home/${HOST_USERNAME}/.config:/home/little/.config:cached
     ports:
       - 3000:3000
     command: sleep infinity
