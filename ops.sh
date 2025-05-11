@@ -119,6 +119,21 @@ rebuild() {
     fi
 }
 
+if [ $1 == 'shortlist' ]; then
+  echo up start stop down build prebuild rebuild test clean init
+  exit
+fi
+
+if [ $2 == 'shortlist' ]; then
+  echo nvim neovim code vscode prod production
+  exit
+fi
+
+if [ $3 == 'shortlist' ]; then
+  echo example backend frontend
+  exit
+fi
+
 case $2 in
 nvim | neovim | code | vscode)
   case $3 in
@@ -173,10 +188,6 @@ up | start)
     code .
     ;;
   prod | production) ;;
-  shortlist)
-    echo nvim neovim code vscode prod production
-    exit
-    ;;
   *)
     initialize
     for context in 'example' 'backend' 'frontend'; do
@@ -203,10 +214,6 @@ clean)
   ;;
 init)
   initialize
-  ;;
-shortlist)
-  echo up start stop down build prebuild rebuild test clean init
-  exit
   ;;
 *)
   print_help
