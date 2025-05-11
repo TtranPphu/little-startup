@@ -5,7 +5,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo zsh wget curl git tmux vim zip unzip locales \
     build-essential software-properties-common gnupg \
     python3-pip python3.12-venv npm \
-    shfmt luarocks fd-find \
+    shfmt shellcheck luarocks fd-find \
     btop tree cloc neofetch
 
 # locale

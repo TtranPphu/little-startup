@@ -6,7 +6,7 @@ if [ -z "$USER" ]; then
 fi
 
 exe_aloud() {
-  echo "\$ $@"
+  echo "\$ $*"
   "$@"
 }
 
@@ -33,13 +33,13 @@ print_vscode() {
     printf "We will launch VS Code inside WSL for you, once you're there,\n"
     printf "  Hit [Ctrl + Shift + P]\n"
     printf "  Select \"Dev Containers: Reopen in Container\"\n"
-    printf "  Then select '$CONTEXT'.\n"
-    read -p "Press [Enter] to continue or [Ctrl + C] to start later... "
+    printf "  Then select '%s'.\n" "$CONTEXT"
+    read -r -p "Press [Enter] to continue or [Ctrl + C] to start later... "
   else
     printf "Look like you're already in VS Code,\n"
     printf "  Hit [Ctrl + Shift + P]\n"
     printf "  Select \"Dev Containers: Reopen in Container\"\n"
-    printf "  Then select '$CONTEXT'.\n"
+    printf "  Then select '%s'.\n" "$CONTEXT"
     exit
   fi
 }
@@ -47,9 +47,9 @@ print_vscode() {
 initialize() {
   cp .devcontainer/pre-commit .git/hooks/pre-commit
   git config --local core.autocrlf false
-  if [ command -v nvim ] &>/dev/null; then
+  if hash novim &>/dev/null; then
     git config --local core.editor "nvim"
-  elif [ command -v vim ] &>/dev/null; then
+  else
     git config --local core.editor "vim"
   fi
 
@@ -66,9 +66,9 @@ initialize() {
 build_containers() {
   initialize
   printf 'Building containers...\n'
-  exe_aloud docker compose --progress plain build --parallel $SERVICES \
+  exe_aloud docker compose --progress plain build --parallel "$SERVICES" \
     &>.logs/compose-build.log &&
-    exe_aloud docker compose up -d --remove-orphans $SERVICES \
+    exe_aloud docker compose up -d --remove-orphans "$SERVICES" \
       &>>.logs/compose-build.log
   if [ $? != 0 ]; then
     printf "Building containers failed!\n"
@@ -82,24 +82,28 @@ init_container() {
   context="$1"
   service="$context-devcontainer"
   container="little-startup-$service-1"
-  printf "Initiating $service...\n"
+  printf "Initiating %s...\n" "$service"
   exe_aloud docker exec \
     --workdir /workspaces/little-startup \
-    $container \
+    "$container" \
     sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
     &>".logs/$service.log"
-  if [ $? != 0 ]; then
-    printf "Initiating $service failed! For more info:\n"
-    printf "  nvim .logs/$service.log\n"
+  if ! exe_aloud docker exec \
+    --workdir /workspaces/little-startup \
+    "$container" \
+    sh -c ".devcontainer/$context/post-create.sh; exit \$?" \
+    &>".logs/$service.log"; then
+    printf "Initiating %s failed! For more info:\n" "$service"
+    printf "  nvim .logs/%s.log\n" "$service"
   else
-    printf "Initiating $service done!\n"
+    printf "Initiating %s done!\n" "$service"
   fi
 }
 
 clean() {
   sudo true
   printf "Bringing down containers...\n"
-  docker compose down &>.logs/compose-down.log | true
+  docker compose down 2>&1 | tee .logs/compose-down.log | true
   sudo git clean -f -d -x -e ".db-*" -e ".logs/*"
 }
 
@@ -108,8 +112,8 @@ rebuild() {
   initialize
 
   printf 'Testing...\n'
-  docker compose build --parallel $SERVICES &&
-    docker compose up -d --remove-orphans $SERVICES &&
+  docker compose build --parallel "$SERVICES" &&
+    docker compose up -d --remove-orphans "$SERVICES" &&
     if [ $? != 0 ]; then
       printf "Testing... Failed. You suck!\n"
       exit 1
@@ -119,20 +123,20 @@ rebuild() {
     fi
 }
 
-if [ $1 == 'shortlist' ]; then
-  echo up start stop down build prebuild rebuild test clean init
-  exit
-fi
+# if [ $1 == 'shortlist' ]; then
+#   echo up start stop down build prebuild rebuild test clean init
+#   exit
+# fi
 
-if [ $2 == 'shortlist' ]; then
-  echo nvim neovim code vscode prod production
-  exit
-fi
+# if [ $2 == 'shortlist' ]; then
+#   echo nvim neovim code vscode prod production
+#   exit
+# fi
 
-if [ $3 == 'shortlist' ]; then
-  echo example backend frontend
-  exit
-fi
+# if [ $3 == 'shortlist' ]; then
+#   echo example backend frontend
+#   exit
+# fi
 
 case $2 in
 nvim | neovim | code | vscode)
@@ -151,19 +155,19 @@ nvim | neovim | code | vscode)
     exit
     ;;
   esac
-  printf "context: $CONTEXT\n"
+  printf "context: %s\n" "$CONTEXT"
   SERVICES="$CONTEXT-devcontainer"
   CONTAINERS="little-startup-$SERVICES-1"
-  printf "services: $SERVICES\n"
-  printf "containers: $CONTAINERS\n"
+  printf "services: %s\n" "$SERVICES"
+  printf "containers: %s\n" "$CONTAINERS"
   ;;
 prod | production)
   SERVICES='student-fe tutor-fe faculty-fe'
   CONTAINERS='little-startup-student-fe-1 '$(
   )'little-startup-tutor-fe-1 '$(
   )'little-startup-faculty-fe-1'
-  printf "services: $SERVICES\n"
-  printf "containers: $CONTAINERS\n"
+  printf "services: %s\n" "$SERVICES"
+  printf "containers: %s\n" "$CONTAINERS"
   ;;
 *)
   SERVICES=''
@@ -176,14 +180,14 @@ up | start)
   build_containers
   case $2 in
   nvim | neovim)
-    init_container $CONTEXT
+    init_container "$CONTEXT"
     exe_aloud docker exec -it \
       --workdir /workspaces/little-startup \
-      $CONTAINERS \
+      "$CONTAINERS" \
       nvim
     ;;
   code | vscode)
-    init_container $CONTEXT
+    init_container "$CONTEXT"
     print_vscode
     code .
     ;;
@@ -191,17 +195,17 @@ up | start)
   *)
     initialize
     for context in 'example' 'backend' 'frontend'; do
-      init_container $context &
+      init_container "$context" &
     done
     wait
     ;;
   esac
   ;;
 stop)
-  exe_aloud docker compose stop $SERVICES
+  exe_aloud docker compose stop "$SERVICES"
   ;;
 down)
-  exe_aloud docker compose down $SERVICES
+  exe_aloud docker compose down "$SERVICES"
   ;;
 build | prebuild)
   build_containers
