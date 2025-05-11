@@ -9,7 +9,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Test | Rebuild",
+      "label": "Rebuild | Test",
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh rebuild"],
@@ -41,6 +41,13 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh stop"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Down",
+      "type": "shell",
+      "command": "sh",
+      "args": ["-c", "bash ops.sh down"],
       "problemMatcher": []
     },
     {
