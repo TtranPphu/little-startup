@@ -119,7 +119,3 @@ source /workspaces/little-startup/example/python/.venv/bin/activate
 export HISTFILE="/workspaces/little-startup/.zsh_history"
 export HISTSIZE=1000
 export SAVEHIST=10000
-
-alias cdpl="cd /workspaces/little-startup/"
-alias cdnv="cd ~/.config/nvim/"
-alias gs="git status"
