@@ -68,9 +68,9 @@ initialize() {
 build_containers() {
   initialize
   printf 'Building containers...\n'
-  exe_aloud docker compose --progress plain build --parallel "$SERVICES" \
+  exe_aloud docker compose --progress plain build --parallel "${SERVICES[@]}" \
     &>.logs/compose-build.log &&
-    exe_aloud docker compose up -d --remove-orphans "$SERVICES" \
+    exe_aloud docker compose up -d --remove-orphans "${SERVICES[@]}" \
       &>>.logs/compose-build.log
   if [ $? != 0 ]; then
     printf "Building containers failed!\n"
@@ -114,8 +114,8 @@ rebuild() {
   initialize
 
   printf 'Testing...\n'
-  docker compose build --parallel "$SERVICES" &&
-    docker compose up -d --remove-orphans "$SERVICES" &&
+  docker compose build --parallel "${SERVICES[@]}" &&
+    docker compose up -d --remove-orphans "${SERVICES[@]}" &&
     if [ $? != 0 ]; then
       printf "Testing... Failed. You suck!\n"
       exit 1
@@ -168,8 +168,8 @@ prod | production)
   declare -a CONTAINERS=("little-startup-student-fe-1"
     "little-startup-tutor-fe-1"
     "little-startup-faculty-fe-1")
-  printf "services: %s\n" "${SERVICES[*]}"
-  printf "containers: %s\n" "${CONTAINERS[*]}"
+  printf "services: %s\n" "${SERVICES[@]}"
+  printf "containers: %s\n" "${CONTAINERS[@]}"
   ;;
 *)
   SERVICES=()
@@ -204,10 +204,10 @@ up | start)
   esac
   ;;
 stop)
-  exe_aloud docker compose stop "${SERVICES[*]}"
+  exe_aloud docker compose stop "${SERVICES[@]}"
   ;;
 down)
-  exe_aloud docker compose down "${SERVICES[*]}"
+  exe_aloud docker compose down "${SERVICES[@]}"
   ;;
 build | prebuild)
   build_containers
