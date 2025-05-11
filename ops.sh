@@ -156,22 +156,22 @@ nvim | neovim | code | vscode)
     ;;
   esac
   printf "context: %s\n" "$CONTEXT"
-  SERVICES="$CONTEXT-devcontainer"
-  CONTAINERS="little-startup-$SERVICES-1"
-  printf "services: %s\n" "$SERVICES"
-  printf "containers: %s\n" "$CONTAINERS"
+  declare -a SERVICES="$CONTEXT-devcontainer"
+  declare -a CONTAINERS="little-startup-${SERVICES[0]}-1"
+  printf "services: %s\n" "${SERVICES[0]}"
+  printf "containers: %s\n" "${CONTAINERS[0]}"
   ;;
 prod | production)
-  SERVICES='student-fe tutor-fe faculty-fe'
-  CONTAINERS='little-startup-student-fe-1 '$(
-  )'little-startup-tutor-fe-1 '$(
-  )'little-startup-faculty-fe-1'
-  printf "services: %s\n" "$SERVICES"
-  printf "containers: %s\n" "$CONTAINERS"
+  declare -a SERVICES=("student-fe" "tutor-fe" "faculty-fe")
+  declare -a CONTAINERS=("little-startup-student-fe-1"
+    "little-startup-tutor-fe-1"
+    "little-startup-faculty-fe-1")
+  printf "services: %s\n" "${SERVICES[*]}"
+  printf "containers: %s\n" "${CONTAINERS[*]}"
   ;;
 *)
-  SERVICES=''
-  CONTAINERS=''
+  SERVICES=()
+  CONTAINERS=()
   ;;
 esac
 
@@ -183,7 +183,7 @@ up | start)
     init_container "$CONTEXT"
     exe_aloud docker exec -it \
       --workdir /workspaces/little-startup \
-      "$CONTAINERS" \
+      "${CONTAINERS[*]}" \
       nvim
     ;;
   code | vscode)
@@ -202,10 +202,10 @@ up | start)
   esac
   ;;
 stop)
-  exe_aloud docker compose stop "$SERVICES"
+  exe_aloud docker compose stop "${SERVICES[*]}"
   ;;
 down)
-  exe_aloud docker compose down "$SERVICES"
+  exe_aloud docker compose down "${SERVICES[*]}"
   ;;
 build | prebuild)
   build_containers
