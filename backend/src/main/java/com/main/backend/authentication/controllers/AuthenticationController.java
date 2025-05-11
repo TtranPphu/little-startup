@@ -53,8 +53,17 @@ public class AuthenticationController {
             HttpServletRequest request) throws Exception {
         String role = request.getHeader("role");
         User user = authService.register(role, auth.getUsername(), auth.getPassword(), auth.getEmail());
+
         Locale locale = request.getLocale();
-        String appUrl = request.getContextPath();
+
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+
+        String appUrl = scheme + "://" + serverName +
+                ((scheme.equals("http") && serverPort == 80) || (scheme.equals("https") && serverPort == 443) ? ""
+                        : ":" + serverPort);
+
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, locale, appUrl));
 
         return user.getDto();
