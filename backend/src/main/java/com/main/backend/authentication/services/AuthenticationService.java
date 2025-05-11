@@ -58,8 +58,12 @@ public class AuthenticationService {
                     new UsernamePasswordAuthenticationToken(username, password));
             String token = tokenService.generateJwt(auth);
             User user = userRepo.findByUsername(username).orElse(new User());
+
             if (!user.getAuthorities().contains(roleRepo.findByAuthority(role.toUpperCase()).get())) {
                 throw new Exception("User does not have the required role");
+            }
+            if (!user.isEnable()) {
+                throw new Exception("This account is not activated");
             }
 
             // Should not pass token in because we are using Http-Only Cookies for JWT
