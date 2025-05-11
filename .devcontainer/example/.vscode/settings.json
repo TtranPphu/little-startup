@@ -27,7 +27,7 @@
   ],
   // shellscript
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode",
     "editor.rulers": [120]
   },
   "shellformat.path": "/usr/bin/shfmt",

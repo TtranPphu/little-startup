@@ -1,7 +1,7 @@
 {
   "name": "example",
-  "initializeCommand": "sh ops.sh init",
-  "postCreateCommand": "sh .devcontainer/example/post-create.sh",
+  "initializeCommand": "bash ops.sh init",
+  "postCreateCommand": "bash .devcontainer/example/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "example-devcontainer",
   "runServices": ["example-devcontainer"],
@@ -27,7 +27,7 @@
         "cweijan.vscode-mysql-client2",
         "eriklynd.json-tools",
         "esbenp.prettier-vscode",
-        "foxundermoon.shell-format",
+        "mads-hartmann.bash-ide-vscode",
         "github.codespaces",
         "github.copilot",
         "github.vscode-pull-request-github",
