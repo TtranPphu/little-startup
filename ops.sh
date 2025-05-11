@@ -46,8 +46,12 @@ print_vscode() {
 
 initialize() {
   cp .devcontainer/pre-commit .git/hooks/pre-commit
-  git config --local core.editor "nvim"
   git config --local core.autocrlf false
+  if [ command -v nvim ] &>/dev/null; then
+    git config --local core.editor "nvim"
+  elif [ command -v vim ] &>/dev/null; then
+    git config --local core.editor "vim"
+  fi
 
   # .env for backend
   if [ ! -f backend/.env ]; then
