@@ -172,8 +172,8 @@ prod | production)
   printf "containers: %s\n" "${CONTAINERS[@]}"
   ;;
 *)
-  SERVICES=()
-  CONTAINERS=()
+  declare -a SERVICES=()
+  declare -a CONTAINERS=()
   ;;
 esac
 

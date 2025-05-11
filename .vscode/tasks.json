@@ -33,7 +33,7 @@
       "label": "Start (Development)",
       "type": "shell",
       "command": "sh",
-      "args": ["-c", "bash ops.sh start dev ${input:service}"],
+      "args": ["-c", "bash ops.sh start code ${input:service}"],
       "problemMatcher": []
     },
     {
