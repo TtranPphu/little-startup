@@ -53,6 +53,8 @@ initialize() {
     git config --local core.editor "vim"
   fi
 
+  git update-index --skip-worktree .vscode/task.json &>/dev/null
+
   # .env for backend
   if [ ! -f backend/.env ]; then
     if [ -f ~/.little-startup/.env ]; then
