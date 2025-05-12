@@ -1,6 +1,8 @@
+# Hello
+
 ## Instructions
 
-### Please read the whole instruction carefully as it is not so long and very importance.
+### Please read the whole instruction carefully as it is not so long and very importance
 
 ### 0. Requirements
 
@@ -42,7 +44,8 @@ Subsitude **_\<your-service\>_** with the service you want to work on.
 On the project's Github page:
 
 - **[<> Code]** > Change to **[Codespaces]** tab > **[⋯]** > **[New with options...]**
-- Make sure **[Dev container configuration]** is set to the service you want to work on, and **NOT** **[Default project configuration]**, because we have none.
+- Make sure **[Dev container configuration]** is set to the service you want to work on,
+and **NOT** **[Default project configuration]**, because we have none.
 
 #### Google IDX
 
@@ -52,11 +55,11 @@ Work in progress...
 
 #### Recommends
 
-- Rebase you working branch to master frequently.
+- Rebase you working branch onto master frequently.
 
 #### Before merge your feature branch to `master`
 
-- Rebase you branch upto latest `master` commit
+- Rebase you branch onto latest `master` commit
 
   ```shell
   git checkout master
@@ -73,7 +76,7 @@ Work in progress...
   - In VS Code: `[Ctrl + Shift + B]` > `Rebuild (Test)`
   - In Terminal: `./ops.sh rebuild`
 
-- Acquire PR approval, then merge you branch to master
+- Acquire PR approval, in case there're update on master, repeat the first step one more time, then merge you branch to `master`
 
   ```shell
   git checkout master

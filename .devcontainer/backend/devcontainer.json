@@ -1,7 +1,7 @@
 {
   "name": "backend",
-  "initializeCommand": "sh ops.sh init",
-  "postCreateCommand": "sh .devcontainer/backend/post-create.sh",
+  "initializeCommand": "bash ops.sh init",
+  "postCreateCommand": "bash .devcontainer/backend/post-create.sh",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "backend-devcontainer",
   "runServices": ["backend-devcontainer"],
