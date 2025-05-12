@@ -10,7 +10,6 @@
   "customizations": {
     "vscode": {
       "settings": {
-        // ui
         // https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hermit.zip
         "workbench.colorTheme": "Default Dark Modern",
         "editor.fontFamily": "Hurmit Nerd Font",
