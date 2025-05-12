@@ -1,6 +1,8 @@
+# Hello
+
 ## Instructions
 
-### Please read the whole instruction carefully as it is not so long and very importance.
+### Please read the whole instruction carefully as it is not so long and very importance
 
 ### 0. Requirements
 
@@ -42,7 +44,8 @@ Subsitude **_\<your-service\>_** with the service you want to work on.
 On the project's Github page:
 
 - **[<> Code]** > Change to **[Codespaces]** tab > **[⋯]** > **[New with options...]**
-- Make sure **[Dev container configuration]** is set to the service you want to work on, and **NOT** **[Default project configuration]**, because we have none.
+- Make sure **[Dev container configuration]** is set to the service you want to work on,
+and **NOT** **[Default project configuration]**, because we have none.
 
 #### Google IDX
 
