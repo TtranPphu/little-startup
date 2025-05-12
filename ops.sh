@@ -125,6 +125,11 @@ rebuild() {
     fi
 }
 
+test_initialize() {
+  # Dummy function to test github actions
+  no-op
+}
+
 # if [ $1 == 'shortlist' ]; then
 #   echo up start stop down build prebuild rebuild test clean init
 #   exit
