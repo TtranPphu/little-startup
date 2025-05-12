@@ -4,7 +4,7 @@ sh .devcontainer/post-create.sh
 
 (
     cd example/python || return
-    # shellcheck source=/home/little/.local/bin/env
+    # shellcheck source=/dev/null
     . "$HOME/.local/bin/env" && uv sync
 )
 (
