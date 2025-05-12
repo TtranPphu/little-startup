@@ -24,18 +24,8 @@ spring:
     username: ${SPRING_MAIL_USERNAME}
     password: ${SPRING_MAIL_PASSWORD}
     properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-        debug: true
-        transport:
-          protocol: smtp
-
-springdoc:
-  swagger-ui:
-    path: /api/docs/index.html
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 springdoc:
   swagger-ui:

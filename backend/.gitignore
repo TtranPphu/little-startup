@@ -34,4 +34,3 @@ build/
 
 ### ENV ###
 .env
-secrets.yml
