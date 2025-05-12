@@ -37,5 +37,5 @@
       "usernamehw.errorlens"
       "vadimcn.vscode-lldb"
     ];
-  }
+  };
 }
