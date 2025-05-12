@@ -1,38 +1,46 @@
 ## Instructions
 
-0.  **Requirement**:
+### 0. Requirements
 
-    - Docker
-      - **_For Windows_**: Recommended to use WSL2 based engine.
-    - VS Code with **Dev Containers** extention
-      (_ms-vscode-remote.remote-containers_) installed (Optional).
+- Docker
+  - **_For Windows_**: Recommended to use WSL2 based engine.
+- [Optional] Visual Studio Code with **Dev Containers** extention
+  (`ms-vscode-remote.remote-containers`) installed.
+- [Optional] Neo-vim with your personal configuration.
 
-1.  **Working locally**:
+### 1. Working locally
 
-    - **_For Windows_**: Recommended to clone in WSL2 managed directory.
+Note: _For Windows_, recommended to clone in WSL2 managed directory.
 
-    ```shell
-    git clone git@github.com:TtranPphu/little-startup.git
-    cd little-startup
-    ```
+```shell
+git clone git@github.com:TtranPphu/little-startup.git
+cd little-startup
+```
 
-    - in VS Code
+#### Visual Studio Code
 
-      ```shell
-      ./ops.sh start code <your-service>
-      ```
+```shell
+code .
+```
 
-      Follow the instruction.
+`[Ctrl + Shift + P]` > `Run Tasks` > Pick the service you want to work on.
 
-    - in Neovim
-      ```shell
-      ./ops.sh start nvim <your-service>
-      ```
-    - Subsitude **_\<your-service\>_** with the name of the service you want to work on.
+#### Neo-vim
 
-2.  **Working on Github codespaces**
+```shell
+./ops.sh start nvim <your-service>
+```
 
-    - On the project's Github page:
-      - **<> Code** -> Change to **Codespaces** tab -> **⋯** -> **New with options...**
-      - Make sure **Dev container configuration** is set to the component you want to work with,
-      and not **Default project configuration**, because we have none.
+Subsitude **_\<your-service\>_** with the service you want to work on.
+
+### 2. Working on Github codespaces
+
+On the project's Github page:
+
+- **<> Code** > Change to **Codespaces** tab > **⋯** > **New with options...**
+- Make sure **Dev container configuration** is set to the component you want to work with,
+  and not **Default project configuration**, because we have none.
+
+### 3. Working on Google IDX
+
+In progress...

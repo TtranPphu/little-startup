@@ -9,31 +9,42 @@
       "problemMatcher": []
     },
     {
-      "label": "Rebuild | Test",
+      "label": "Rebuild (Test)",
+      "group": "build",
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh rebuild"],
-      "problemMatcher": []
+      "problemMatcher": [],
+      "hide": true
     },
     {
-      "label": "Build | Pre-build",
+      "label": "(Pre)-Build",
+      "group": "build",
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh build"],
-      "problemMatcher": []
+      "problemMatcher": [],
+      "hide": true
     },
     {
-      "label": "Start (Production)",
+      "label": "Start - Production",
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh start prod"],
       "problemMatcher": []
     },
     {
-      "label": "Start (Development)",
+      "label": "Start - Development",
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh start code ${input:service}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Start - All",
+      "type": "shell",
+      "command": "sh",
+      "args": ["-c", "bash ops.sh start"],
       "problemMatcher": []
     },
     {

@@ -111,7 +111,7 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Generate shell completion for uv
-source $HOME/.local/bin/env
+source "$HOME/.local/bin/env"
 eval "$(uv generate-shell-completion zsh)"
 
 source /workspaces/little-startup/example/python/.venv/bin/activate
