@@ -23,7 +23,7 @@ cd little-startup
 code .
 ```
 
-`[Ctrl + Shift + P]` > `Run Tasks` > Pick the service you want to work on.
+`[Ctrl + Shift + P]` > `Run Tasks` > `Start - Development` > Pick the service you want to work on.
 
 #### Neo-vim
 
