@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Document(collection = "little_verification_tokens")
 public class VerificationToken {
-    private static final int EXPIRATION = 60 * 24;
 
     @Id
     private String tokenId;
@@ -28,11 +27,17 @@ public class VerificationToken {
 
     private Date expiryDate;
 
+    public VerificationToken(String token, User user, int expiryTimeInMinutes) {
+        this.token = token;
+        this.user = user;
+        this.expiryDate = calculateExpiryDate(expiryTimeInMinutes);
+    }
+
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Timestamp(cal.getTime().getTime()));
+        cal.setTimeInMillis(new Date().getTime());
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-        return new Date(cal.getTime().getTime());
+        return new Timestamp(cal.getTime().getTime());
     }
 
 }

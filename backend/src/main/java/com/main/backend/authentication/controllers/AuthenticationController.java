@@ -1,7 +1,6 @@
 package com.main.backend.authentication.controllers;
 
 import java.time.Duration;
-import java.util.Calendar;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,7 @@ import com.main.backend.authentication.dtos.AuthenticationResponse;
 import com.main.backend.authentication.dtos.UserDto;
 import com.main.backend.authentication.events.OnRegistrationCompleteEvent;
 import com.main.backend.authentication.models.User;
-import com.main.backend.authentication.models.VerificationToken;
 import com.main.backend.authentication.services.AuthenticationService;
-import com.main.backend.authentication.services.UserService;
 import com.main.backend.authentication.services.VerificationTokenService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,9 +37,6 @@ public class AuthenticationController {
 
     @Autowired
     private VerificationTokenService verificationTokenService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -120,21 +114,8 @@ public class AuthenticationController {
             HttpServletRequest request,
             @RequestParam String token) {
 
-        VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
-        if (verificationToken == null) {
-            // Do something
-        }
+        boolean verified = verificationTokenService.verifyToken(token);   
 
-        User userDto = verificationToken.getUser();
-        Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            // Do something
-        }
-
-        User user = userService.loadUserByUsername(userDto.getUsername());
-        user.setEnable(true);
-        userService.saveUser(user);
-
-        return ResponseEntity.ok("Verification token: " + token);
+        return ResponseEntity.ok("Token verified: " + verified);
     }
 }

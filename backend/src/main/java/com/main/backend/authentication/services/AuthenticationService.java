@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.main.backend.authentication.dtos.AuthenticationResponse;
-import com.main.backend.authentication.dtos.UserDto;
 import com.main.backend.authentication.models.Role;
 import com.main.backend.authentication.models.User;
 import com.main.backend.authentication.repositories.RoleRepo;
