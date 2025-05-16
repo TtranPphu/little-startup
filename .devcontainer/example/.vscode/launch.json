@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: main",
+      "name": "Python (main)",
       "type": "debugpy",
       "request": "launch",
       "program": "main.py",
@@ -14,7 +14,7 @@
       "justMyCode": false
     },
     {
-      "name": "Python: test",
+      "name": "Python (test)",
       "type": "debugpy",
       "request": "launch",
       "program": ".venv/bin/pytest",
@@ -24,7 +24,7 @@
       "justMyCode": false
     },
     {
-      "name": "Python: this file",
+      "name": "Python (file)",
       "type": "debugpy",
       "request": "launch",
       "program": "${file}",
@@ -33,7 +33,7 @@
       "justMyCode": false
     },
     {
-      "name": "Rust: main",
+      "name": "Rust (main)",
       "type": "lldb",
       "request": "launch",
       "program": "${workspaceFolder}/example/rust/target/debug/example",
@@ -42,6 +42,14 @@
       "preLaunchTask": "Build (rust)",
       "sourceLanguages": ["rust"],
       "initCommands": ["settings set target.disable-aslr false"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "python_test_cases",
+      "description": "Test case(s)",
+      "type": "promptString",
+      "default": ""
     }
   ]
 }
