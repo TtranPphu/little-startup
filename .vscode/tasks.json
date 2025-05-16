@@ -6,16 +6,11 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh init"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
-    },
-    {
-      "label": "Rebuild (Test)",
-      "group": "build",
-      "type": "shell",
-      "command": "sh",
-      "args": ["-c", "bash ops.sh rebuild"],
-      "problemMatcher": [],
-      "hide": true
     },
     {
       "label": "(Pre)-Build",
@@ -24,6 +19,23 @@
       "command": "sh",
       "args": ["-c", "bash ops.sh build"],
       "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "focus": false
+      },
+      "hide": true
+    },
+    {
+      "label": "Rebuild (Test)",
+      "group": "build",
+      "type": "shell",
+      "command": "sh",
+      "args": ["-c", "bash ops.sh rebuild"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "focus": false
+      },
       "hide": true
     },
     {
@@ -31,6 +43,10 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh start prod"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
     },
     {
@@ -45,6 +61,10 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh start"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
     },
     {
@@ -52,6 +72,10 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh stop"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
     },
     {
@@ -59,6 +83,10 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh down"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
     },
     {
@@ -66,6 +94,10 @@
       "type": "shell",
       "command": "sh",
       "args": ["-c", "bash ops.sh clean"],
+      "presentation": {
+        "reveal": "silent",
+        "focus": false
+      },
       "problemMatcher": []
     }
   ],

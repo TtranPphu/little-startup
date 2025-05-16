@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "papertrail_formatter": {
+      "format": "| %(filename)s:%(lineno)s | %(message)s"
+    },
+    "json_formatter": {
+      "()": "utils.log_json_formatter.JsonFormatter",
+      "fmt_dict": {
+        "level": "levelname",
+        "message": "message",
+        "logger": "name"
+      },
+      "time_format": "%Y-%m-%d %H:%M:%S %z"
+    },
+    "default_formatter": {
+      "format": "%(asctime)s | %(levelname)s | %(filename)s:%(lineno)s\n%(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S %z"
+    },
+    "debug_formatter": {
+      "format": "%(levelname)s | %(filename)s:%(lineno)s\n%(message)s"
+    }
+  },
+  "handlers": {
+    "papertrail_handler": {
+      "class": "logging.handlers.SysLogHandler",
+      "level": "INFO",
+      "formatter": "papertrail_formatter",
+      "address": ["logs6.papertrailapp.com", 11443]
+    },
+    "file_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "when": "midnight",
+      "level": "DEBUG",
+      "formatter": "default_formatter",
+      "filename": "../../.logs/log.log"
+    },
+    "json_file_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "when": "midnight",
+      "level": "DEBUG",
+      "formatter": "json_formatter",
+      "filename": "../../.logs/log.jsonl"
+    },
+    "stream_handler": {
+      "class": "logging.StreamHandler",
+      "level": "DEBUG",
+      "formatter": "debug_formatter",
+      "stream": "ext://sys.stderr"
+    },
+    "queue_handler": {
+      "class": "logging.handlers.QueueHandler",
+      "handlers": [
+        "papertrail_handler",
+        "file_handler",
+        "json_file_handler",
+        "stream_handler"
+      ],
+      "respect_handler_level": true
+    }
+  },
+  "loggers": {
+    "root": {
+      "level": "DEBUG",
+      "handlers": ["queue_handler"]
+      // "handlers": [
+      //     "papertrail_handler",
+      //     "file_handler",
+      //     "json_file_handler",
+      //     "stream_handler"
+      // ]
+    }
+  }
+}
